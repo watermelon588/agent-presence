@@ -1,0 +1,11 @@
+{
+  "name": "agent-presence",
+  "plugins": [
+    {
+      "name": "agent-presence",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_USE" },
+      "category": "Productivity"
+    }
+  ]
+}

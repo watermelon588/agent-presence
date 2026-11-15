@@ -1,0 +1,44 @@
+{
+  "name": "agent-presence",
+  "version": "0.1.0",
+  "description": "Sticker chibis that float over your screen and show what Claude Code and Codex agents (and their subagents) are doing, live.",
+  "license": "MIT",
+  "bin": {
+    "agent-presence": "cli.js"
+  },
+  "main": "overlay/main.js",
+  "scripts": {
+    "test": "node test.js",
+    "overlay": "electron overlay/main.js",
+    "demo": "node demo.js"
+  },
+  "files": [
+    "cli.js",
+    "overlay/",
+    "avatars/",
+    "hooks/",
+    "skills/",
+    ".claude-plugin/",
+    ".codex-plugin/",
+    ".agents/"
+  ],
+  "keywords": [
+    "claude-code",
+    "codex",
+    "ai-agents",
+    "overlay",
+    "stickers",
+    "desktop-pet"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "electron": "^45.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watermelon588/agent-presence.git"
+  },
+  "homepage": "https://github.com/watermelon588/agent-presence"
+}

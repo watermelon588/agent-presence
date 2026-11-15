@@ -1,0 +1,12 @@
+{
+  "name": "agent-presence",
+  "owner": { "name": "agent-presence" },
+  "description": "Sticker overlay that shows what your AI coding agents and subagents are doing.",
+  "plugins": [
+    {
+      "name": "agent-presence",
+      "source": "./",
+      "description": "Sticker chibis that show what your Claude Code agents and subagents are doing."
+    }
+  ]
+}

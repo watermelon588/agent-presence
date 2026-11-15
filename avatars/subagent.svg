@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- "Pip": small helper chibi. The overlay hue-shifts it per subagent type. Original art, MIT. -->
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <g fill="#fff" stroke="#fff" stroke-width="13">
+      <path d="M60 30 C60 18 70 14 76 20 C80 25 72 30 68 26" fill="none"/>
+      <circle cx="60" cy="68" r="36"/>
+    </g>
+    <path d="M60 32 C60 18 70 14 76 20 C80 25 72 30 68 26" fill="none" stroke="#3a2f4a" stroke-width="3.2"/>
+    <circle cx="60" cy="68" r="36" fill="#c9b8f4" stroke="#3a2f4a" stroke-width="3.2"/>
+    <ellipse cx="45" cy="50" rx="10" ry="5.5" fill="#fff" opacity=".45" transform="rotate(-22 45 50)"/>
+    <circle cx="48" cy="70" r="5" fill="#2e2638"/>
+    <circle cx="72" cy="70" r="5" fill="#2e2638"/>
+    <circle cx="49.6" cy="68" r="1.7" fill="#fff"/>
+    <circle cx="73.6" cy="68" r="1.7" fill="#fff"/>
+    <ellipse cx="38" cy="80" rx="6" ry="3.4" fill="#f07272" opacity=".45"/>
+    <ellipse cx="82" cy="80" rx="6" ry="3.4" fill="#f07272" opacity=".45"/>
+    <path d="M56 80 Q60 84 64 80" fill="none" stroke="#2e2638" stroke-width="2.6"/>
+  </g>
+</svg>

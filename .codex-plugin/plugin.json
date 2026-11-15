@@ -1,0 +1,39 @@
+{
+  "name": "agent-presence",
+  "version": "0.1.0",
+  "description": "Sends Codex activity (files, commands, subagents) to the agent-presence sticker overlay.",
+  "author": { "name": "agent-presence contributors" },
+  "license": "MIT",
+  "keywords": ["overlay", "subagents", "presence", "stickers", "desktop pet"],
+  "skills": "./skills/",
+  "hooks": {
+    "hooks": {
+      "SessionStart": [{ "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "UserPromptSubmit": [{ "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "PreToolUse": [{ "matcher": "*", "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "PostToolUse": [{ "matcher": "*", "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "PermissionRequest": [{ "matcher": "*", "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "SubagentStart": [{ "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "SubagentStop": [{ "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "Stop": [{ "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "async": true, "timeout": 3 }] }],
+      "SessionEnd": [{ "hooks": [{ "type": "command", "command": "node \"$PLUGIN_ROOT/cli.js\" emit codex", "commandWindows": "node \"%PLUGIN_ROOT%\\cli.js\" emit codex", "timeout": 3 }] }]
+    }
+  },
+  "interface": {
+    "displayName": "Agent Presence",
+    "shortDescription": "Sticker chibis that show what your agents are doing",
+    "longDescription": "Floating sticker characters for every Codex and Claude Code session and subagent, with a live bubble showing the file or command each one is on. Runs locally; needs the agent-presence overlay from npm.",
+    "developerName": "agent-presence contributors",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "composerIcon": "./avatars/codex.svg",
+    "logo": "./avatars/codex.svg",
+    "brandColor": "#8FDCC6",
+    "defaultPrompt": [
+      "Use this image as my Codex sticker",
+      "Give my Explore subagents their own sticker",
+      "Start the agent-presence overlay"
+    ],
+    "screenshots": []
+  }
+}

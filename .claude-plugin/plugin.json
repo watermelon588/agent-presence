@@ -1,0 +1,9 @@
+{
+  "name": "agent-presence",
+  "version": "0.1.0",
+  "description": "Sends Claude Code activity (files, tools, subagents) to the agent-presence sticker overlay.",
+  "author": { "name": "agent-presence contributors" },
+  "license": "MIT",
+  "keywords": ["overlay", "subagents", "presence", "stickers"],
+  "hooks": "./hooks/claude.json"
+}

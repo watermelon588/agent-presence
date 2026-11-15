@@ -1,0 +1,113 @@
+{
+  "name": "agent-presence-vscode",
+  "displayName": "Agent Presence",
+  "description": "See which AI agent or subagent (Claude Code, Codex) is working on which file, right in the Explorer.",
+  "version": "0.1.0",
+  "publisher": "agent-presence",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "claude code",
+    "codex",
+    "ai agents",
+    "subagents",
+    "presence"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "agentPresence.agents",
+          "name": "Agents"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "agentPresence.agents",
+        "contents": "No agents active right now.\nRun `npm i -g agent-presence` and `agent-presence init`, then start Claude Code or Codex."
+      }
+    ],
+    "colors": [
+      {
+        "id": "agentPresence.claude",
+        "description": "Files Claude Code is working on",
+        "defaults": {
+          "dark": "#F6A983",
+          "light": "#B8541F",
+          "highContrast": "#F6A983",
+          "highContrastLight": "#8A3A10"
+        }
+      },
+      {
+        "id": "agentPresence.codex",
+        "description": "Files Codex is working on",
+        "defaults": {
+          "dark": "#8FDCC6",
+          "light": "#16795E",
+          "highContrast": "#8FDCC6",
+          "highContrastLight": "#0E5A45"
+        }
+      },
+      {
+        "id": "agentPresence.subagent",
+        "description": "Files a subagent is working on",
+        "defaults": {
+          "dark": "#C9B8F4",
+          "light": "#6447C2",
+          "highContrast": "#C9B8F4",
+          "highContrastLight": "#4A2FA0"
+        }
+      },
+      {
+        "id": "agentPresence.other",
+        "description": "Files another agent is working on",
+        "defaults": {
+          "dark": "#E8DCCF",
+          "light": "#6F5E4E",
+          "highContrast": "#E8DCCF",
+          "highContrastLight": "#4F4033"
+        }
+      }
+    ],
+    "configuration": {
+      "title": "Agent Presence",
+      "properties": {
+        "agentPresence.badges": {
+          "type": "object",
+          "default": {
+            "claude": "🍑",
+            "codex": "🤖",
+            "subagent": "🌱"
+          },
+          "markdownDescription": "Explorer badge (1–2 characters or one emoji) per agent. Keys: `claude`, `codex`, `subagent`, or a subagent type such as `Explore`.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "agentPresence.recentSeconds": {
+          "type": "number",
+          "default": 90,
+          "minimum": 0,
+          "description": "How long a file keeps its badge after an agent stops touching it."
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watermelon588/agent-presence.git",
+    "directory": "vscode"
+  },
+  "homepage": "https://github.com/watermelon588/agent-presence"
+}

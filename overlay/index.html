@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src file: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>agent-presence</title>
+<style>
+  :root { --ink: #3b2a2a; --paper: #fffdf8; --chip: #f3ebe1; }
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; user-select: none;
+    font: 650 12px/1.25 ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; color: var(--ink); }
+
+  #dock { position: fixed; right: 28px; bottom: 18px; display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 22px; }
+  .group { display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 6px; }
+  .subs { display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 4px; margin-bottom: 8px; }
+
+  .chibi { position: relative; transform: rotate(var(--tilt, 0deg)); transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); cursor: grab; }
+  .chibi:hover { transform: rotate(0deg) translateY(-6px) scale(1.06); }
+  .body { display: flex; flex-direction: column; align-items: center; }
+  .sticker { width: 88px; height: 88px; -webkit-user-drag: none;
+    filter: hue-rotate(var(--hue, 0deg)) drop-shadow(0 2px 0 rgba(0,0,0,.06)) drop-shadow(0 7px 9px rgba(60,30,15,.28)); }
+  .sub .sticker { width: 54px; height: 54px; }
+
+  .name { margin-top: -6px; padding: 2px 9px; background: var(--paper); border-radius: 999px; box-shadow: 0 2px 6px rgba(0,0,0,.18);
+    font-size: 11px; white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+  .sub .name { font-size: 10px; padding: 1px 6px; max-width: 90px; }
+
+  .bubble { position: absolute; bottom: calc(100% - 4px); left: 50%; transform: translateX(-50%); background: var(--paper);
+    border: 2px solid var(--accent, #e8dccf); border-radius: 14px; padding: 4px 10px; white-space: nowrap; max-width: 240px;
+    overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 10px rgba(0,0,0,.16); transition: opacity .2s, border-color .2s; }
+  .sub .bubble { font-size: 10.5px; max-width: 120px; padding: 3px 8px; }
+  .subs { gap: 10px; }
+  .sub:nth-child(even) .bubble { bottom: calc(100% + 22px); } /* stagger so neighbours never collide */
+  .bubble:empty { opacity: 0; }
+  /* main agents sit at the screen edge: grow their bubble leftward so long text never runs off-screen */
+  .chibi:not(.sub) .bubble { left: auto; right: -6px; transform: none; max-width: 170px; }
+  .group:nth-child(even) > .chibi .bubble { bottom: calc(100% + 24px); }
+  .chibi:not(.sub) .bubble::after { left: auto; right: 38px; }
+
+  .files { display: none; position: absolute; bottom: calc(100% + 30px); right: 0; background: var(--paper); border-radius: 12px; padding: 6px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.22); min-width: 170px; max-width: 300px; }
+  .files::before { content: "recent files"; display: block; padding: 2px 6px 4px; font-size: 10px; opacity: .55; text-transform: uppercase; letter-spacing: .06em; }
+  .chibi:hover .files:not(:empty) { display: block; }
+  .files button { display: block; width: 100%; text-align: left; border: 0; background: none; font: inherit; color: inherit; padding: 3px 6px;
+    border-radius: 8px; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .files button:hover { background: var(--chip); }
+
+  /* one animation per state, on the sticker only (tilt/hover live on .chibi, enter/leave on .body) */
+  .s-idle .sticker { animation: bob 3.4s ease-in-out infinite; opacity: .82; }
+  .s-thinking .sticker { animation: sway 2.2s ease-in-out infinite; }
+  .s-reading .sticker { animation: tilt 1.8s ease-in-out infinite; }
+  .s-writing .sticker { animation: wiggle .35s ease-in-out infinite; }
+  .s-running .sticker { animation: hop .7s ease-in-out infinite; }
+  .s-delegating .sticker, .s-browsing .sticker, .s-working .sticker { animation: pulse 1.2s ease-in-out infinite; }
+  .s-waiting .sticker { animation: bounce 1s ease-in-out infinite; }
+  .s-done .sticker { animation: pop .5s cubic-bezier(.3, 1.6, .5, 1); }
+  .s-waiting .bubble { font-weight: 750; }
+
+  .enter { animation: pop .45s cubic-bezier(.3, 1.6, .5, 1); }
+  .leave { animation: leave .3s ease-in forwards; }
+
+  @keyframes bob { 50% { transform: translateY(-3px); } }
+  @keyframes sway { 50% { transform: rotate(4deg); } }
+  @keyframes tilt { 50% { transform: rotate(-8deg) translateX(-2px); } }
+  @keyframes wiggle { 25% { transform: rotate(-6deg); } 75% { transform: rotate(6deg); } }
+  @keyframes hop { 30% { transform: translateY(-10px) scaleY(1.04); } 55% { transform: translateY(0) scaleY(.94); } }
+  @keyframes pulse { 50% { transform: scale(1.07); } }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 40%, 60% { transform: translateY(-14px) rotate(4deg); } }
+  @keyframes pop { 0% { transform: scale(.6); } 60% { transform: scale(1.14); } 100% { transform: scale(1); } }
+  @keyframes leave { to { transform: scale(.3) translateY(10px); opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div id="dock"></div>
+<script>
+  const dock = document.getElementById('dock');
+  const agents = new Map(); // key -> { el, e, files, subs?, group?, timer }
+  let cfg = { avatars: {}, names: {} };
+
+  const ICON = { thinking: '💭', reading: '🔍', writing: '✏️', running: '▶️', delegating: '🧩', browsing: '🌐', working: '⚙️' };
+  const ACCENT = { thinking: '#d9d2f5', reading: '#bfe3f5', writing: '#f7c3a1', running: '#bde8c8', delegating: '#f1cdec',
+                   browsing: '#bfe3f5', working: '#e8dccf', waiting: '#ff8a80', done: '#bde8c8', idle: '#e8dccf' };
+  const STALE = 15 * 60e3;
+  const base = p => String(p).split(/[\\/]/).filter(Boolean).pop() || String(p);
+  // hue offsets from the lavender base that stay pastel: lavender, pink, rose, mint, aqua, periwinkle
+  const HUES = [0, 50, 100, -100, -60, -30];
+  const hue = s => HUES[[...String(s)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % HUES.length];
+  const cap = s => (s ? s[0].toUpperCase() + s.slice(1) : '');
+
+  function make(isSub) {
+    const el = document.createElement('div');
+    el.className = 'chibi' + (isSub ? ' sub' : '');
+    el.style.setProperty('--tilt', (Math.random() * 10 - 5).toFixed(1) + 'deg');
+    el.innerHTML = '<div class="body enter"><div class="files"></div><div class="bubble"></div><img class="sticker" alt=""><div class="name"></div></div>';
+    el.addEventListener('contextmenu', ev => { ev.preventDefault(); ap.menu(); });
+    return el;
+  }
+
+  function avatar(img, e) {
+    const a = cfg.avatars;
+    if (!e.sub) { img.src = a[e.agent] || a.agent; return; }
+    const custom = a[e.subType] || a[e.agent + '-subagent'];
+    img.src = custom || a.subagent;
+    if (!custom) img.style.setProperty('--hue', hue(e.subType || e.sub) + 'deg'); // each subagent type gets its own color
+  }
+
+  function setState(a, state, e) {
+    a.el.className = a.el.className.replace(/\s*s-\w+/g, '') + ' s-' + state;
+    a.el.style.setProperty('--accent', ACCENT[state] || ACCENT.working);
+    const what = e.file ? base(e.file) : (e.detail || '');
+    const b = a.el.querySelector('.bubble');
+    b.textContent = state === 'idle' ? ''
+      : state === 'done' ? '✓ done'
+      : state === 'waiting' ? '❗ needs you'
+      : state === 'thinking' ? '💭 thinking'
+      : (ICON[state] || '⚙️') + ' ' + (what || state);
+    b.title = e.file || e.detail || '';
+  }
+
+  function renderFiles(a) {
+    const box = a.el.querySelector('.files');
+    box.replaceChildren(...a.files.map(f => {
+      const btn = document.createElement('button');
+      btn.textContent = base(f); btn.title = 'Show in folder: ' + f;
+      btn.addEventListener('click', () => ap.reveal(f, a.e.cwd));
+      return btn;
+    }));
+  }
+
+  function remove(key) {
+    const a = agents.get(key);
+    if (!a) return;
+    for (const k of [...agents.keys()]) if (k.startsWith(key + ':')) agents.delete(k);
+    agents.delete(key);
+    const node = a.group || a.el;
+    a.el.querySelector('.body').className = 'body leave';
+    setTimeout(() => node.remove(), 320);
+  }
+
+  function upsert(e) {
+    const mainKey = e.agent + ':' + e.session;
+    const key = e.sub ? mainKey + ':' + e.sub : mainKey;
+    if (e.state === 'gone') return remove(key);
+    if (Date.now() - e.t > STALE) return;
+    if (e.sub && !agents.has(mainKey)) upsert({ ...e, sub: null, subType: null, state: 'delegating', file: null, detail: null });
+
+    let a = agents.get(key);
+    if (!a) {
+      a = { el: make(!!e.sub), files: [] };
+      if (e.sub) agents.get(mainKey).subs.prepend(a.el);
+      else {
+        a.group = document.createElement('div'); a.group.className = 'group';
+        a.subs = document.createElement('div'); a.subs.className = 'subs';
+        a.group.append(a.el, a.subs); dock.append(a.group);
+      }
+      avatar(a.el.querySelector('.sticker'), e);
+      a.el.querySelector('.name').textContent = e.sub
+        ? (e.subType || 'helper')
+        : (cfg.names[e.agent] || cap(e.agent)) + (e.cwd ? ' · ' + base(e.cwd) : '');
+      agents.set(key, a);
+    }
+    a.e = e;
+    if (e.file && a.files[0] !== e.file) { a.files = [e.file, ...a.files.filter(f => f !== e.file)].slice(0, 6); renderFiles(a); }
+    clearTimeout(a.timer);
+    setState(a, e.state, e);
+    if (e.state === 'done') a.timer = setTimeout(() => setState(a, 'idle', e), 8000);
+  }
+
+  setInterval(() => { for (const [k, a] of agents) if (Date.now() - a.e.t > STALE) remove(k); }, 30e3);
+
+  // clicks pass through the window except while the pointer is over the stickers
+  dock.addEventListener('mouseenter', () => ap.mouse(true));
+  dock.addEventListener('mouseleave', () => ap.mouse(false));
+
+  // drag the whole dock anywhere; position is remembered per viewer
+  try { const p = JSON.parse(localStorage.getItem('dock')); if (p) Object.assign(dock.style, { left: p.x + 'px', top: p.y + 'px', right: 'auto', bottom: 'auto' }); } catch {}
+  dock.addEventListener('mousedown', ev => {
+    if (ev.button !== 0 || !ev.target.classList.contains('sticker')) return;
+    ev.preventDefault();
+    const r = dock.getBoundingClientRect(), dx = ev.clientX - r.left, dy = ev.clientY - r.top;
+    const move = m => Object.assign(dock.style, { left: (m.clientX - dx) + 'px', top: (m.clientY - dy) + 'px', right: 'auto', bottom: 'auto' });
+    const up = () => {
+      removeEventListener('mousemove', move); removeEventListener('mouseup', up);
+      try { const b = dock.getBoundingClientRect(); localStorage.setItem('dock', JSON.stringify({ x: b.left, y: b.top })); } catch {}
+    };
+    addEventListener('mousemove', move); addEventListener('mouseup', up);
+  });
+
+  ap.onConfig(c => { cfg = c; });
+  ap.onEvent(upsert);
+</script>
+</body>
+</html>
