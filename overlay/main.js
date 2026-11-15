@@ -10,7 +10,7 @@ const readConfig = () => { try { return JSON.parse(fs.readFileSync(CONFIG, 'utf8
 
 function avatarUrls(cfg) {
   const def = n => pathToFileURL(path.join(__dirname, '..', 'avatars', n + '.svg')).href;
-  const urls = { claude: def('claude'), codex: def('codex'), agent: def('subagent'), subagent: def('subagent') };
+  const urls = { claude: def('claude'), codex: def('codex'), copilot: def('copilot'), antigravity: def('antigravity'), agent: def('subagent'), subagent: def('subagent') };
   for (const [k, v] of Object.entries(cfg.avatars || {})) {
     const p = path.resolve(String(v).replace(/^~(?=$|[\\/])/, require('os').homedir()));
     if (fs.existsSync(p)) urls[k] = pathToFileURL(p).href;

@@ -5,7 +5,7 @@ const path = require('path');
 const { createPresence, tail } = require('./presence');
 
 const HOME = process.env.AGENT_PRESENCE_HOME || path.join(os.homedir(), '.agent-presence');
-const NAMES = { claude: 'Claude', codex: 'Codex' };
+const NAMES = { claude: 'Claude', codex: 'Codex', copilot: 'Copilot', antigravity: 'Antigravity' };
 const base = p => path.basename(p || '');
 const ago = t => { const s = Math.round((Date.now() - t) / 1000); return s < 60 ? s + 's ago' : Math.round(s / 60) + 'm ago'; };
 const who = h => (NAMES[h.agent] || h.agent) + (h.sub ? ' · ' + (h.subType || 'subagent') : '');

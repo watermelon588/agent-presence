@@ -2,11 +2,11 @@
 
 See which AI coding agent is working on which file, live, in the Explorer.
 
-- **Explorer badges**: 🍑 Claude Code, 🤖 Codex, 🌱 subagents, each in its own color. Folders light up when an agent works inside them. Hover for who, what and when.
+- **Explorer badges**: 🍑 Claude Code, 🤖 Codex, 🧭 Copilot, 🎈 Antigravity, 🌱 subagents, each in its own color. Folders light up when an agent works inside them. Hover for who, what and when.
 - **Agents view** (Explorer sidebar): every running agent with its sticker, its subagents, and the files it touched. Click a file to open it.
 - Works in VS Code, Cursor, Windsurf and Antigravity.
 
-Needs the agent-presence hooks, which feed `~/.agent-presence/events.jsonl`:
+Needs the agent-presence hooks (Claude Code, Codex, Copilot and Antigravity), which feed `~/.agent-presence/events.jsonl`:
 
 ```bash
 npm i -g agent-presence

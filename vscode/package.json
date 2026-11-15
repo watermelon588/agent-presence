@@ -1,7 +1,7 @@
 {
   "name": "agent-presence-vscode",
   "displayName": "Agent Presence",
-  "description": "See which AI agent or subagent (Claude Code, Codex) is working on which file, right in the Explorer.",
+  "description": "See which AI agent or subagent (Claude Code, Codex, Copilot, Antigravity) is working on which file, right in the Explorer.",
   "version": "0.1.0",
   "publisher": "agent-presence",
   "license": "MIT",
@@ -17,7 +17,9 @@
     "codex",
     "ai agents",
     "subagents",
-    "presence"
+    "presence",
+    "copilot",
+    "antigravity"
   ],
   "main": "./extension.js",
   "activationEvents": [
@@ -35,7 +37,7 @@
     "viewsWelcome": [
       {
         "view": "agentPresence.agents",
-        "contents": "No agents active right now.\nRun `npm i -g agent-presence` and `agent-presence init`, then start Claude Code or Codex."
+        "contents": "No agents active right now.\nRun `npm i -g agent-presence` and `agent-presence init`, then start Claude Code, Codex, Copilot or Antigravity."
       }
     ],
     "colors": [
@@ -57,6 +59,26 @@
           "light": "#16795E",
           "highContrast": "#8FDCC6",
           "highContrastLight": "#0E5A45"
+        }
+      },
+      {
+        "id": "agentPresence.copilot",
+        "description": "Files Copilot is working on",
+        "defaults": {
+          "dark": "#8CC8F5",
+          "light": "#1F5F99",
+          "highContrast": "#8CC8F5",
+          "highContrastLight": "#174A78"
+        }
+      },
+      {
+        "id": "agentPresence.antigravity",
+        "description": "Files Antigravity is working on",
+        "defaults": {
+          "dark": "#F7A8C8",
+          "light": "#B02F66",
+          "highContrast": "#F7A8C8",
+          "highContrastLight": "#86224D"
         }
       },
       {
@@ -88,9 +110,11 @@
           "default": {
             "claude": "🍑",
             "codex": "🤖",
+            "copilot": "🧭",
+            "antigravity": "🎈",
             "subagent": "🌱"
           },
-          "markdownDescription": "Explorer badge (1–2 characters or one emoji) per agent. Keys: `claude`, `codex`, `subagent`, or a subagent type such as `Explore`.",
+          "markdownDescription": "Explorer badge (1–2 characters or one emoji) per agent. Keys: `claude`, `codex`, `copilot`, `antigravity`, `subagent`, or a subagent type such as `Explore`.",
           "additionalProperties": {
             "type": "string"
           }

@@ -1,7 +1,7 @@
 {
   "name": "agent-presence",
   "version": "0.1.0",
-  "description": "Sticker chibis that float over your screen and show what Claude Code and Codex agents (and their subagents) are doing, live.",
+  "description": "Sticker chibis that float over your screen and show what Claude Code, Codex, Copilot and Antigravity agents (and their subagents) are doing, live.",
   "license": "MIT",
   "bin": {
     "agent-presence": "cli.js"
@@ -28,7 +28,9 @@
     "ai-agents",
     "overlay",
     "stickers",
-    "desktop-pet"
+    "desktop-pet",
+    "copilot",
+    "antigravity"
   ],
   "engines": {
     "node": ">=18"

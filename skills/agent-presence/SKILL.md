@@ -1,6 +1,6 @@
 ---
 name: agent-presence
-description: Customize or control the agent-presence sticker overlay — set a custom sticker image for Claude, Codex or a subagent type, rename an agent's sticker, or start, stop and check the floating overlay. Use when the user mentions their agent sticker, chibi, avatar, mascot or the presence overlay.
+description: Customize or control the agent-presence sticker overlay — set a custom sticker image for Claude, Codex, Copilot, Antigravity or a subagent type, rename an agent's sticker, or start, stop and check the floating overlay. Use when the user mentions their agent sticker, chibi, avatar, mascot or the presence overlay.
 ---
 
 # agent-presence
@@ -15,7 +15,7 @@ The overlay reads `~/.agent-presence/config.json` (Windows: `%USERPROFILE%\.agen
 }
 ```
 
-- Avatar keys: `claude`, `codex`, a subagent type such as `Explore` or `test-writer`, `<agent>-subagent`, or `subagent` for every helper.
+- Avatar keys: `claude`, `codex`, `copilot`, `antigravity`, a subagent type such as `Explore` or `test-writer`, `<agent>-subagent`, or `subagent` for every helper.
 - Images: PNG, GIF (animation plays), SVG or WebP, square, about 256 px. Use absolute paths; `~` is allowed. Check the file exists before writing it.
 - `autostart: false` stops the overlay from opening on new sessions.
 
