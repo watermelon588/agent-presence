@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Presence · See what your AI agents are doing</title>
+<meta name="description" content="Sticker chibis that float over your screen and show what Claude Code and Codex are working on, live. Local only, MIT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{
+  --bg:#fbfbfa; --ink:#121214; --muted:#5d5d66; --line:#e7e7e4; --soft:#f1f1ee;
+  --accent:#2f4bff; --accent-ink:#fff;
+  --r:18px; --ease:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0}
+html{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%;user-select:none;-webkit-user-drag:none}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Bricolage Grotesque",sans-serif;letter-spacing:-.035em;line-height:1.02;font-weight:700}
+
+/* die-cut white border for transparent PNGs */
+.diecut{filter:drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff) drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff) drop-shadow(0 10px 14px rgba(30,30,60,.16))}
+.shadow{filter:drop-shadow(0 10px 14px rgba(30,30,60,.16))}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid transparent}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font:800 22px "Bricolage Grotesque";letter-spacing:-.04em}
+.logo-mark{width:30px;height:30px;border-radius:9px 9px 18px 9px;background:var(--accent);position:relative;overflow:hidden}
+.logo-mark::after{content:"";position:absolute;right:0;bottom:0;width:14px;height:14px;background:linear-gradient(135deg,#c9d2ff 50%,var(--bg) 50%);border-radius:0 0 9px 0}
+.links{display:flex;gap:30px;font-size:15px;color:var(--muted)}
+.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 20px;border-radius:999px;font:600 15px Geist;border:0;cursor:pointer;transition:transform .2s var(--ease),background .2s}
+.btn:active{transform:scale(.97)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#2a2a30}
+.btn-accent{background:var(--accent);color:var(--accent-ink)}
+.btn-accent:hover{background:#2238e0}
+.nav .btn{height:40px;padding:0 16px;font-size:14px}
+
+/* hero */
+.hero{position:relative;min-height:min(calc(100dvh - 68px),860px);display:grid;place-items:center;text-align:center;padding:56px 0 72px;isolation:isolate}
+.hero h1{font-size:clamp(46px,7.4vw,104px);max-width:1000px;margin:0 auto}
+.inl{display:inline-block;width:.86em;height:.86em;vertical-align:-.1em;margin:0 .04em;transition:transform .35s var(--spring)}
+.inl:hover{transform:rotate(-14deg) scale(1.2)}
+.hero p.sub{font-size:19px;color:var(--muted);max-width:520px;margin:26px auto 0}
+.cta{display:flex;gap:12px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+.install{display:inline-flex;align-items:center;gap:12px;height:46px;padding:0 8px 0 18px;border:1px solid var(--line);background:#fff;border-radius:999px;font:500 14px "Geist Mono";cursor:pointer;color:var(--ink)}
+.install .chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;background:var(--soft);font:500 13px Geist;transition:background .2s}
+.install.is-copied .chip{background:#dff5e3;color:#14692a}
+.install .dollar{color:var(--accent)}
+
+.stk{position:absolute;z-index:2;width:var(--w,110px);rotate:var(--r,0deg);animation:pop .8s var(--spring) both;animation-delay:calc(var(--i,0)*70ms + 250ms)}
+.stk img{width:100%;pointer-events:none}
+.stk:hover:not(.is-grabbed){scale:1.06}
+@keyframes pop{from{opacity:0;transform:scale(.3) translateY(30px)}to{opacity:1;transform:none}}
+.hint{position:absolute;z-index:3;font:600 26px Caveat;color:var(--accent);rotate:-8deg;left:12%;top:63%;display:flex;align-items:flex-end;gap:4px;animation:pop .8s var(--spring) 1.2s both}
+.hint i{font-size:30px;rotate:200deg}
+
+/* before/after */
+section{padding:120px 0}
+.center-head{text-align:center;max-width:720px;margin:0 auto 52px}
+.center-head h2{font-size:clamp(36px,5vw,64px)}
+.center-head p{color:var(--muted);font-size:18px;margin-top:16px}
+.toggle{display:inline-flex;padding:5px;background:var(--soft);border-radius:999px;margin:0 auto 28px;gap:4px}
+.toggle button{height:40px;padding:0 20px;border-radius:999px;border:0;background:none;font:600 14px Geist;color:var(--muted);cursor:pointer;transition:background .25s,color .25s}
+.toggle button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.demo{position:relative;max-width:980px;margin:0 auto;border-radius:24px;background:#fff;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(30,30,80,.18);overflow:visible}
+.demo-bar{height:44px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:0 18px}
+.demo-bar span{width:11px;height:11px;border-radius:50%;background:#e4e4e0}
+.demo-bar em{margin-left:16px;font:500 12px "Geist Mono";color:var(--muted);font-style:normal;background:var(--soft);padding:4px 12px;border-radius:999px}
+.demo-body{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding:64px 56px;align-items:center}
+.demo-body h3{font-size:clamp(34px,4.4vw,56px);color:#2b1d14}
+.demo-body p{color:#6d625a;margin:16px 0 26px;max-width:360px}
+.demo-body .btn{background:#2b1d14;color:#fff}
+.demo-img{aspect-ratio:4/3.4;border-radius:16px;background:#d9c2a8 url(https://loremflickr.com/640/560/coffee,beans?lock=31) center/cover}
+.ds{position:absolute;width:var(--w,90px);rotate:var(--r);opacity:0;scale:.2;transition:opacity .3s,scale .55s var(--spring);transition-delay:calc(var(--i)*60ms);pointer-events:none;z-index:2}
+.demo.on .ds{opacity:1;scale:1}
+.tag{position:absolute;white-space:nowrap;font:700 18px "Bricolage Grotesque";padding:8px 16px;border-radius:999px;color:#fff;box-shadow:0 0 0 3px #fff,0 10px 18px rgba(30,30,60,.18)}
+
+/* pack marquee */
+.marquee{overflow:hidden;padding:30px 0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;gap:18px;width:max-content;animation:slide 60s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.pack{flex:none;width:236px;border-radius:var(--r);background:#fff;border:1px solid var(--line);padding:18px;transition:transform .3s var(--ease)}
+.pack:hover{transform:translateY(-6px) rotate(-1deg)}
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;height:150px;background:var(--soft);border-radius:12px;padding:12px;align-items:center}
+.pack-grid img{width:100%;aspect-ratio:1;object-fit:contain}
+.pack b{display:block;margin-top:14px;font:700 17px "Bricolage Grotesque"}
+.pack small{color:var(--muted);font-size:13px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(240px,auto);gap:16px}
+.cell{border-radius:24px;padding:32px;position:relative;overflow:hidden;border:1px solid var(--line);background:#fff}
+.cell h3{font-size:30px;max-width:340px}
+.cell p{color:var(--muted);margin-top:10px;max-width:360px}
+.c1{grid-column:span 4;grid-row:span 2;background:var(--accent);color:#fff;border:0}
+.c1 p{color:#d6dcff}
+.playground{position:absolute;inset:170px 24px 24px;border-radius:18px;background:rgba(255,255,255,.1);border:1.5px dashed rgba(255,255,255,.35)}
+.playground .stk{animation:none}
+.c2{grid-column:span 2;grid-row:span 2;background:#121214;color:#fff;border:0}
+.c2 p{color:#a7a7b0}
+pre{margin-top:26px;font:400 13.5px/1.75 "Geist Mono";color:#d8d8e0;white-space:pre-wrap}
+.k{color:#ff8fb1}.s{color:#9be9a8}.c{color:#6e6e7a}.t{color:#8fb1ff}
+.c3{grid-column:span 3}
+.c4{grid-column:span 3;background:#fff6d6;border-color:#f3e7b8}
+.scale-row{display:flex;align-items:flex-end;gap:18px;margin-top:28px}
+.scale-row img{flex:none}
+.moods{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.moods span{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid #efe1a6;font:500 14px Geist}
+.c4 .peek{position:absolute;right:-10px;bottom:-14px;width:180px;rotate:-10deg}
+
+/* final */
+.final{position:relative;text-align:center;padding:140px 0 160px;overflow:hidden}
+.final h2{font-size:clamp(44px,7vw,96px);max-width:900px;margin:0 auto}
+.final .cta{margin-top:40px}
+footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer .row{display:flex;gap:24px}
+
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+[data-reveal].is-in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .links{display:none}
+  .demo-body{grid-template-columns:1fr;padding:36px 24px}
+  .bento{grid-template-columns:1fr}
+  .c1,.c2,.c3,.c4{grid-column:auto;grid-row:auto}
+  .c1{min-height:520px}
+  .hide-sm{display:none}
+  .stk{--w:72px !important}
+  .hint{display:none}
+  section{padding:80px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  [data-reveal]{opacity:1;transform:none}
+}
+
+/* extra */
+.logo img{width:32px;height:32px}
+.bub{position:absolute;z-index:2;white-space:nowrap;background:#fffdf8;border:2px solid var(--a,#e8dccf);border-radius:14px;padding:6px 12px;font:650 14px/1.2 ui-rounded,"Segoe UI",system-ui,sans-serif;color:#3b2a2a;box-shadow:0 6px 14px rgba(30,30,60,.14);rotate:var(--r,0deg);animation:pop .8s var(--spring) both;animation-delay:calc(var(--i,0)*70ms + 250ms)}
+.editor{display:grid;grid-template-columns:1fr;min-height:440px;position:relative}
+.code{padding:28px 0;font:400 14px/1.9 "Geist Mono",monospace;color:#3d3d48;counter-reset:ln;overflow:hidden}
+.code div{padding-left:64px;position:relative;white-space:pre}
+.code div::before{counter-increment:ln;content:counter(ln);position:absolute;left:0;width:44px;text-align:right;color:#b5b5bd}
+.code .hl{background:#fff4ec}
+.kw{color:#c2410c}.st{color:#15803d}.fn{color:#2f4bff}.cm{color:#9a9aa4}
+.editor .ap-dock{position:absolute;right:26px;bottom:22px;transition:opacity .4s,scale .5s var(--spring);transform-origin:bottom right}
+.demo:not(.on) .ap-dock{opacity:0;scale:.6;pointer-events:none}
+.demo:not(.on) .lost{opacity:1}
+.lost{position:absolute;right:30px;bottom:30px;opacity:0;transition:opacity .3s;display:flex;gap:8px}
+.lost span{font:500 13px "Geist Mono";background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:6px 10px;color:var(--muted)}
+.states{position:absolute;inset:150px 24px 24px;border-radius:18px;background:rgba(255,255,255,.1);border:1.5px dashed rgba(255,255,255,.35);display:grid;grid-template-columns:repeat(3,1fr);place-items:center;padding:12px}
+.state{display:grid;justify-items:center;gap:6px}
+.state .ap-sticker{width:58px;height:58px}
+.state span{font:600 13px Geist;background:#fff;color:#2b2a33;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.c2 pre .p{color:#8fb1ff}
+.c4 p{color:#6b5c22}
+@media (max-width:900px){.states{position:static;margin-top:24px;grid-template-columns:repeat(3,1fr);gap:14px}.c1{min-height:auto}.editor .ap-dock{--ap-s:58px;right:10px}.code{font-size:12px}.lost{display:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav">
+  <a class="logo" href="#"><img src="assets/avatars/claude.svg" alt="">agent presence</a>
+  <div class="links"><a href="#how">How it works</a><a href="#stickers">Your stickers</a><a href="#">Docs</a><a href="#">GitHub</a></div>
+  <a class="btn btn-dark" href="#start">Install <i class="ph-bold ph-arrow-up-right"></i></a>
+</div></nav>
+
+<header class="hero">
+  <div class="stk" data-drag style="--w:132px;--r:-10deg;--i:0;left:6%;top:9%"><img src="assets/avatars/claude.svg" alt="Mochi, the Claude Code sticker"></div>
+  <span class="bub" data-drag style="--a:#f7c3a1;--r:-4deg;--i:1;left:14%;top:4%">✏️ auth.ts</span>
+  <div class="stk" data-drag style="--w:124px;--r:9deg;--i:2;right:7%;top:8%"><img src="assets/avatars/codex.svg" alt="Bit, the Codex sticker"></div>
+  <span class="bub" data-drag style="--a:#bde8c8;--r:5deg;--i:3;right:16%;top:5%">▶️ pytest -q</span>
+  <div class="stk hide-sm" data-drag style="--w:88px;--r:-12deg;--i:4;left:5%;top:58%"><img src="assets/avatars/subagent.svg" alt="" style="filter:hue-rotate(50deg)"></div>
+  <span class="bub hide-sm" data-drag style="--a:#bfe3f5;--r:-6deg;--i:5;left:11%;top:54%">🔍 session</span>
+  <div class="stk" data-drag style="--w:84px;--r:10deg;--i:6;right:6%;top:55%"><img src="assets/avatars/subagent.svg" alt="" style="filter:hue-rotate(-100deg)"></div>
+  <span class="bub" data-drag style="--a:#ff8a80;--r:4deg;--i:7;right:11%;bottom:22%;font-weight:750">❗ needs you</span>
+  <div class="stk hide-sm" data-drag style="--w:110px;--r:-6deg;--i:8;left:20%;bottom:5%"><img class="diecut" src="assets/stickers/anime/jiji-ok.png" alt=""></div>
+  <div class="stk hide-sm" data-drag style="--w:92px;--r:12deg;--i:9;right:24%;bottom:5%"><img class="diecut" src="assets/fluent/robot.png" alt=""></div>
+  <div class="hint">drag us around <i class="ph-bold ph-arrow-bend-down-left"></i></div>
+
+  <div class="wrap" style="position:relative;z-index:1">
+    <h1>See what your <img class="inl" src="assets/avatars/claude.svg" alt=""> AI agents are <img class="inl" src="assets/avatars/codex.svg" alt=""> doing.</h1>
+    <p class="sub">Sticker chibis float over your screen and show what Claude Code and Codex are working on, live.</p>
+    <div class="cta">
+      <button class="install" data-copy="npm i -g agent-presence"><span><span class="dollar">$</span> npm i -g agent-presence</span><span class="chip"><i class="ph ph-copy"></i><span data-copy-label>Copy</span></span></button>
+      <a class="btn btn-accent" href="#how">Watch it live <i class="ph-bold ph-arrow-down"></i></a>
+    </div>
+  </div>
+</header>
+
+<section id="how" style="padding-top:60px">
+  <div class="wrap">
+    <div class="center-head" data-reveal>
+      <h2>Four agents running. Zero tabs to check.</h2>
+      <p>Every session gets a sticker. Every subagent gets a little one. The bubble says what it's on right now.</p>
+    </div>
+    <div style="text-align:center" data-reveal>
+      <div class="toggle" role="group" aria-label="Preview mode">
+        <button aria-pressed="false" data-mode="off">Without</button>
+        <button aria-pressed="true" data-mode="on">With Agent Presence</button>
+      </div>
+    </div>
+    <div class="demo on" id="demo" data-reveal>
+      <div class="demo-bar"><span></span><span></span><span></span><em>my-app / src / auth.ts</em></div>
+      <div class="editor">
+        <div class="code">
+<div><span class="kw">import</span> { createSession } <span class="kw">from</span> <span class="st">"./session"</span></div>
+<div><span class="kw">import</span> { hash, verify } <span class="kw">from</span> <span class="st">"./crypto"</span></div>
+<div> </div>
+<div class="hl"><span class="kw">export async function</span> <span class="fn">login</span>(email, password) {</div>
+<div class="hl">  <span class="kw">const</span> user = <span class="kw">await</span> db.users.<span class="fn">find</span>({ email })</div>
+<div>  <span class="kw">if</span> (!user || !(<span class="kw">await</span> <span class="fn">verify</span>(password, user.hash))) {</div>
+<div>    <span class="kw">throw new</span> <span class="fn">AuthError</span>(<span class="st">"Wrong email or password"</span>)</div>
+<div>  }</div>
+<div>  <span class="kw">return</span> <span class="fn">createSession</span>(user.id)</div>
+<div>}</div>
+<div> </div>
+<div><span class="cm">// TODO: rate limit failed attempts</span></div>
+        </div>
+        <div data-dock data-speed="1400"></div>
+        <div class="lost" aria-hidden="true"><span>claude: ???</span><span>codex: ???</span><span>4 terminals</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stickers" style="padding-top:40px">
+  <div class="wrap center-head" data-reveal>
+    <h2>Bring your own sticker.</h2>
+    <p>Any PNG, GIF, SVG or WebP can be your agent, animated GIFs included. Give it a name too. Sticker packs are on the way.</p>
+  </div>
+  <div class="marquee"><div class="track" id="track"></div></div>
+</section>
+
+<section style="padding-top:60px">
+  <div class="wrap">
+    <div class="bento">
+      <div class="cell c1" data-reveal>
+        <h3>Every state at a glance.</h3>
+        <p>Each one has its own motion and colour, so you can tell from across the room.</p>
+        <div class="states">
+          <div class="state s-thinking"><img class="ap-sticker" src="assets/avatars/claude.svg" alt=""><span>💭 thinking</span></div>
+          <div class="state s-reading"><img class="ap-sticker" src="assets/avatars/codex.svg" alt=""><span>🔍 reading</span></div>
+          <div class="state s-writing"><img class="ap-sticker" src="assets/avatars/claude.svg" alt=""><span>✏️ writing</span></div>
+          <div class="state s-running"><img class="ap-sticker" src="assets/avatars/codex.svg" alt=""><span>▶️ running</span></div>
+          <div class="state s-delegating"><img class="ap-sticker" src="assets/avatars/subagent.svg" alt=""><span>🧩 delegating</span></div>
+          <div class="state s-browsing"><img class="ap-sticker" src="assets/avatars/subagent.svg" alt="" style="--hue:50deg"><span>🌐 browsing</span></div>
+          <div class="state s-waiting"><img class="ap-sticker" src="assets/avatars/claude.svg" alt=""><span>❗ needs you</span></div>
+          <div class="state s-done"><img class="ap-sticker" src="assets/avatars/codex.svg" alt=""><span>✓ done</span></div>
+          <div class="state s-idle"><img class="ap-sticker" src="assets/avatars/subagent.svg" alt="" style="--hue:-100deg"><span>idle</span></div>
+        </div>
+      </div>
+      <div class="cell c2" data-reveal>
+        <h3>Three commands. Done.</h3>
+        <p>Hooks go into Claude Code and Codex. Backups are kept.</p>
+<pre><span class="p">$</span> npm i -g agent-presence
+<span class="p">$</span> agent-presence init
+<span class="c"># hooks added to Claude Code + Codex</span>
+<span class="p">$</span> agent-presence overlay
+<span class="c"># stickers appear. that's it.</span></pre>
+      </div>
+      <div class="cell c3" data-reveal>
+        <h3>Works where you work.</h3>
+        <p>It listens to the agents' own hooks, not your editor.</p>
+        <div class="moods" style="margin-top:22px"><span>Claude Code CLI</span><span>Claude desktop app</span><span>Claude in your IDE</span><span>Codex</span><span>VS Code</span><span>Cursor</span><span>Windsurf</span><span>Antigravity</span></div>
+      </div>
+      <div class="cell c4" data-reveal>
+        <h3>Local only.</h3>
+        <p>No server, no account, no network. Hooks run async and never block your agent.</p>
+        <img class="peek" src="assets/avatars/codex.svg" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="start">
+  <div class="stk" data-drag style="--w:130px;--r:-14deg;--i:0;left:8%;top:18%"><img src="assets/avatars/claude.svg" alt=""></div>
+  <div class="stk" data-drag style="--w:120px;--r:12deg;--i:1;right:9%;top:16%"><img src="assets/avatars/codex.svg" alt=""></div>
+  <div class="stk hide-sm" data-drag style="--w:84px;--r:8deg;--i:2;left:17%;bottom:14%"><img src="assets/avatars/subagent.svg" alt="" style="filter:hue-rotate(100deg)"></div>
+  <div class="stk hide-sm" data-drag style="--w:100px;--r:-10deg;--i:3;right:16%;bottom:14%"><img class="diecut" src="assets/stickers/cutesy/pink-cat-face.png" alt=""></div>
+  <div class="wrap" data-reveal>
+    <h2>Stop alt-tabbing to check on your agents.</h2>
+    <div class="cta">
+      <button class="install" data-copy="npm i -g agent-presence"><span><span class="dollar">$</span> npm i -g agent-presence</span><span class="chip"><i class="ph ph-copy"></i><span data-copy-label>Copy</span></span></button>
+      <a class="btn btn-accent" href="#">View on GitHub <i class="ph-bold ph-github-logo"></i></a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <a class="logo" href="#" style="font-size:18px"><img src="assets/avatars/claude.svg" alt="" style="width:26px;height:26px">agent presence</a>
+  <div class="row"><a href="#">Docs</a><a href="#">GitHub</a><a href="#">npm</a><a href="#">VS Code extension</a></div>
+  <span>Free and open source, MIT</span>
+</div></footer>
+
+<script src="shared.js"></script>
+<script>
+// "Bring your own sticker" marquee: the sticker library as example avatars
+const packs = [
+  ['Anime', ['anime/jiji-ok','anime/kiki-checked','anime/tombo-cheering','anime/mob-shigeo-cafe','anime/yuji-chibi-head','anime/jiji-amazing']],
+  ['Expressions', ['expressions/girl-side-eye','expressions/orange-smirk-face','expressions/purple-dizzy-face','expressions/lime-flat-face','expressions/girl-sleepy','expressions/red-shocked-face']],
+  ['Retro tech', ['retro-tech/blue-flip-phone','retro-tech/pixel-computer','retro-tech/jpeg-file','retro-tech/canon-camera','retro-tech/pixel-cursor','retro-tech/magnifying-glass']],
+  ['Cozy Japan', ['japanese/black-lucky-cat','japanese/paper-lantern','japanese/koinobori','japanese/kokeshi-dolls','japanese/blue-bowl','japanese/goldfish-wind-chime']],
+  ['Cutesy', ['cutesy/blue-teddy-bear','cutesy/pink-cat-face','cutesy/walking-star','cutesy/white-dice','cutesy/olive-spiral-large','cutesy/sun-cat']],
+  ['3D emoji', ['../fluent/robot','../fluent/alien','../fluent/unicorn','../fluent/ghost','../fluent/frog','../fluent/panda']],
+  ['Moods', ['expressions/girl-thinking','expressions/girl-overwhelmed','expressions/yellow-star-eyes','expressions/blue-sad-face','expressions/red-happy-face','expressions/girl-dreaming']],
+];
+const html = packs.map(([n, imgs]) => `<div class="pack"><div class="pack-grid">${imgs.map(s => `<img src="assets/stickers/${s}.png" alt="" loading="lazy">`).join('')}</div><b>${n}</b><small>Pack preview</small></div>`).join('');
+document.getElementById('track').innerHTML = html + html;
+
+const demo = document.getElementById('demo');
+document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  demo.classList.toggle('on', b.dataset.mode === 'on');
+}));
+</script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Docs · Agent Peeps</title>
+<meta name="description" content="Agent Peeps docs: install, every agentpeeps command, sticker packs, the control room, config.json, the event log, the VS Code extension and the Node API." />
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="stylesheet" href="/src/docs.css" />
+<link rel="icon" href="/brand/favicon.png" />
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/docs.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<div class="wrap docs pt-24 pb-24 md:pt-28">
+  <label class="docs-jump">
+    <span class="sr-only">Jump to section</span>
+    <select id="jump"></select>
+  </label>
+
+  <aside class="docs-side" aria-label="Docs sections">
+    <p class="docs-side-h">Docs</p>
+    <nav id="side"></nav>
+  </aside>
+
+  <article class="docs-body" id="doc">
+    <header class="docs-head">
+      <p class="docs-kicker">Agent Peeps docs</p>
+      <h1>Everything <span class="whitespace-nowrap">agentpeeps</span> can do.</h1>
+      <p class="docs-lede">Commands, sticker rules, the config file, the event log and the APIs. One page, local only, no account.</p>
+    </header>
+
+    <!-- 1 -->
+    <section id="quick-start">
+      <h2>Quick start</h2>
+      <p>One command adds hooks to every supported agent it finds. Your existing settings are backed up first.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init</pre></div>
+      <p>Prefer a global install? Same thing, and the command stays on your PATH:</p>
+      <div class="dcode"><button class="cp" data-copy="npm i -g agentpeeps&#10;agentpeeps init"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npm i -g agentpeeps
+<span class="p">$</span> agentpeeps init</pre></div>
+      <ol class="steps">
+        <li><b>Start a new agent session.</b> Hooks load when a session starts, so the stickers appear from the next one. To start them now: <code>agentpeeps overlay</code>.</li>
+        <li><b>Codex:</b> open <code>/hooks</code> once and trust the Agent Peeps hooks. Codex never runs new hooks without asking.</li>
+        <li><b>Copilot and Antigravity:</b> restart them so they read the new hook files.</li>
+      </ol>
+      <p class="note">The old command name <code>agent-presence</code> still works. Settings live in <code>~/.agent-presence/</code> either way.</p>
+    </section>
+
+    <!-- 2 -->
+    <section id="agents">
+      <h2>Supported agents</h2>
+      <p><code>init</code> with no arguments sets up every agent whose folder it finds. Name agents to pick: <code>agentpeeps init claude codex</code>.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Agent</th><th>Hooks written to</th><th>Events</th></tr></thead>
+        <tbody>
+          <tr><td><b>Claude Code</b><small>CLI, desktop app, IDE</small></td><td><code>~/.claude/settings.json</code></td><td>SessionStart, UserPromptSubmit, PreToolUse, PostToolUse, Notification, SubagentStart, SubagentStop, Stop, SessionEnd. Async, never blocks.</td></tr>
+          <tr><td><b>Codex</b></td><td><code>~/.codex/hooks.json</code></td><td>Same as Claude, plus PermissionRequest. Trust them once in <code>/hooks</code>.</td></tr>
+          <tr><td><b>Copilot</b><small>VS Code agent mode, Copilot CLI</small></td><td><code>~/.copilot/hooks/agent-presence.json</code></td><td>sessionStart, userPromptSubmitted, postToolUse, notification, subagentStart, subagentStop, agentStop, sessionEnd. 5 s timeout.</td></tr>
+          <tr><td><b>Antigravity</b></td><td><code>~/.gemini/config/hooks.json</code>, key <code>"agent-presence"</code></td><td>SessionStart, PostToolUse, Stop.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Copilot and Antigravity run hooks synchronously and treat a failing pre-tool hook as “deny”, so Agent Peeps only listens to events that can't block them. A tool call shows up when it finishes, not when it starts.</p>
+    </section>
+
+    <!-- 3 -->
+    <section id="cli">
+      <h2>CLI reference</h2>
+      <p>Run <code>agentpeeps</code> with no arguments for this list in your terminal.</p>
+
+      <div class="cmd" id="cmd-init">
+        <h3><code>agentpeeps init [agent...]</code></h3>
+        <p>Installs hooks for <code>claude</code>, <code>codex</code>, <code>copilot</code>, <code>antigravity</code> (default: every one found), backs up each file it touches (<code>.bak-agent-presence</code>), and starts the overlay. Run it again any time to update.</p>
+        <div class="dcode"><pre><span class="p">$</span> agentpeeps init
+<span class="c">Installed hooks for: Claude Code (~/.claude/settings.json), Codex (~/.codex/hooks.json)
+Codex: open /hooks in Codex once and trust the Agent Peeps hooks.
+The stickers appear on your next agent session. To start them now: agentpeeps overlay</span></pre></div>
+        <p class="note">Run through <code>npx</code>, it first installs a permanent copy into <code>~/.agent-presence/app</code> and points the hooks there, because npx may clear its cache.</p>
+      </div>
+
+      <div class="cmd" id="cmd-uninstall">
+        <h3><code>agentpeeps uninstall [agent...]</code></h3>
+        <p>Removes only the Agent Peeps hooks. Your own hooks and settings stay.</p>
+      </div>
+
+      <div class="cmd" id="cmd-overlay">
+        <h3><code>agentpeeps overlay [--quit]</code></h3>
+        <p>Starts the floating stickers, or stops them with <code>--quit</code>. It also starts on its own at the next session start unless <code>autostart</code> is off.</p>
+      </div>
+
+      <div class="cmd" id="cmd-control">
+        <h3><code>agentpeeps control [target]</code></h3>
+        <p>Opens the <a href="#control-room">control room</a>. Pass a target to open straight on its stickers: <code>agentpeeps control codex</code>, <code>agentpeeps control helpers</code>. Aliases: <code>stickers</code>, <code>settings</code>.</p>
+      </div>
+
+      <div class="cmd" id="cmd-packs">
+        <h3><code>agentpeeps packs</code></h3>
+        <p>Lists every sticker pack: your folders first, then the bundled ones.</p>
+        <div class="dcode"><pre><span class="p">$</span> agentpeeps packs
+<span class="c">Sticker packs (use one with: agentpeeps set &lt;target&gt; &lt;pack&gt;)</span>
+
+  capybaras                   16 stickers  <span class="c">(bundled)</span>
+  cats                        54 stickers  <span class="c">(bundled)</span>
+  fruit-cats                   6 stickers  <span class="c">(bundled)</span></pre></div>
+      </div>
+
+      <div class="cmd" id="cmd-set">
+        <h3><code>agentpeeps set &lt;target&gt; &lt;pack|image|default&gt; [more...]</code></h3>
+        <p>Points a target at a pack, an image, or several of both. <code>default</code> (or <code>none</code>, <code>reset</code>) goes back to the colored disc. Singular and plural pack names both work. Targets are listed under <a href="#stickers">Stickers</a>.</p>
+        <div class="dcode"><button class="cp" data-copy="agentpeeps set claude capybaras&#10;agentpeeps set codex cats&#10;agentpeeps set helpers fruit-cats&#10;agentpeeps set model:opus capybaras&#10;agentpeeps set Explore ~/stickers/detective.png&#10;agentpeeps set claude default"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> agentpeeps set claude capybaras
+<span class="c">claude -&gt; capybaras pack (16 stickers)
+Each session gets its own sticker from the set. The overlay updates live.</span>
+<span class="p">$</span> agentpeeps set codex cats
+<span class="p">$</span> agentpeeps set helpers fruit-cats
+<span class="p">$</span> agentpeeps set model:opus capybaras
+<span class="p">$</span> agentpeeps set Explore ~/stickers/detective.png
+<span class="p">$</span> agentpeeps set claude default</pre></div>
+      </div>
+
+      <div class="cmd" id="cmd-watch">
+        <h3><code>agentpeeps watch</code></h3>
+        <p>The same live view in your terminal: every agent, its helpers, and the last four files each one touched, relative to its project.</p>
+        <div class="dcode"><pre><span class="c">Agent Peeps  (Ctrl+C to exit)</span>
+
+  ✏️  claude 3f9a1c              writing    src/login.ts  (2s)
+          ✏️ src/login.ts  2s
+          🔍 src/auth.ts  9s
+      🔍  └ Explore              reading    tests  (4s)</pre></div>
+      </div>
+
+      <div class="cmd" id="cmd-emit">
+        <h3><code>agentpeeps emit &lt;agent&gt; [event]</code></h3>
+        <p>Used by the hooks: reads the hook's JSON on stdin and appends one line to the <a href="#events">event log</a>. It always exits 0, so it can never break or slow your agent. Copilot and Antigravity pass the event name as the second argument and get <code>{}</code> back on stdout.</p>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="stickers">
+      <h2>Stickers</h2>
+      <p>Every session shows the colored disc for its agent until you pick stickers: <span class="disc" style="--c:#f6a983">C</span> Claude, <span class="disc" style="--c:#8fdcc6">X</span> Codex, <span class="disc" style="--c:#8cc8f5">P</span> Copilot, <span class="disc" style="--c:#f7a8c8">A</span> Antigravity. Helpers get a white disc ringed in their parent's color.</p>
+      <h3>Packs</h3>
+      <p>A pack is any folder of images. Yours live in <code>~/.agent-presence/stickers/&lt;pack&gt;/</code>, and a folder of yours wins over a bundled pack with the same name. PNG, GIF (animation plays), SVG, WebP or JPEG; square, about 256 px.</p>
+      <h3>Targets</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Target</th><th>Who it applies to</th></tr></thead>
+        <tbody>
+          <tr><td><code>claude</code> <code>codex</code> <code>copilot</code> <code>antigravity</code></td><td>Every session of that agent.</td></tr>
+          <tr><td><code>model:&lt;text&gt;</code></td><td>Sessions whose model contains the text, e.g. <code>model:opus</code>, <code>model:fable</code>.</td></tr>
+          <tr><td><code>helpers</code></td><td>Every subagent. Saved as <code>subagent</code>.</td></tr>
+          <tr><td><code>claude-helpers</code>, <code>codex-helpers</code>, …</td><td>One agent's subagents. Saved as <code>claude-subagent</code>.</td></tr>
+          <tr><td><code>Explore</code>, any type name</td><td>One subagent type.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Which sticker wins</h3>
+      <ul class="rules">
+        <li><b>Sessions:</b> the longest matching <code>model:</code> rule, then the agent, then the default disc.</li>
+        <li><b>Helpers:</b> their type, then <code>&lt;agent&gt;-subagent</code>, then <code>subagent</code>, then the default disc.</li>
+        <li><b>A pack or a list</b> gives each session (or helper) one sticker of its own, picked by its id, so it keeps the same face all session.</li>
+      </ul>
+    </section>
+
+    <section id="sponsoring">
+      <h2>Sponsoring</h2>
+      <p>Agent Peeps is free and open source, and so is every sticker on the site: the packs, the animated ones and the sticker maker.</p>
+      <p>If your team uses it, you can <a href="./#sponsor">sponsor the project</a> to keep it free and local-first for everyone. Or just buy me a coffee from the same page.</p>
+    </section>
+
+    <!-- 5 -->
+    <section id="control-room">
+      <h2>Control room</h2>
+      <p>One window for every setting, so you never edit a file or spend tokens asking an agent. Changes apply the moment you click. Open it with <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>C</kbd>, the tray icon, <code>agentpeeps control</code>, or right-click a sticker → Change sticker…. It loads in the background when the overlay starts, so it opens instantly, and closing it only hides it.</p>
+
+      <h3>Overview: what every agent is doing</h3>
+      <p>A live board of every agent session on this machine, fed by the same hooks as the stickers.</p>
+      <figure class="shot" data-shot="overview"></figure>
+
+      <h3>Display: how the stickers sit on screen</h3>
+      <figure class="shot" data-shot="display"></figure>
+      <p><b>Only over my apps</b> hides the stickers whenever another app is in front, and brings them back when you switch to your editor or terminal. Highlighted chips count as yours; dashed ones were in front recently and are one click away. Switching to the control room never hides them. It works on Windows and macOS, and on Linux under X11 with <code>xdotool</code>; where the app in front can't be detected, the stickers simply show everywhere.</p>
+      <p>Helpers (subagents) can show which agent they belong to in three ways:</p>
+      <div class="shots">
+        <figure><img src="/docs/room/helpers-line.webp" alt="A Claude sticker with two smaller helper stickers joined to it by a thin orange line" loading="lazy"><figcaption><b>Joining line</b> The default. A thin line in the agent's color.</figcaption></figure>
+        <figure><img src="/docs/room/helpers-pod.webp" alt="Helper stickers inside a dashed pill in Claude's color" loading="lazy"><figcaption><b>Dashed pod</b> Helpers sit in a tinted pill with the agent's letter.</figcaption></figure>
+        <figure><img src="/docs/room/helpers-none.webp" alt="Helper stickers next to the Claude sticker with nothing joining them" loading="lazy"><figcaption><b>Side by side</b> No decoration at all.</figcaption></figure>
+      </div>
+
+      <h3>Speech bubbles: the card on each sticker</h3>
+      <p>Hover a sticker to see what it's doing. Click it to pin the bubble open (it gets an outline in the agent's color); click again to unpin. A bubble opens by itself when an agent needs you.</p>
+      <figure class="shot" data-shot="bubble"></figure>
+      <figure class="shot" data-shot="bubbles"></figure>
+      <div class="shots">
+        <figure><img src="/docs/room/bubble.webp" alt="Dark bubble card with white text" loading="lazy"><figcaption><b>Card, dark</b> White text. Auto picks this in dark mode.</figcaption></figure>
+        <figure><img class="light" src="/docs/room/bubble-light.webp" alt="Light bubble card with black text" loading="lazy"><figcaption><b>Card, light</b> Black text. Auto picks this in light mode.</figcaption></figure>
+        <figure><img src="/docs/room/bubble-text.webp" alt="Bubble text with no card behind it, just a soft shadow" loading="lazy"><figcaption><b>Text only</b> No card, just a soft shadow behind the letters.</figcaption></figure>
+        <figure><img class="light" src="/docs/room/bubble-noborder.webp" alt="Light bubble with no border and blue text" loading="lazy"><figcaption><b>No border, custom color</b> Any text color from the picker.</figcaption></figure>
+      </div>
+
+      <h3>Keyboard shortcuts</h3>
+      <p>Everything you change often has a global shortcut, so you never need to open the window. A small toast at the bottom of the screen confirms each one. On macOS use <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>⇧</kbd> instead of <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>Shift</kbd>.</p>
+      <div class="tbl keys-tbl"><table>
+        <thead><tr><th>Shortcut</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>A</kbd></td><td>Show or hide the stickers (always on)</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>C</kbd></td><td>Open the control room</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>F</kbd></td><td>Everywhere, or only over my apps</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>B</kbd></td><td>Speech bubbles on or off</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>P</kbd></td><td>Peek: open every bubble at once</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>T</kbd></td><td>Bubble theme: auto, dark, light</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>D</kbd></td><td>Details in the bubble, or always under each sticker</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>S</kbd></td><td>Next size: small, medium, large</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>W</kbd></td><td>When to show: while working, only when it needs you, always</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>L</kbd></td><td>Helper layout: line, pod, side by side</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>M</kbd></td><td>Motion: lively, calm, off</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>H</kbd></td><td>Hide for 30 minutes</td></tr>
+          <tr><td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>R</kbd></td><td>Reset sticker positions</td></tr>
+        </tbody>
+      </table></div>
+      <figure class="shot" data-shot="shortcuts"></figure>
+
+      <h3>Stickers: one set per agent, helper or model</h3>
+      <p>The left column lists every target: each agent, each agent's helpers, every helper, helper types that have shown up (Explore, test-writer…) and model rules (type <code>opus</code> and press Add). Pick one image, several (each session or helper gets its own), or a whole pack. <b>Add from my computer…</b> copies nothing; it points at your files.</p>
+      <figure class="shot" data-shot="stickers"></figure>
+
+      <h3>On the stickers</h3>
+      <div class="shots">
+        <figure><img src="/docs/room/needs-you.webp" alt="A Claude sticker with a red pulse ring and an open bubble saying it needs permission to use Bash" loading="lazy"><figcaption><b>Needs you</b> A pulse ring, a red badge, and the bubble opens by itself.</figcaption></figure>
+        <figure><img src="/docs/room/details-always.webp" alt="Stickers with a short status line under each one" loading="lazy"><figcaption><b>Details: always</b> One short line under each sticker.</figcaption></figure>
+      </div>
+      <ul class="rules">
+        <li><b>Drag</b> an agent's sticker anywhere; it remembers the spot. <b>Reset positions</b> (or <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>R</kbd>) puts them back in the corner.</li>
+        <li><b>Hover</b> for who, what, its recent files and its stats; <b>click a file</b> to show it in your file manager.</li>
+        <li><b>Click</b> a sticker to pin its bubble open. <b>Peek</b> (<kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>P</kbd>) opens them all.</li>
+        <li><b>Right-click</b> for Change sticker…, Hide this agent, Peek, Hide for 30 minutes, Size and Quit.</li>
+        <li><b>Motion</b>: Lively adds a pulse ring when an agent needs you, a small hop on each step and a bounce when it finishes. Calm keeps only slow loops; Off stops everything.</li>
+        <li>With no sticker chosen, each agent shows its own logo. Clicks pass straight through everywhere except on the stickers, and a session that goes quiet for 15 minutes disappears.</li>
+      </ul>
+      <p class="note">Updated Agent Peeps while it was running? The control room says <b>Restart Agent Peeps to finish updating</b>. Run <code>agentpeeps overlay --quit</code>, then <code>agentpeeps overlay</code>.</p>
+    </section>
+
+    <!-- 6 -->
+    <section id="config">
+      <h2>Config file</h2>
+      <p><code>~/.agent-presence/config.json</code> (Windows: <code>%USERPROFILE%\.agent-presence\config.json</code>). The control room and <code>set</code> write it; you can edit it by hand and the overlay applies changes live. The VS Code extension reads it too.</p>
+      <div class="dcode"><button class="cp" data-copy='{
+  "avatars": {
+    "claude": "pack:capybaras",
+    "model:opus": ["pack:capybaras", "~/stickers/fox.png"],
+    "codex": "pack:cats",
+    "claude-subagent": "pack:fruit-cats",
+    "subagent": "pack:pixel-food",
+    "Explore": "~/stickers/detective.png"
+  },
+  "names": { "claude": "Foxy" },
+  "size": "small",
+  "show": "working",
+  "details": "hover",
+  "agents": { "copilot": false, "subagent": true },
+  "autostart": true,
+  "scope": "apps",
+  "apps": ["Code", "Cursor", "WindowsTerminal"],
+  "helpers": "line",
+  "motion": "lively",
+  "icon": true,
+  "opacity": 80,
+  "shortcuts": true,
+  "bubble": { "on": true, "style": "card", "border": true, "theme": "auto", "text": "auto", "size": "medium", "auto": true, "stats": true }
+}'><span data-copy-label>Copy</span></button><pre>{
+  <span class="k">"avatars"</span>: {
+    <span class="k">"claude"</span>: <span class="s">"pack:capybaras"</span>,
+    <span class="k">"model:opus"</span>: [<span class="s">"pack:capybaras"</span>, <span class="s">"~/stickers/fox.png"</span>],
+    <span class="k">"codex"</span>: <span class="s">"pack:cats"</span>,
+    <span class="k">"claude-subagent"</span>: <span class="s">"pack:fruit-cats"</span>,
+    <span class="k">"subagent"</span>: <span class="s">"pack:pixel-food"</span>,
+    <span class="k">"Explore"</span>: <span class="s">"~/stickers/detective.png"</span>
+  },
+  <span class="k">"names"</span>: { <span class="k">"claude"</span>: <span class="s">"Foxy"</span> },
+  <span class="k">"size"</span>: <span class="s">"small"</span>,
+  <span class="k">"show"</span>: <span class="s">"working"</span>,
+  <span class="k">"details"</span>: <span class="s">"hover"</span>,
+  <span class="k">"agents"</span>: { <span class="k">"copilot"</span>: false, <span class="k">"subagent"</span>: true },
+  <span class="k">"autostart"</span>: true,
+  <span class="k">"scope"</span>: <span class="s">"apps"</span>,
+  <span class="k">"apps"</span>: [<span class="s">"Code"</span>, <span class="s">"Cursor"</span>, <span class="s">"WindowsTerminal"</span>],
+  <span class="k">"helpers"</span>: <span class="s">"line"</span>,
+  <span class="k">"motion"</span>: <span class="s">"lively"</span>,
+  <span class="k">"icon"</span>: true,
+  <span class="k">"opacity"</span>: 80,
+  <span class="k">"shortcuts"</span>: true,
+  <span class="k">"bubble"</span>: { <span class="k">"on"</span>: true, <span class="k">"style"</span>: <span class="s">"card"</span>, <span class="k">"border"</span>: true, <span class="k">"theme"</span>: <span class="s">"auto"</span>, <span class="k">"text"</span>: <span class="s">"auto"</span>, <span class="k">"size"</span>: <span class="s">"medium"</span>, <span class="k">"auto"</span>: true, <span class="k">"stats"</span>: true }
+}</pre></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Key</th><th>Type</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>avatars</code></td><td>object</td><td>Target → image path, <code>"pack:&lt;name&gt;"</code>, or a list of both. <code>~</code> is allowed.</td></tr>
+          <tr><td><code>names</code></td><td>object</td><td>Display name per agent, e.g. <code>{"claude": "Foxy"}</code>.</td></tr>
+          <tr><td><code>size</code></td><td>string</td><td><code>small</code> (default) · <code>medium</code> · <code>large</code></td></tr>
+          <tr><td><code>show</code></td><td>string</td><td><code>working</code> (default) · <code>alerts</code> · <code>always</code></td></tr>
+          <tr><td><code>details</code></td><td>string</td><td><code>hover</code> (default) · <code>always</code></td></tr>
+          <tr><td><code>agents</code></td><td>object</td><td><code>false</code> hides an agent; <code>"subagent": false</code> hides all helpers.</td></tr>
+          <tr><td><code>autostart</code></td><td>boolean</td><td><code>false</code> stops the overlay opening on new sessions. Default <code>true</code>.</td></tr>
+          <tr><td><code>scope</code></td><td>string</td><td><code>everywhere</code> (default) · <code>apps</code>: only while an app in <code>apps</code> is in front</td></tr>
+          <tr><td><code>apps</code></td><td>array</td><td>Process names (Windows), app names (macOS) or commands (Linux) that count as yours. Defaults to common editors and terminals.</td></tr>
+          <tr><td><code>helpers</code></td><td>string</td><td><code>line</code> (default) · <code>pod</code> · <code>none</code></td></tr>
+          <tr><td><code>motion</code></td><td>string</td><td><code>lively</code> (default) · <code>calm</code> · <code>off</code></td></tr>
+          <tr><td><code>icon</code></td><td>boolean</td><td><code>false</code> hides the small status badge. Default <code>true</code>.</td></tr>
+          <tr><td><code>opacity</code></td><td>number</td><td>30 to 100. Stickers rest at this opacity until you hover them. Default <code>100</code>.</td></tr>
+          <tr><td><code>shortcuts</code></td><td>boolean</td><td><code>false</code> turns off every global shortcut except show / hide. Default <code>true</code>.</td></tr>
+          <tr><td><code>bubble</code></td><td>object</td><td><code>on</code>, <code>border</code>, <code>auto</code> (open when it needs you), <code>stats</code>: booleans, all <code>true</code> by default · <code>style</code>: <code>card</code> or <code>text</code> · <code>theme</code>: <code>auto</code>, <code>dark</code> or <code>light</code> · <code>text</code>: <code>auto</code> or a color like <code>#ffd166</code> · <code>size</code>: <code>small</code>, <code>medium</code> or <code>large</code></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- 7 -->
+    <section id="events">
+      <h2>Event log</h2>
+      <p>Every hook call becomes one JSON line in <code>~/.agent-presence/events.jsonl</code>. The overlay, <code>watch</code> and VS Code all tail this file, so anything you build can too. It rolls over to <code>events.jsonl.old</code> at 5 MB.</p>
+      <div class="dcode"><pre>{<span class="k">"t"</span>:1794788741918,<span class="k">"agent"</span>:<span class="s">"claude"</span>,<span class="k">"session"</span>:<span class="s">"3f9a1c…"</span>,<span class="k">"sub"</span>:null,<span class="k">"subType"</span>:null,<span class="k">"event"</span>:<span class="s">"PreToolUse"</span>,<span class="k">"state"</span>:<span class="s">"writing"</span>,<span class="k">"tool"</span>:<span class="s">"Edit"</span>,<span class="k">"file"</span>:<span class="s">"/repo/src/login.ts"</span>,<span class="k">"detail"</span>:null,<span class="k">"cwd"</span>:<span class="s">"/repo"</span>,<span class="k">"model"</span>:<span class="s">"claude-opus-5-5"</span>}</pre></div>
+      <div class="tbl"><table>
+        <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>t</code></td><td>Time in ms.</td></tr>
+          <tr><td><code>agent</code></td><td><code>claude</code> · <code>codex</code> · <code>copilot</code> · <code>antigravity</code></td></tr>
+          <tr><td><code>session</code></td><td>Session or conversation id.</td></tr>
+          <tr><td><code>sub</code>, <code>subType</code></td><td>Helper id and type (e.g. <code>Explore</code>); <code>null</code> for the main session.</td></tr>
+          <tr><td><code>event</code>, <code>tool</code></td><td>The hook event and the tool name, as the agent sent them.</td></tr>
+          <tr><td><code>state</code></td><td>What the sticker shows (below).</td></tr>
+          <tr><td><code>file</code></td><td>File being read or written, when there is one (also parsed out of Codex patches).</td></tr>
+          <tr><td><code>detail</code></td><td>Command, search, URL, helper task or the reason it needs you.</td></tr>
+          <tr><td><code>cwd</code>, <code>model</code></td><td>Project folder and model, when the agent sends them.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>States</h3>
+      <ul class="states" id="states"></ul>
+    </section>
+
+    <!-- 8 -->
+    <section id="vscode">
+      <h2>VS Code extension</h2>
+      <p>Shows the same activity inside VS Code, Cursor and Windsurf: a badge on every file an agent is touching, colored by agent, and an <b>Agents</b> view in the Explorer listing sessions and helpers. It reads the same event log, so it needs the hooks from <code>agentpeeps init</code>.</p>
+      <p class="badges"><span>🅒 Claude</span><span>🅧 Codex</span><span>🅟 Copilot</span><span>🅐 Antigravity</span><span>🅔 an Explore helper</span></p>
+      <div class="tbl"><table>
+        <thead><tr><th>Setting</th><th>Default</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>agentPresence.badges</code></td><td><code>{"claude":"🅒", …}</code></td><td>Badge per agent, <code>subagent</code> or helper type; 1–2 characters or one emoji.</td></tr>
+          <tr><td><code>agentPresence.recentSeconds</code></td><td><code>90</code></td><td>How long a file keeps its badge after an agent stops touching it.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Colors are themeable as <code>agentPresence.claude</code>, <code>.codex</code>, <code>.copilot</code>, <code>.antigravity</code>, <code>.subagent</code>, <code>.other</code>. Custom stickers from <code>config.json</code> show up in the Agents view.</p>
+    </section>
+
+    <!-- 9 -->
+    <section id="api">
+      <h2>Node API</h2>
+      <p>For tools and contributors. <code>require('agentpeeps/cli.js')</code> exports:</p>
+      <dl class="api">
+        <dt><code>normalize(agent, hookJson, event?)</code></dt><dd>Turns any agent's hook payload into one event line (or <code>null</code> for events it ignores).</dd>
+        <dt><code>patchFiles(patchText)</code></dt><dd>File paths named in a Codex <code>apply_patch</code> body.</dd>
+        <dt><code>editHooksFile(file, events, makeHook, remove)</code></dt><dd>Adds or removes our hook in a Claude/Codex style hooks file, keeping everything else and writing a backup.</dd>
+        <dt><code>copilotHooks(file, cli, remove)</code></dt><dd>Writes or deletes <code>~/.copilot/hooks/agent-presence.json</code>.</dd>
+        <dt><code>antigravityHooks(file, cli, remove)</code></dt><dd>Adds or removes the <code>"agent-presence"</code> group in Antigravity's hooks file.</dd>
+        <dt><code>isEphemeral(dir)</code></dt><dd><code>true</code> when running from an npx / dlx / bunx cache.</dd>
+        <dt><code>packs()</code></dt><dd><code>Map</code> of pack slug → <code>{ name, dir, files, mine }</code>.</dd>
+        <dt><code>stickerFiles(value, packs?)</code></dt><dd>Resolves a config value (path, <code>"pack:x"</code> or a list) to existing image files.</dd>
+        <dt><code>targetKey(target)</code></dt><dd>What people type → config key: <code>helpers</code> → <code>subagent</code>, <code>claude-helpers</code> → <code>claude-subagent</code>.</dd>
+        <dt><code>slug(text)</code></dt><dd>Pack-name slug: lowercase, dashes.</dd>
+        <dt><code>HOME</code>, <code>EVENTS</code>, <code>CONFIG</code></dt><dd>Paths of <code>~/.agent-presence</code>, the event log and the config file. <code>AGENT_PRESENCE_HOME</code> overrides <code>HOME</code>.</dd>
+      </dl>
+      <h3>Overlay bridge</h3>
+      <p>The overlay pages talk to Electron through <code>window.ap</code> (<code>overlay/preload.js</code>). Every message is validated in the main process.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Call</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>onConfig(cb)</code> · <code>onEvent(cb)</code> · <code>onResetPositions(cb)</code></td><td>Config changes, new events, position reset.</td></tr>
+          <tr><td><code>mouse(over)</code></td><td>Lets clicks through unless the pointer is over a sticker.</td></tr>
+          <tr><td><code>reveal(file, cwd)</code> · <code>menu(target)</code></td><td>Show a file in the file manager · open the right-click menu.</td></tr>
+          <tr><td><code>onRoom(cb)</code> · <code>setAvatars(key, files)</code> · <code>browse(key)</code></td><td>Control room data · choose stickers · pick files from disk.</td></tr>
+          <tr><td><code>setConfig(patch)</code> · <code>setVisible(on)</code> · <code>resetPositions()</code> · <code>openFolder()</code></td><td>Save settings · show/hide · reset drag positions · open the sticker folder.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- 10 -->
+    <section id="skill">
+      <h2>Agent skill</h2>
+      <p>The package ships a skill for Claude Code and Codex, so you can just ask: “give Codex the cat stickers”, “make the stickers smaller”, “only show them when an agent needs me”. The agent runs <code>agentpeeps set</code> or edits <code>config.json</code>. It never touches your hook settings. For one-off changes the control room is faster and costs no tokens.</p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy</h2>
+      <p>Local only: no server, no account, no network calls, no telemetry. Hooks write to a file in your home folder and the overlay reads it. Nothing leaves your machine.</p>
+    </section>
+
+    <section id="uninstall">
+      <h2>Uninstall</h2>
+      <div class="dcode"><button class="cp" data-copy="agentpeeps uninstall&#10;agentpeeps overlay --quit&#10;npm rm -g agentpeeps"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> agentpeeps uninstall
+<span class="p">$</span> agentpeeps overlay --quit
+<span class="p">$</span> npm rm -g agentpeeps</pre></div>
+      <p>Then delete <code>~/.agent-presence/</code> if you want your stickers and settings gone too.</p>
+    </section>
+
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <dl class="faq">
+        <dt>No stickers appear</dt><dd>Start a <em>new</em> session; hooks load at session start. Then check that <code>~/.agent-presence/events.jsonl</code> grows while the agent works, and run <code>agentpeeps overlay</code>.</dd>
+        <dt>Codex shows nothing</dt><dd>Open <code>/hooks</code> in Codex and trust the Agent Peeps entries.</dd>
+        <dt>Stickers stopped after an update or a cache clean</dt><dd>Run <code>agentpeeps init</code> again. With npx it reinstalls the permanent copy in <code>~/.agent-presence/app</code>.</dd>
+        <dt>The control room says "Restart Agent Peeps to finish updating"</dt><dd>The copy that is running is older than the one installed. Run <code>agentpeeps overlay --quit</code>, then <code>agentpeeps overlay</code>.</dd>
+        <dt>A shortcut says "used by another app"</dt><dd>Another program registered the same keys first. Close it, or turn global shortcuts off in the control room; <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>A</kbd> keeps working either way.</dd>
+        <dt>"Only over my apps" hides the stickers in my editor</dt><dd>Open Display in the control room, switch to your editor and back: its name shows up as a dashed chip. Click it to add it.</dd>
+        <dt>Copilot or Antigravity show only finished steps</dt><dd>Expected: their hooks can't run in the background, so tool calls show when they finish.</dd>
+        <dt>Testing by hand on Windows</dt><dd>PowerShell pipes a byte-order mark; <code>emit</code> strips it. Set <code>AGENT_PRESENCE_DEBUG=1</code> to print hook errors.</dd>
+      </dl>
+    </section>
+  </article>
+</div>
+
+<!-- include:footer -->
+
+</body>
+</html>

@@ -1,0 +1,1094 @@
+{
+ "overview": {
+  "w": 980,
+  "h": 800,
+  "rects": [
+   [
+    "nav button",
+    8,
+    50,
+    202,
+    31
+   ],
+   [
+    ".top .live",
+    593,
+    12,
+    119,
+    14
+   ],
+   [
+    ".top .vis",
+    725,
+    10,
+    105,
+    20
+   ],
+   [
+    ".stats",
+    254,
+    128,
+    690,
+    69
+   ],
+   [
+    ".stat.alert",
+    531,
+    129,
+    137,
+    67
+   ],
+   [
+    ".card.waiting",
+    254,
+    245,
+    339,
+    178
+   ],
+   [
+    ".card.waiting .state",
+    269,
+    317,
+    310,
+    32
+   ],
+   [
+    ".card.waiting .helpers",
+    269,
+    357,
+    310,
+    18
+   ],
+   [
+    ".card.waiting .ft",
+    269,
+    387,
+    310,
+    20
+   ],
+   [
+    ".card.waiting .ft button",
+    480,
+    387,
+    51,
+    20
+   ],
+   [
+    ".log",
+    254,
+    634,
+    690,
+    340
+   ],
+   [
+    "nav h3",
+    18,
+    189,
+    182,
+    12
+   ],
+   [
+    "nav h3 + h3 + button",
+    8,
+    235,
+    202,
+    38
+   ]
+  ]
+ },
+ "display": {
+  "w": 980,
+  "h": 1320,
+  "rects": [
+   [
+    ".row:nth-child(1) .sw",
+    507,
+    150,
+    34,
+    20
+   ],
+   [
+    ".row:nth-child(2) .seg",
+    507,
+    214,
+    227,
+    34
+   ],
+   [
+    ".row:nth-child(2) .keyhint",
+    744,
+    225,
+    103,
+    13
+   ],
+   [
+    ".row.apps .front",
+    507,
+    285,
+    225,
+    14
+   ],
+   [
+    ".row.apps .chips",
+    507,
+    310,
+    421,
+    174
+   ],
+   [
+    ".row.apps .add",
+    507,
+    494,
+    255,
+    32
+   ],
+   [
+    ".row:nth-child(4) .seg",
+    507,
+    553,
+    187,
+    34
+   ],
+   [
+    ".row:nth-child(5) .seg",
+    507,
+    614,
+    330,
+    34
+   ],
+   [
+    ".row:nth-child(6) .seg",
+    507,
+    708,
+    218,
+    34
+   ],
+   [
+    ".row:nth-child(7) .seg",
+    507,
+    788,
+    156,
+    34
+   ],
+   [
+    ".row:nth-child(8) .sw",
+    507,
+    867,
+    34,
+    20
+   ],
+   [
+    ".row:nth-child(9) input",
+    509,
+    932,
+    180,
+    16
+   ],
+   [
+    ".panel:nth-of-type(2) .row:nth-child(2) .seg",
+    507,
+    1107,
+    281,
+    34
+   ],
+   [
+    ".panel:nth-of-type(3) .chips",
+    507,
+    1230,
+    364,
+    28
+   ],
+   [
+    ".panel:nth-of-type(3) .btn",
+    507,
+    1372,
+    112,
+    32
+   ]
+  ]
+ },
+ "bubbles": {
+  "w": 980,
+  "h": 1060,
+  "rects": [
+   [
+    ".stage",
+    254,
+    128,
+    700,
+    172
+   ],
+   [
+    ".desk.dark .bub",
+    400,
+    150,
+    178,
+    68
+   ],
+   [
+    ".desk.light .bub",
+    749,
+    150,
+    178,
+    68
+   ],
+   [
+    ".row:nth-child(1) .sw",
+    507,
+    335,
+    34,
+    20
+   ],
+   [
+    ".row:nth-child(2) .seg",
+    507,
+    391,
+    130,
+    34
+   ],
+   [
+    ".row:nth-child(3) .sw",
+    507,
+    462,
+    34,
+    20
+   ],
+   [
+    ".row:nth-child(4) .seg",
+    507,
+    526,
+    160,
+    34
+   ],
+   [
+    ".swatches",
+    507,
+    597,
+    238,
+    26
+   ],
+   [
+    "input[type=color]",
+    717,
+    597,
+    28,
+    26
+   ],
+   [
+    ".row:nth-child(6) .seg",
+    507,
+    650,
+    188,
+    34
+   ],
+   [
+    ".row:nth-child(7) .sw",
+    507,
+    728,
+    34,
+    20
+   ],
+   [
+    ".row:nth-child(8) .sw",
+    507,
+    800,
+    34,
+    20
+   ]
+  ]
+ },
+ "shortcuts": {
+  "w": 980,
+  "h": 1060,
+  "rects": [
+   [
+    ".panel .sw",
+    507,
+    159,
+    34,
+    20
+   ],
+   [
+    ".keys .key:nth-child(1) .combo",
+    271,
+    269,
+    210,
+    17
+   ],
+   [
+    ".keys .key:nth-child(1) .ok",
+    895,
+    271,
+    32,
+    13
+   ],
+   [
+    ".keys .key:nth-child(5)",
+    255,
+    416,
+    689,
+    40
+   ],
+   [
+    ".panel:last-of-type",
+    254,
+    821,
+    690,
+    199
+   ],
+   [
+    "h2:last-of-type",
+    254,
+    799,
+    690,
+    12
+   ]
+  ]
+ },
+ "stickers": {
+  "w": 980,
+  "h": 800,
+  "rects": [
+   [
+    ".chosen .pick.pack",
+    254,
+    130,
+    172,
+    60
+   ],
+   [
+    ".chosen .pick:not(.pack)",
+    434,
+    130,
+    60,
+    60
+   ],
+   [
+    ".actions .btn",
+    254,
+    204,
+    170,
+    32
+   ],
+   [
+    ".actions .btn:nth-child(2)",
+    432,
+    204,
+    90,
+    32
+   ],
+   [
+    "h2 .use",
+    362,
+    277,
+    101,
+    24
+   ],
+   [
+    ".tile[aria-pressed=\"true\"]",
+    553,
+    311,
+    92,
+    88
+   ],
+   [
+    "nav button[aria-current=\"true\"] .count",
+    36,
+    258,
+    13,
+    13
+   ],
+   [
+    ".grid .tile",
+    254,
+    311,
+    92,
+    88
+   ]
+  ]
+ },
+ "bubble": {
+  "w": 274,
+  "h": 246,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    40,
+    32,
+    39,
+    16
+   ],
+   [
+    ".group > .chibi .meta",
+    84,
+    33,
+    151,
+    15
+   ],
+   [
+    ".group > .chibi .verb",
+    53,
+    52,
+    38,
+    16
+   ],
+   [
+    ".group > .chibi .obj",
+    97,
+    53,
+    45,
+    13
+   ],
+   [
+    ".group > .chibi .files",
+    40,
+    73,
+    196,
+    35
+   ],
+   [
+    ".group > .chibi .stats",
+    40,
+    113,
+    196,
+    11
+   ],
+   [
+    ".group > .chibi .icon",
+    234,
+    137,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    156,
+    140,
+    92,
+    92
+   ],
+   [
+    ".subs",
+    36,
+    160,
+    118,
+    52
+   ],
+   [
+    ".subs .chibi .sticker",
+    96,
+    157,
+    52,
+    52
+   ]
+  ]
+ },
+ "bubble-light": {
+  "w": 274,
+  "h": 246,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    40,
+    32,
+    39,
+    16
+   ],
+   [
+    ".group > .chibi .meta",
+    84,
+    33,
+    151,
+    15
+   ],
+   [
+    ".group > .chibi .verb",
+    53,
+    52,
+    38,
+    16
+   ],
+   [
+    ".group > .chibi .obj",
+    97,
+    53,
+    45,
+    13
+   ],
+   [
+    ".group > .chibi .files",
+    40,
+    73,
+    196,
+    35
+   ],
+   [
+    ".group > .chibi .stats",
+    40,
+    113,
+    196,
+    11
+   ],
+   [
+    ".group > .chibi .icon",
+    234,
+    137,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    156,
+    140,
+    92,
+    92
+   ],
+   [
+    ".subs",
+    36,
+    160,
+    118,
+    52
+   ],
+   [
+    ".subs .chibi .sticker",
+    96,
+    160,
+    52,
+    52
+   ]
+  ]
+ },
+ "bubble-text": {
+  "w": 266,
+  "h": 227,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    42,
+    25,
+    39,
+    16
+   ],
+   [
+    ".group > .chibi .meta",
+    86,
+    26,
+    151,
+    15
+   ],
+   [
+    ".group > .chibi .verb",
+    55,
+    45,
+    38,
+    16
+   ],
+   [
+    ".group > .chibi .obj",
+    99,
+    46,
+    45,
+    13
+   ],
+   [
+    ".group > .chibi .files",
+    42,
+    66,
+    196,
+    31
+   ],
+   [
+    ".group > .chibi .stats",
+    42,
+    102,
+    196,
+    11
+   ],
+   [
+    ".group > .chibi .icon",
+    226,
+    118,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    148,
+    121,
+    92,
+    92
+   ],
+   [
+    ".subs",
+    28,
+    141,
+    118,
+    52
+   ],
+   [
+    ".subs .chibi .sticker",
+    88,
+    140,
+    52,
+    52
+   ]
+  ]
+ },
+ "bubble-noborder": {
+  "w": 274,
+  "h": 246,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    40,
+    32,
+    39,
+    16
+   ],
+   [
+    ".group > .chibi .meta",
+    84,
+    33,
+    151,
+    15
+   ],
+   [
+    ".group > .chibi .verb",
+    53,
+    52,
+    38,
+    16
+   ],
+   [
+    ".group > .chibi .obj",
+    97,
+    53,
+    45,
+    13
+   ],
+   [
+    ".group > .chibi .files",
+    40,
+    73,
+    196,
+    35
+   ],
+   [
+    ".group > .chibi .stats",
+    40,
+    113,
+    196,
+    11
+   ],
+   [
+    ".group > .chibi .icon",
+    234,
+    137,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    156,
+    140,
+    91,
+    91
+   ],
+   [
+    ".subs",
+    36,
+    160,
+    118,
+    52
+   ],
+   [
+    ".subs .chibi .sticker",
+    96,
+    156,
+    52,
+    52
+   ]
+  ]
+ },
+ "helpers-line": {
+  "w": 266,
+  "h": 128,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .meta",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .verb",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .obj",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .files",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .stats",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .icon",
+    226,
+    19,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    148,
+    22,
+    91,
+    91
+   ],
+   [
+    ".subs",
+    28,
+    42,
+    118,
+    52
+   ],
+   [
+    ".subs .chibi .sticker",
+    88,
+    39,
+    52,
+    52
+   ]
+  ]
+ },
+ "helpers-pod": {
+  "w": 268,
+  "h": 128,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    -1276,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .meta",
+    -1276,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .verb",
+    -1276,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .obj",
+    -1276,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .files",
+    -1276,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .stats",
+    -1276,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .icon",
+    228,
+    19,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    150,
+    22,
+    92,
+    92
+   ],
+   [
+    ".subs",
+    28,
+    48,
+    120,
+    60
+   ],
+   [
+    ".subs .chibi .sticker",
+    90,
+    52,
+    52,
+    52
+   ]
+  ]
+ },
+ "helpers-none": {
+  "w": 266,
+  "h": 128,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .meta",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .verb",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .obj",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .files",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .stats",
+    -1278,
+    -690,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .icon",
+    226,
+    19,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    148,
+    22,
+    92,
+    92
+   ],
+   [
+    ".subs",
+    28,
+    42,
+    118,
+    52
+   ],
+   [
+    ".subs .chibi .sticker",
+    88,
+    41,
+    52,
+    52
+   ]
+  ]
+ },
+ "details-always": {
+  "w": 268,
+  "h": 149,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    -1276,
+    -669,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .meta",
+    -1276,
+    -669,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .verb",
+    -1276,
+    -669,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .obj",
+    -1276,
+    -669,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .files",
+    -1276,
+    -669,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .stats",
+    -1276,
+    -669,
+    0,
+    0
+   ],
+   [
+    ".group > .chibi .icon",
+    228,
+    19,
+    18,
+    18
+   ],
+   [
+    ".group > .chibi .sticker",
+    150,
+    22,
+    92,
+    92
+   ],
+   [
+    ".subs",
+    28,
+    44,
+    120,
+    71
+   ],
+   [
+    ".subs .chibi .sticker",
+    88,
+    40,
+    52,
+    52
+   ]
+  ]
+ },
+ "needs-you": {
+  "w": 378,
+  "h": 226,
+  "rects": [
+   [
+    ".group > .chibi .who",
+    39,
+    32,
+    39,
+    16
+   ],
+   [
+    ".group > .chibi .meta",
+    84,
+    33,
+    151,
+    15
+   ],
+   [
+    ".group > .chibi .verb",
+    52,
+    51,
+    56,
+    16
+   ],
+   [
+    ".group > .chibi .obj",
+    114,
+    53,
+    225,
+    13
+   ],
+   [
+    ".group > .chibi .files",
+    39,
+    72,
+    300,
+    16
+   ],
+   [
+    ".group > .chibi .stats",
+    39,
+    93,
+    300,
+    11
+   ],
+   [
+    ".group > .chibi .icon",
+    338,
+    117,
+    19,
+    19
+   ],
+   [
+    ".group > .chibi .sticker",
+    262,
+    121,
+    88,
+    88
+   ],
+   [
+    ".subs",
+    140,
+    140,
+    118,
+    52
+   ],
+   [
+    ".subs .chibi .sticker",
+    200,
+    138,
+    52,
+    52
+   ]
+  ]
+ }
+}

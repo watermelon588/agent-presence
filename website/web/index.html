@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent Peeps · Stickers that show what your AI agents are doing</title>
+<meta name="description" content="Agent Peeps puts a small sticker on your screen for every Claude Code, Codex, Copilot and Antigravity session, with a line icon for what it is doing. Free, local, MIT." />
+<meta property="og:title" content="Agent Peeps" />
+<meta property="og:description" content="A tiny sticker for every AI coding agent session, live on your screen." />
+<meta property="og:image" content="/brand/logo-512.png" />
+<meta name="walkthru-verification" content="wt-0b23df3cf5792d0485d6b4ce">
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<link rel="apple-touch-icon" href="/brand/logo.png" />
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/home.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="relative isolate grid min-h-[min(100dvh,920px)] place-items-center overflow-x-clip px-5 pb-28 pt-[168px] text-center sm:pt-32" data-hero>
+  <div class="stk peep" data-drag data-float style="--w:clamp(70px,9vw,120px);--r:-8deg;left:5%;top:16%">
+    <img class="lift" src="/src/stickers-fan/claude/claude-coding.webp" alt="A Claude sticker typing on a laptop">
+    <span class="ico" data-icon="writing"></span>
+    <span class="tag say max-sm:hidden">writing auth.ts</span>
+  </div>
+  <div class="stk peep" data-drag data-float style="--w:clamp(66px,8.5vw,112px);--r:7deg;right:6%;top:15%">
+    <img class="lift" src="/src/stickers-fan/tech-faces/zuckerberg.webp" alt="">
+    <span class="ico" data-icon="running"></span>
+    <span class="tag say max-sm:hidden">running pytest -q</span>
+  </div>
+  <div class="stk peep max-md:hidden" data-drag data-float style="--w:92px;--r:-10deg;left:7%;top:57%">
+    <img class="lift" src="/src/stickers-fan/plants-vs-zombies/squash.webp" alt="">
+    <span class="ico" data-icon="reading"></span>
+    <span class="tag say">reading README.md</span>
+  </div>
+  <div class="stk peep max-md:hidden" data-drag data-float style="--w:96px;--r:9deg;right:8%;top:55%;--ic:#e5483b">
+    <img class="lift" src="/src/stickers-fan/goth/lime-beanie-side-eye.webp" alt="">
+    <span class="ico" data-icon="waiting"></span>
+    <span class="tag say">needs you</span>
+  </div>
+  <div class="stk peep max-lg:hidden" data-drag data-float style="--w:84px;--r:-5deg;left:22%;bottom:9%;--ic:#2f9e5b">
+    <img class="lift" src="/src/stickers-fan/model-logos/deepseek-logo.webp" alt="">
+    <span class="ico" data-icon="done"></span>
+  </div>
+  <div class="stk peep max-lg:hidden" data-drag data-float style="--w:78px;--r:10deg;right:23%;bottom:10%">
+    <img class="lift" src="/src/stickers-fan/internet-cats/blue-cat-scream-animated.webp" alt="">
+    <span class="ico" data-icon="thinking"></span>
+  </div>
+  <p class="hint absolute left-[8%] top-[78%] z-[3] flex items-end gap-1 max-lg:hidden" data-float>drag us around <i class="ph-bold ph-arrow-bend-right-up text-3xl"></i></p>
+
+  <div class="relative z-10 mx-auto max-w-[1040px]">
+    <div data-reveal><a class="pill" href="#see"><span class="discs" data-discs></span><span class="max-sm:hidden">Claude Code, Codex, Copilot and Antigravity</span><span class="sm:hidden">Works with four agents</span></a></div>
+    <h1 data-split class="mx-auto mt-7 text-[clamp(44px,7.6vw,108px)]">
+      See what your <img class="inl tall" src="/src/stickers/pixel-food/pixel-astronaut.webp" alt=""> AI agents are <img class="inl" src="/src/stickers/flame-expressions/flame-friendly.webp" alt=""> doing.
+    </h1>
+    <p data-split class="mx-auto mt-7 max-w-[560px] text-[clamp(17px,1.5vw,20px)] leading-relaxed text-muted">
+      A tiny sticker for every agent session, with an icon for what it's doing. Hover one for the file it's on.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3" data-reveal>
+      <button class="install" data-copy="npx agentpeeps init" aria-label="Copy install command: npx agentpeeps init"></button>
+      <a class="btn btn-line btn-watch" href="#see"><span class="play"><i class="ph-fill ph-play"></i></span>Watch it work <i class="ph-bold ph-arrow-down"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEE IT IN ACTION ============ -->
+<!-- ============ WORKS WITH ============ -->
+<section class="pb-6 pt-2 md:pb-10" aria-labelledby="works-title">
+  <div class="wrap">
+    <p id="works-title" class="text-center text-[13px] font-semibold uppercase tracking-[.14em] text-muted" data-reveal>Works with the agents you use</p>
+    <ul class="works mt-5" data-reveal>
+      <li><img src="/brand/agents/claude.svg" alt="" width="26" height="26">Claude Code</li>
+      <li><img src="/brand/agents/codex.svg" alt="" width="26" height="26">Codex</li>
+      <li><img class="mono" src="/brand/agents/copilot.svg" alt="" width="26" height="26">GitHub Copilot</li>
+      <li><img src="/brand/agents/antigravity.svg" alt="" width="26" height="26">Antigravity</li>
+      <li><img src="/brand/agents/vscode.svg" alt="" width="26" height="26">VS Code</li>
+    </ul>
+  </div>
+</section>
+
+<section id="see" class="scroll-mt-16 py-16 md:py-24">
+  <div class="wrap">
+    <div class="mb-10 max-w-[720px]">
+      <h2 data-split class="text-[clamp(36px,5vw,64px)]">See it in action.</h2>
+      <p class="mt-4 text-lg text-muted" data-reveal>Three short clips. Install, pick your stickers, or just ask your agent to change its own.</p>
+    </div>
+    <div class="grid items-start gap-6 lg:grid-cols-[320px_minmax(0,1fr)]" data-reveal>
+      <div class="vtabs max-lg:order-2 max-lg:grid-cols-3 max-sm:grid-cols-1" role="tablist" aria-label="Clips">
+        <button class="vtab" role="tab" aria-selected="true" data-src="/media/getting-started.mp4" data-poster="/media/getting-started.jpg">
+          <span class="n">1</span><span class="min-w-0 flex-1"><b class="block font-display text-[17px]">Getting started</b><small class="block text-[13px] text-muted">One command, then start an agent.</small><span class="bar"><i></i></span></span>
+        </button>
+        <button class="vtab" role="tab" aria-selected="false" data-src="/media/customize.mp4" data-poster="/media/customize.jpg">
+          <span class="n">2</span><span class="min-w-0 flex-1"><b class="block font-display text-[17px]">Pick your stickers</b><small class="block text-[13px] text-muted">Packs for each agent, helper or model.</small><span class="bar"><i></i></span></span>
+        </button>
+        <button class="vtab" role="tab" aria-selected="false" data-src="/media/ask-your-agent.mp4" data-poster="/media/ask-your-agent.png">
+          <span class="n">3</span><span class="min-w-0 flex-1"><b class="block font-display text-[17px]">Ask your agent</b><small class="block text-[13px] text-muted">"Make yourself a capybara." Done.</small><span class="bar"><i></i></span></span>
+        </button>
+      </div>
+      <div class="screen" role="tabpanel">
+        <video id="clip" muted playsinline preload="metadata" poster="/media/getting-started.jpg" src="/media/getting-started.mp4" aria-label="Agent Peeps clip"></video>
+        <button class="sound" id="sound" aria-pressed="false"><i class="ph-bold ph-speaker-slash"></i><span>Sound off</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WITHOUT / WITH ============ -->
+<section id="how" class="scroll-mt-16 py-16 md:py-24">
+  <div class="wrap">
+    <div class="mx-auto mb-12 max-w-[740px] text-center">
+      <h2 data-split class="text-[clamp(36px,5vw,64px)]">Four agents running. Zero tabs to check.</h2>
+      <p class="mt-4 text-lg text-muted" data-reveal>Each session gets a sticker. Helpers sit in a dashed pod in their parent's color. Hover any of them for who, what and which files.</p>
+    </div>
+    <div class="mb-7 text-center" data-reveal>
+      <div class="seg" role="group" aria-label="Preview mode">
+        <button aria-pressed="false" data-mode="off">Without</button>
+        <button aria-pressed="true" data-mode="on">With Agent Peeps</button>
+      </div>
+    </div>
+    <div class="demo on relative mx-auto max-w-[980px]" id="demo" data-reveal>
+      <div class="flex h-11 items-center gap-[7px] border-b border-line px-[18px]">
+        <span class="size-[11px] rounded-full bg-line"></span><span class="size-[11px] rounded-full bg-line"></span><span class="size-[11px] rounded-full bg-line"></span>
+        <em class="ml-4 truncate rounded-full bg-soft px-3 py-1 font-mono text-xs not-italic text-muted">my-app / src / auth.ts</em>
+      </div>
+      <div class="relative min-h-[460px] overflow-x-clip rounded-b-[24px]">
+        <div class="code max-sm:!text-[11.5px]">
+<div><span class="kw">import</span> { createSession } <span class="kw">from</span> <span class="st">"./session"</span></div>
+<div><span class="kw">import</span> { hash, verify } <span class="kw">from</span> <span class="st">"./crypto"</span></div>
+<div> </div>
+<div class="hl"><span class="kw">export async function</span> <span class="fn">login</span>(email, password) {</div>
+<div class="hl">  <span class="kw">const</span> user = <span class="kw">await</span> db.users.<span class="fn">find</span>({ email })</div>
+<div>  <span class="kw">if</span> (!user || !(<span class="kw">await</span> <span class="fn">verify</span>(password, user.hash))) {</div>
+<div>    <span class="kw">throw new</span> <span class="fn">AuthError</span>(<span class="st">"Wrong email or password"</span>)</div>
+<div>  }</div>
+<div>  <span class="kw">return</span> <span class="fn">createSession</span>(user.id)</div>
+<div>}</div>
+<div> </div>
+<div><span class="cm">// TODO: rate limit failed attempts</span></div>
+        </div>
+        <div data-dock data-speed="1400" class="max-sm:[--ap-s:48px] max-sm:!right-3"></div>
+        <div class="lost absolute bottom-7 right-7 flex gap-2 max-sm:hidden" aria-hidden="true">
+          <span class="rounded-lg border border-line bg-soft px-2.5 py-1.5 font-mono text-[13px] text-muted">claude: ???</span>
+          <span class="rounded-lg border border-line bg-soft px-2.5 py-1.5 font-mono text-[13px] text-muted">codex: ???</span>
+          <span class="rounded-lg border border-line bg-soft px-2.5 py-1.5 font-mono text-[13px] text-muted">4 terminals</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENTO ============ -->
+<section class="pb-20 md:pb-28">
+  <div class="wrap grid grid-cols-1 gap-4 md:grid-cols-6">
+    <div class="cell !border-0 !bg-accent text-white md:col-span-4" data-reveal>
+      <h3 class="max-w-[380px] text-[30px]">Every state at a glance.</h3>
+      <p class="mt-2.5 max-w-[400px] text-white/80">A line icon on the corner and a calm little motion. Red when it needs you, green when it's done.</p>
+      <div class="mt-7 grid grid-cols-3 place-items-center gap-x-2 gap-y-7 rounded-[20px] border-[1.5px] border-dashed border-white/35 bg-white/10 px-3 py-7" data-states></div>
+    </div>
+    <div class="cell !border-[#24242b] !bg-[#121214] text-white md:col-span-2" data-reveal>
+      <h3 class="text-[30px]">A few commands.</h3>
+      <p class="mt-2.5 text-[#a7a7b0]">Hooks go into every agent it finds. Your old settings are backed up.</p>
+<pre class="term mt-6"><span class="p">$</span> npx agentpeeps init
+<span class="c">Installed hooks for: Claude Code, Codex, Copilot</span>
+<span class="p">$</span> agentpeeps packs
+<span class="p">$</span> agentpeeps set claude capybaras
+<span class="ok">claude -> capybaras pack (8 stickers)</span>
+<span class="p">$</span> agentpeeps control
+<span class="c">Opening the control room...</span>
+<span class="p">$</span> agentpeeps watch
+<span class="c"># the same view, in your terminal</span></pre>
+    </div>
+
+    <div class="cell md:col-span-3" data-reveal>
+      <h3 class="text-[30px]">A control room, not a config file.</h3>
+      <p class="mt-2.5 text-muted">Press <kbd class="rounded-md border border-line bg-soft px-1.5 font-mono text-[13px]">Ctrl+Alt+Shift+C</kbd> or click the tray icon. Live sessions, speech bubbles, shortcuts and stickers, all in one dark window. <a class="underline decoration-line underline-offset-4 hover:decoration-current" href="docs.html#control-room">See the tour</a>. Try a few settings here:</p>
+      <div class="room mt-5" data-room>
+        <div class="row"><span>Size</span><span class="seg2" data-set="size"><button aria-pressed="false" data-v="38">Small</button><button aria-pressed="true" data-v="50">Medium</button><button aria-pressed="false" data-v="64">Large</button></span></div>
+        <div class="row"><span>Show an agent</span><span class="seg2" data-set="show"><button aria-pressed="true" data-v="working">While it works</button><button aria-pressed="false" data-v="needs">Needs you</button></span></div>
+        <div class="row"><span>Details</span><span class="seg2" data-set="details"><button aria-pressed="true" data-v="hover">On hover</button><button aria-pressed="false" data-v="always">Always</button></span></div>
+        <div class="row flex-wrap"><span>Agents</span><span class="flex flex-wrap gap-1.5" data-agents></span></div>
+        <div class="flex min-h-[96px] items-end justify-end gap-4 rounded-[14px] bg-soft px-4 pb-3 pt-6" data-room-preview aria-label="Preview of your stickers"></div>
+      </div>
+    </div>
+    <div class="cell md:col-span-3" data-reveal>
+      <h3 class="text-[30px]">Works where you work.</h3>
+      <p class="mt-2.5 text-muted">It listens to the agents' own hooks, not your editor. Floats above everything, clicks pass through.</p>
+      <div class="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-4" data-agent-cards></div>
+      <div class="chipline mt-4 flex flex-wrap gap-2"><span>Claude Code CLI, app and IDE</span><span>Copilot in VS Code and CLI</span><span>Codex</span><span>Antigravity</span></div>
+      <p class="mt-5 text-[14px] text-muted">In VS Code, Cursor and Windsurf, files get badges as agents touch them: <span class="whitespace-nowrap text-[17px] text-ink">🅒 🅧 🅟 🅐</span></p>
+    </div>
+
+    <div class="cell md:col-span-3" data-reveal>
+      <h3 class="text-[30px]">Yours to push around.</h3>
+      <ul class="mt-5 grid gap-3.5 text-[15px]">
+        <li class="flex gap-3"><i class="ph-bold ph-hand-grabbing mt-0.5 text-xl text-accent-text"></i><span><b class="font-semibold">Drag</b> any sticker. Each agent remembers its spot.</span></li>
+        <li class="flex gap-3"><i class="ph-bold ph-cursor mt-0.5 text-xl text-accent-text"></i><span><b class="font-semibold">Hover</b> for what it's on, its recent files and how long it's been at it. <b class="font-semibold">Click</b> to pin the bubble.</span></li>
+        <li class="flex gap-3"><i class="ph-bold ph-app-window mt-0.5 text-xl text-accent-text"></i><span><b class="font-semibold">Only over my apps</b> keeps them in your editor and terminal, out of everything else.</span></li>
+        <li class="flex gap-3"><i class="ph-bold ph-moon-stars mt-0.5 text-xl text-accent-text"></i><span><b class="font-semibold">Right-click</b> to hide everything for 30 minutes, or just that one.</span></li>
+        <li class="flex gap-3"><i class="ph-bold ph-keyboard mt-0.5 text-xl text-accent-text"></i><span><kbd class="rounded-md border border-line bg-soft px-1.5 font-mono text-[13px]">Ctrl+Alt+Shift</kbd> + a letter for everything: <b class="font-semibold">A</b> show, <b class="font-semibold">B</b> bubbles, <b class="font-semibold">P</b> peek, <b class="font-semibold">F</b> only my apps. <a class="underline decoration-line underline-offset-4 hover:decoration-current" href="docs.html#control-room">All shortcuts</a></span></li>
+      </ul>
+    </div>
+    <div class="cell !border-[var(--sunny-line)] !bg-[var(--sunny)] md:col-span-3" data-reveal>
+      <div class="sm:pr-[150px]">
+        <h3 class="text-[30px]">Local only.</h3>
+        <p class="mt-2.5 text-[var(--sunny-ink)]">No server, no account, no network. Hooks run in the background and never block your agent.</p>
+      </div>
+      <img class="lift pointer-events-none ml-auto mt-2 block w-[104px] -rotate-[8deg] sm:absolute sm:bottom-6 sm:right-6 sm:mt-0 sm:w-[128px]" src="/src/stickers/plush-blobs/plush-pink-smile.webp" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ============ STICKER PACKS ============ -->
+<section id="stickers" class="scroll-mt-16 pb-16 md:pb-24">
+  <div class="wrap mx-auto max-w-[760px] text-center">
+    <h2 data-split class="text-[clamp(36px,5vw,64px)]">One pack per agent. Or per model.</h2>
+    <p class="mt-4 text-lg text-muted" data-reveal>A pack is a folder of images. Each session gets its own sticker from the set. Start with <b class="font-semibold text-ink" data-count>our</b> stickers, or drop in any PNG, GIF, SVG or WebP.</p>
+  </div>
+  <div class="marquee mt-6" data-reveal><div class="track" id="track"></div></div>
+  <div class="wrap mt-2 flex flex-wrap justify-center gap-2.5" data-reveal>
+    <button class="install sm" data-copy="agentpeeps set claude capybaras"></button>
+    <button class="install sm" data-copy="agentpeeps set helpers fruit-cats"></button>
+    <button class="install sm" data-copy="agentpeeps set model:opus cats"></button>
+  </div>
+  <div class="mt-8 text-center" data-reveal>
+    <a class="btn btn-accent" href="stickers.html" data-magnetic>Open the sticker shop <i class="ph-bold ph-arrow-right"></i></a>
+  </div>
+</section>
+
+<!-- ============ GACHA ============ -->
+<section id="gacha" class="pb-20 md:pb-28">
+  <div class="wrap">
+    <div class="grid items-center gap-14 rounded-[36px] border border-line bg-card p-7 sm:p-12 md:grid-cols-2 md:p-14" data-reveal>
+      <div>
+        <h2 data-split class="text-[clamp(38px,4.8vw,64px)]">Can't decide? Spin for a pack.</h2>
+        <p class="mt-4 max-w-[430px] text-muted">Turn the knob, then paste one line into your terminal. Claude's new look shows up live. Somewhere in there is a <b class="font-semibold text-ink">★ sticker</b>.</p>
+        <p class="mt-6 min-h-[1.6em] font-display text-lg font-semibold text-accent-text" id="prizeName" aria-live="polite">Something cute is in there.</p>
+        <button class="cfg mt-2 flex w-full items-center justify-between gap-3 text-left" id="prizeCfg" data-copy="agentpeeps set claude capybaras">
+          <span><b>$</b> agentpeeps set claude <b data-pack>capybaras</b></span><span class="shrink-0 font-sans text-[12.5px] font-semibold text-muted" data-copy-label>Copy</span>
+        </button>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <button class="btn btn-accent" id="spin" data-magnetic>Turn the knob <i class="ph-bold ph-arrows-clockwise"></i></button>
+          <a class="btn btn-line" id="customize" href="stickers.html">See the whole pack <i class="ph-bold ph-arrow-right"></i></a>
+        </div>
+        <p class="mt-4 text-[13px] text-muted" id="odds" aria-live="polite">1 in 20 spins pulls the ★ sticker.</p>
+      </div>
+      <div class="relative mx-auto w-full max-w-[340px] pb-10">
+        <div class="dome" id="dome"></div>
+        <div class="gacha-base"><button class="knob" id="knob" aria-label="Turn the knob"><i class="ph-bold ph-star"></i></button><div class="slot"></div></div>
+        <div class="prize" id="prize"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPONSOR ============ -->
+<section id="sponsor" class="scroll-mt-16 pb-20 md:pb-28">
+  <div class="wrap">
+    <div class="mx-auto flex max-w-[860px] flex-col items-center gap-5 rounded-[24px] border border-line bg-card px-6 py-7 text-center md:flex-row md:px-8 md:text-left" data-reveal>
+      <img class="lift size-14 shrink-0 -rotate-6 object-contain" src="/src/stickers-fan/claude/claude-coffee.webp" alt="">
+      <div class="flex-1">
+        <h2 class="text-[26px]">Sponsors</h2>
+        <p class="mt-1 text-[15px] text-muted">Agent Peeps is free and open source. If it helps you, sponsor it or buy me a coffee.</p>
+      </div>
+      <div class="flex shrink-0 flex-wrap justify-center gap-2.5">
+        <button class="btn btn-line !h-11" data-support="sponsor"><i class="ph-bold ph-heart"></i>Sponsor</button>
+        <button class="btn btn-ink !h-11" data-support="coffee"><i class="ph-bold ph-coffee"></i>Buy me a coffee</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINALE: ORBIT ============ -->
+<section id="start" class="relative isolate grid min-h-[720px] place-items-center overflow-hidden py-32 text-center md:min-h-[960px]">
+  <div class="orbit" id="ring1" style="--R:min(405px,42vw);--s:clamp(48px,6.5vw,92px)"></div>
+  <div class="wrap relative z-10">
+    <h2 data-split class="mx-auto max-w-[700px] text-[clamp(38px,5.6vw,80px)] max-sm:max-w-[300px]">Stop wondering what your agents are doing.</h2>
+    <div class="mt-10 flex flex-wrap justify-center gap-3" data-reveal>
+      <button class="install" data-copy="npx agentpeeps init" aria-label="Copy install command: npx agentpeeps init"></button>
+      <a class="btn btn-ink" href="https://github.com/watermelon588/agent-presence" data-magnetic><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>Star on GitHub</a>
+    </div>
+    <p class="mt-5 text-[13.5px] text-muted" data-reveal>Free and open source, MIT. Nothing leaves your machine.</p>
+  </div>
+</section>
+</main>
+
+<!-- include:footer -->
+
+</body>
+</html>

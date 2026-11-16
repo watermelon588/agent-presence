@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agent-presence.exe · Your AI agents, live on your desktop</title>
+<meta name="description" content="A sticker for every Claude Code and Codex session floats above your windows and says what it is doing. Free, local, MIT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=VT323&family=Silkscreen&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{
+  --desk:#7b8cff; --desk2:#b7a6ff; --win:#e9e7e1; --hi:#ffffff; --lo:#8a877f; --dk:#2b2a33;
+  --title1:#1f2bd8; --title2:#6a7bff; --ink:#16161d; --acc:#ff4fa3;
+  --ease:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0}
+html{overflow-x:clip}
+body{color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:radial-gradient(circle,rgba(255,255,255,.22) 1px,transparent 1.5px) 0 0/18px 18px,linear-gradient(160deg,var(--desk) 0%,var(--desk2) 100%) fixed;background-color:var(--desk)}
+img{display:block;max-width:100%;user-select:none;-webkit-user-drag:none;image-rendering:auto}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.px{font-family:"Pixelify Sans",monospace}
+.sk{font-family:Silkscreen,monospace;letter-spacing:.02em}
+.lift{filter:drop-shadow(3px 4px 0 rgba(20,20,60,.35))}
+.diecut{filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(3px 4px 0 rgba(20,20,60,.35))}
+
+/* bevel primitives */
+.bevel{background:var(--win);box-shadow:inset -2px -2px 0 var(--lo),inset 2px 2px 0 var(--hi),inset -3px -3px 0 #b9b6ae,0 0 0 1.5px var(--dk)}
+.well{background:#fff;box-shadow:inset 2px 2px 0 var(--lo),inset -2px -2px 0 var(--hi),inset 3px 3px 0 #b9b6ae}
+.win{position:relative;padding:4px;box-shadow:inset -2px -2px 0 var(--lo),inset 2px 2px 0 var(--hi),0 0 0 1.5px var(--dk),10px 12px 0 rgba(20,20,70,.25);background:var(--win)}
+.title{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 12px;color:#fff;background:linear-gradient(90deg,var(--title1),var(--title2));font:15px Silkscreen}
+.title .ctrls{display:flex;gap:4px}
+.title .ctrls span{width:24px;height:22px;display:grid;place-items:center;color:var(--ink);font:13px Silkscreen}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 22px;font:600 16px "IBM Plex Sans";color:var(--ink);cursor:pointer;border:0}
+.btn:active{box-shadow:inset 2px 2px 0 var(--lo),inset -2px -2px 0 var(--hi),0 0 0 1.5px var(--dk);padding:2px 21px 0 23px}
+.btn.primary{background:var(--acc);color:#fff;box-shadow:inset -2px -2px 0 #b5266d,inset 2px 2px 0 #ff9fcd,0 0 0 1.5px var(--dk)}
+
+/* menubar */
+.menubar{position:sticky;top:0;z-index:60;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--win);box-shadow:inset 0 -2px 0 var(--lo),0 1.5px 0 var(--dk)}
+.menubar .l{display:flex;align-items:center;gap:26px;font-size:15px}
+.menubar .brand{display:flex;align-items:center;gap:8px;font:600 18px "Pixelify Sans"}
+.menubar .brand img{width:26px}
+.menubar a.m:hover{background:var(--title1);color:#fff}
+.menubar a.m{padding:4px 8px}
+.menubar .btn{height:32px;padding:0 14px;font-size:14px}
+
+/* hero desktop */
+.desktop{position:relative;min-height:min(calc(100dvh - 44px),840px);padding:56px 0 80px}
+.hero-win{max-width:720px;margin-left:4%;animation:boot .7s var(--spring) both}
+@keyframes boot{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+.hero-body{padding:44px 44px 40px}
+.hero-body h1{font:700 clamp(46px,6.2vw,84px)/.98 "Pixelify Sans";letter-spacing:-.01em}
+.hero-body h1 mark{background:none;color:var(--acc);display:inline-block}
+.hero-body p{font-size:18px;color:#45434d;max-width:500px;margin:20px 0 30px}
+.hero-body .row{display:flex;gap:14px;flex-wrap:wrap}
+.cmd{display:inline-flex;align-items:center;gap:12px;height:48px;padding:0 6px 0 16px;font:22px VT323;cursor:pointer;border:0;color:var(--ink)}
+.cmd .c{height:36px;padding:0 12px;display:grid;place-items:center;font:12px Silkscreen}
+.cmd.is-copied .c{background:#b8f0c8}
+.status{display:flex;gap:4px;padding:4px}
+.status span{flex:1;padding:3px 10px;font:12px Silkscreen;color:#55525c}
+
+.icons{position:absolute;right:4%;top:40px;display:grid;gap:22px;justify-items:center}
+.icon{width:110px;display:grid;justify-items:center;gap:6px;text-align:center;font:13px Silkscreen;color:#fff;text-shadow:1px 1px 0 var(--dk)}
+.icon img{width:72px;height:72px;object-fit:contain}
+.icon:hover span{background:var(--title1)}
+.stk{position:absolute;width:var(--w);rotate:var(--r);z-index:5;animation:slap .55s var(--spring) both;animation-delay:calc(var(--i)*90ms + 600ms)}
+@keyframes slap{from{opacity:0;transform:scale(1.8)}to{opacity:1;transform:none}}
+.dialog{position:absolute;left:52%;bottom:60px;width:330px;z-index:4;animation:boot .6s var(--spring) 1.4s both}
+.dialog .b{padding:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;font-size:15px}
+.dialog .b img{width:48px}
+.dialog .acts{display:flex;justify-content:flex-end;gap:8px;padding:0 16px 16px}
+.dialog .btn{height:34px;padding:0 18px;font-size:14px}
+
+/* explorer gallery */
+section{padding:100px 0}
+.sh{font:700 clamp(38px,4.6vw,62px)/1 "Pixelify Sans";color:#fff;text-shadow:3px 3px 0 var(--dk);margin-bottom:34px;max-width:760px}
+.explorer .bar{display:flex;align-items:center;gap:10px;padding:8px 10px;font-size:14px}
+.explorer .addr{flex:1;height:32px;display:flex;align-items:center;padding:0 10px;font:20px VT323}
+.explorer .body{display:grid;grid-template-columns:200px 1fr;gap:6px;padding:0 6px 6px}
+.side{padding:14px;font:13px Silkscreen;display:grid;gap:4px;align-content:start}
+.side button{all:unset;cursor:pointer;padding:6px 8px;display:flex;gap:8px;align-items:center}
+.side button[aria-pressed=true]{background:var(--title1);color:#fff}
+.files{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px 10px;min-height:420px;align-content:start}
+.file{display:grid;justify-items:center;gap:6px;font:11px Silkscreen;text-align:center;overflow-wrap:anywhere;cursor:pointer;animation:slap .4s var(--spring) both;animation-delay:calc(var(--i)*30ms)}
+.file img{width:88px;height:88px;object-fit:contain;transition:transform .3s var(--spring)}
+.file:hover img{transform:rotate(-6deg) scale(1.1)}
+.file:hover span{background:var(--title1);color:#fff}
+.progress{height:26px;margin:0 6px 6px;padding:3px;display:flex;gap:3px}
+.progress i{width:14px;background:var(--title1);animation:fill .1s both;animation-delay:calc(var(--i)*60ms)}
+@keyframes fill{from{opacity:0}to{opacity:1}}
+
+/* paint + terminal */
+.duo{display:grid;grid-template-columns:1.35fr 1fr;gap:34px;align-items:start}
+.paint .tools{display:flex;gap:6px;padding:8px;flex-wrap:wrap}
+.paint .tools button{width:52px;height:52px;padding:6px;cursor:pointer;border:0}
+.paint .tools button[aria-pressed=true]{box-shadow:inset 2px 2px 0 var(--lo),inset -2px -2px 0 var(--hi),0 0 0 1.5px var(--dk);background:#d8d5cc}
+.paint .tools img{width:100%;height:100%;object-fit:contain}
+.canvas{position:relative;height:440px;margin:0 6px 6px;overflow:hidden;cursor:crosshair}
+.canvas .hint{position:absolute;inset:0;display:grid;place-items:center;font:28px VT323;color:#9a97a3;pointer-events:none;transition:opacity .3s}
+.canvas img.stamp{position:absolute;width:96px;translate:-50% -50%;animation:slap .45s var(--spring) both;pointer-events:none}
+.term{background:#121216;color:#c7f7c1;font:22px/1.35 VT323;padding:22px;min-height:300px;margin:0 6px 6px}
+.term .p{color:#ff8ccc}
+.term .cur{display:inline-block;width:11px;height:20px;background:#c7f7c1;vertical-align:-3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.props{padding:18px 20px;display:grid;gap:12px;font-size:15px}
+.props label{display:flex;gap:12px;align-items:center}
+.props .chk{width:20px;height:20px;display:grid;place-items:center;font-size:14px;flex:none}
+
+/* bsod */
+.bsod{background:#1424b8;color:#fff;padding:120px 0;font:24px/1.45 VT323;position:relative;overflow:hidden}
+.bsod .tag{background:#e9e7e1;color:#1424b8;padding:2px 12px;display:inline-block;margin-bottom:30px}
+.bsod h2{font:700 clamp(40px,5.4vw,76px)/1 "Pixelify Sans";max-width:880px;margin-bottom:26px}
+.bsod p{max-width:700px;opacity:.9}
+.bsod .row{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.bsod .stk{animation:none}
+
+/* taskbar */
+.taskbar{height:52px;display:flex;align-items:center;gap:10px;padding:0 10px;background:var(--win);box-shadow:inset 0 2px 0 var(--hi),0 -1.5px 0 var(--dk)}
+.taskbar .start{height:38px;padding:0 14px;display:flex;align-items:center;gap:8px;font:600 16px "Pixelify Sans"}
+.taskbar .start img{width:24px}
+.taskbar .tab{height:38px;padding:0 14px;display:flex;align-items:center;font:13px Silkscreen}
+.taskbar .tray{margin-left:auto;height:38px;padding:0 14px;display:flex;align-items:center;font:13px Silkscreen}
+
+[data-reveal]{opacity:0;translate:0 40px;transition:opacity .7s var(--ease),translate .7s var(--ease)}
+[data-reveal].is-in{opacity:1;translate:0 0}
+@media (max-width:960px){
+  .menubar .m{display:none}
+  .icons,.dialog,.hide-sm{display:none}
+  .hero-win{margin:0}
+  .hero-body{padding:28px 22px}
+  .explorer .body,.duo{grid-template-columns:minmax(0,1fr)}
+  .files{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));padding:14px}
+  .file img{width:64px;height:64px}
+  .side{display:flex;flex-wrap:wrap}
+  .taskbar .tab{display:none}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-reveal]{opacity:1;translate:0 0}}
+
+/* extra */
+.desk-dock{position:absolute;right:3%;bottom:34px;z-index:6;--ap-s:96px;--ap-paper:#fffdf8}
+.dialog{left:61%;bottom:auto;top:24%;width:290px}
+.hero-win{max-width:760px}
+.hero-body h1{font-size:clamp(40px,4.8vw,66px)}
+.explorer .body{grid-template-columns:200px 1fr 270px}
+.preview{padding:16px;display:grid;align-content:start;gap:10px}
+.preview .sk{font-size:12px;color:#55525c}
+.preview .ap-dock{--ap-s:84px;justify-content:center;gap:10px}
+.preview pre{font:18px/1.2 VT323;white-space:pre-wrap;word-break:break-all;background:#121216;color:#c7f7c1;padding:12px}
+.preview pre b{color:#ff8ccc;font-weight:400}
+.file{all:unset;display:grid;justify-items:center;gap:6px;font:11px Silkscreen;text-align:center;overflow-wrap:anywhere;cursor:pointer;animation:slap .4s var(--spring) both;animation-delay:calc(var(--i)*30ms)}
+.file[aria-pressed=true] span{background:var(--acc);color:#fff}
+.file:focus-visible{outline:2px dashed var(--title1);outline-offset:4px}
+.watch{white-space:pre;overflow:auto;font-size:20px}
+.watch .dim{color:#6f8f6c}
+@media (max-width:960px){.explorer .body{grid-template-columns:minmax(0,1fr)}.desk-dock{position:static;--ap-s:72px;margin-top:20px;justify-content:center}.watch{font-size:15px}}
+</style>
+</head>
+<body>
+
+<div class="menubar">
+  <div class="l">
+    <a class="brand" href="#"><img src="assets/avatars/claude.svg" alt="">agent-presence.exe</a>
+    <a class="m" href="#stickers">Your stickers</a><a class="m" href="#how">How it works</a><a class="m" href="#">Docs</a><a class="m" href="#">GitHub</a>
+  </div>
+  <a class="btn primary" href="#install">Install</a>
+</div>
+
+<header class="wrap desktop">
+  <div class="win hero-win">
+    <div class="title"><span>Welcome to agent-presence.exe</span><div class="ctrls"><span class="bevel">_</span><span class="bevel">□</span><span class="bevel">×</span></div></div>
+    <div class="hero-body">
+      <h1>Your AI agents, <mark>live on your desktop.</mark></h1>
+      <p>A sticker for every Claude Code and Codex session floats above your windows and says what it's doing.</p>
+      <div class="row">
+        <button class="cmd well" data-copy="npm i -g agent-presence">C:\&gt; npm i -g agent-presence <span class="c bevel" data-copy-label>Copy</span></button>
+        <a class="btn bevel" href="#how">See it work</a>
+      </div>
+    </div>
+    <div class="status"><span class="well">Claude Code + Codex</span><span class="well">9 live states</span><span class="well">Local only</span></div>
+  </div>
+
+  <div class="icons">
+    <a class="icon" href="#"><img src="assets/stickers/retro-tech/paper-files.png" alt=""><span>my-app/</span></a>
+    <a class="icon" href="#how"><img src="assets/stickers/retro-tech/pixel-computer.png" alt=""><span>watch.exe</span></a>
+    <a class="icon" href="#stickers"><img src="assets/stickers/retro-tech/classic-paint.png" alt=""><span>stickers/</span></a>
+    <a class="icon" href="#"><img src="assets/stickers/retro-tech/pixel-recycle-bin.png" alt=""><span>alt-tab.exe</span></a>
+  </div>
+
+  <img class="stk diecut hide-sm" data-drag src="assets/stickers/retro-tech/hello-kitty-disc.png" alt="" style="--w:120px;--r:-12deg;--i:0;left:1%;bottom:40px">
+  <img class="stk diecut hide-sm" data-drag src="assets/stickers/retro-tech/blue-flip-phone.png" alt="" style="--w:76px;--r:16deg;--i:1;left:52%;top:30px">
+  <img class="stk diecut hide-sm" data-drag src="assets/stickers/retro-tech/pixel-cursor.png" alt="" style="--w:56px;--r:-6deg;--i:2;left:33%;bottom:70px">
+
+  <div class="win dialog">
+    <div class="title"><span>Claude Code</span><div class="ctrls"><span class="bevel">×</span></div></div>
+    <div class="b"><img src="assets/avatars/claude.svg" alt=""><span><b>Claude needs your permission</b> to use Bash. Your sticker is bouncing.</span></div>
+    <div class="acts"><a class="btn bevel" href="#install">Allow</a><a class="btn bevel" href="#install">Deny</a></div>
+  </div>
+
+  <div class="desk-dock" data-dock data-speed="1500" aria-label="Live demo of the Agent Presence sticker dock"></div>
+</header>
+
+<section id="stickers">
+  <div class="wrap">
+    <h2 class="sh" data-reveal>Any sticker can be your agent.</h2>
+    <div class="win explorer" data-reveal>
+      <div class="title"><span>C:\Users\you\stickers</span><div class="ctrls"><span class="bevel">_</span><span class="bevel">□</span><span class="bevel">×</span></div></div>
+      <div class="bar"><span class="sk">Address</span><div class="addr well" id="addr">C:\Users\you\stickers\retro-tech</div></div>
+      <div class="body">
+        <div class="side well" id="side"></div>
+        <div class="files well" id="files"></div>
+        <div class="preview well">
+          <span class="sk">Preview: click a file</span>
+          <div data-dock id="previewDock" data-only="claude" data-speed="1900"></div>
+          <pre id="cfg"></pre>
+        </div>
+      </div>
+      <div class="progress well" id="prog"></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="sh" data-reveal>Three commands. That's the whole manual.</h2>
+    <div class="duo">
+      <div class="win" data-reveal>
+        <div class="title"><span>agent-presence watch</span><div class="ctrls"><span class="bevel">_</span><span class="bevel">×</span></div></div>
+        <div class="term watch"><span class="dim">Same live view, for terminal people.</span>
+
+  ✏️  claude · my-app         writing    auth.ts    (2s)
+  🔍  claude · Explore        reading    session    (4s)
+  ✏️  claude · test-writer    writing    auth.test.ts (1s)
+  ▶   codex · api             running    pytest -q  (1s)
+  ❗  claude · my-app         waiting    needs you  (0s)
+  ✓   codex · api             done                  (6s)
+
+<span class="p">C:\&gt;</span> <span class="cur"></span></div>
+      </div>
+      <div style="display:grid;gap:34px">
+        <div class="win" data-reveal id="install">
+          <div class="title"><span>MS-DOS Prompt</span><div class="ctrls"><span class="bevel">×</span></div></div>
+          <div class="term"><div><span class="p">C:\&gt;</span> npm i -g agent-presence</div><div><span class="p">C:\&gt;</span> agent-presence init</div><div>+ hooks added to Claude Code and Codex</div><div>+ old settings backed up</div><div><span class="p">C:\&gt;</span> agent-presence overlay</div><div>+ stickers are on your screen</div></div>
+        </div>
+        <div class="win" data-reveal>
+          <div class="title"><span>System Properties</span><div class="ctrls"><span class="bevel">×</span></div></div>
+          <div class="props">
+            <label><span class="chk well">✓</span>Floats above every window, VS Code included</label>
+            <label><span class="chk well">✓</span>Clicks pass through, except on the stickers</label>
+            <label><span class="chk well">✓</span>Hover a sticker for its recent files</label>
+            <label><span class="chk well">✓</span>Ctrl+Alt+Shift+A hides it</label>
+            <label><span class="chk well">✓</span>Local only: no server, no account</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bsod">
+  <img class="stk hide-sm" data-drag src="assets/avatars/claude.svg" alt="" style="--w:170px;--r:8deg;right:7%;top:16%">
+  <img class="stk hide-sm" data-drag src="assets/avatars/codex.svg" alt="" style="--w:140px;--r:-10deg;right:20%;bottom:12%">
+  <div class="wrap" data-reveal>
+    <span class="tag">AGENT PRESENCE</span>
+    <h2>A fatal lack of visibility has occurred.</h2>
+    <p>You have 4 agents in 4 terminals and no idea which one needs you. Install Agent Presence to continue.</p>
+    <div class="row">
+      <button class="cmd well" data-copy="npm i -g agent-presence">C:\&gt; npm i -g agent-presence <span class="c bevel" data-copy-label>Copy</span></button>
+      <a class="btn primary" href="#">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer class="taskbar">
+  <a class="start bevel" href="#"><img src="assets/avatars/claude.svg" alt="">Start</a>
+  <a class="tab well" href="#">Docs</a><a class="tab well" href="#">GitHub</a><a class="tab well" href="#">npm</a><a class="tab well" href="#">VS Code</a>
+  <span class="tray well">Free, MIT</span>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const folders = {
+  'retro-tech': ['blue-flip-phone','canon-camera','classic-paint','hello-kitty-disc','jpeg-file','magnifying-glass','paper-files','pixel-computer','pixel-cursor','pixel-globe','pixel-recycle-bin','quicktime-movie'],
+  'anime': ['jiji-ok','kiki-checked','tombo-cheering','gojo-chibi-head','yuji-chibi-head','megumi-chibi-head','jiji-head-blue','kiki-broom'],
+  'expressions': ['purple-dizzy-face','yellow-star-eyes','red-happy-face','orange-smirk-face','lime-flat-face','blue-sad-face','girl-side-eye','girl-sleepy'],
+  'cutesy': ['chrome-star-large','blue-teddy-bear','pink-cat-face','walking-star','red-bunny-badge','milk-tea','sun-cat','star-bunny'],
+  '3d-emoji': ['../fluent/robot','../fluent/alien','../fluent/video-game','../fluent/flying-saucer','../fluent/nerd-face','../fluent/exploding-head','../fluent/frog','../fluent/panda'],
+};
+const side = document.getElementById('side'), files = document.getElementById('files'), addr = document.getElementById('addr'), prog = document.getElementById('prog'), cfg = document.getElementById('cfg');
+const preview = AP.get('previewDock');
+const src = (folder, f) => `assets/stickers/${folder === '3d-emoji' ? '' : folder + '/'}${f}.png`;
+function pick(folder, f, btn){
+  preview.setAvatar('claude', src(folder, f));
+  [...files.children].forEach(b => b.setAttribute('aria-pressed', b === btn));
+  cfg.innerHTML = `config.json\n"claude": <b>"~/stickers/${f.split('/').pop()}.png"</b>`;
+}
+function open(name){
+  [...side.children].forEach(b => b.setAttribute('aria-pressed', b.dataset.f === name));
+  addr.textContent = 'C:\\Users\\you\\stickers\\' + name;
+  files.innerHTML = folders[name].map((f,i) => `<button class="file" style="--i:${i}" aria-pressed="false"><img src="${src(name, f)}" alt="" loading="lazy"><span>${f.split('/').pop()}</span></button>`).join('');
+  [...files.children].forEach((b,i) => b.onclick = () => pick(name, folders[name][i], b));
+  prog.innerHTML = Array.from({length: 40}, (_,i) => `<i style="--i:${i}"></i>`).join('');
+}
+Object.keys(folders).forEach(f => { const b = document.createElement('button'); b.dataset.f = f; b.innerHTML = `<i class="ph-fill ph-folder"></i>${f}`; b.onclick = () => open(f); side.append(b); });
+open('retro-tech');
+pick('retro-tech', 'hello-kitty-disc', files.children[3]);
+</script>
+</body>
+</html>
