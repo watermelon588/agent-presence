@@ -1,8 +1,8 @@
 {
   "name": "agent-presence",
   "version": "0.1.0",
-  "description": "Sends Codex activity (files, commands, subagents) to the agent-presence sticker overlay.",
-  "author": { "name": "agent-presence contributors" },
+  "description": "Sends Codex activity (files, commands, subagents) to the Agent Peeps sticker overlay.",
+  "author": { "name": "agentpeeps contributors" },
   "license": "MIT",
   "keywords": ["overlay", "subagents", "presence", "stickers", "desktop pet"],
   "skills": "./skills/",
@@ -20,19 +20,19 @@
     }
   },
   "interface": {
-    "displayName": "Agent Presence",
-    "shortDescription": "Sticker chibis that show what your agents are doing",
-    "longDescription": "Floating sticker characters for every Codex and Claude Code session and subagent, with a live bubble showing the file or command each one is on. Runs locally; needs the agent-presence overlay from npm.",
-    "developerName": "agent-presence contributors",
+    "displayName": "Agent Peeps",
+    "shortDescription": "Small stickers that show what your agents are doing",
+    "longDescription": "Floating sticker characters for every Codex and Claude Code session and subagent, with a tiny status icon and, on hover, the file or command each one is on. Runs locally; needs the Agent Peeps overlay from npm.",
+    "developerName": "agentpeeps contributors",
     "category": "Productivity",
     "capabilities": ["Read", "Write"],
-    "composerIcon": "./avatars/codex.svg",
-    "logo": "./avatars/codex.svg",
+    "composerIcon": "./logo.png",
+    "logo": "./logo.png",
     "brandColor": "#8FDCC6",
     "defaultPrompt": [
       "Use this image as my Codex sticker",
       "Give my Explore subagents their own sticker",
-      "Start the agent-presence overlay"
+      "Start the Agent Peeps overlay"
     ],
     "screenshots": []
   }

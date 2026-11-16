@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// agent-presence: hook receiver + installer + terminal view.
-// Hooks pipe their JSON into `agent-presence emit <agent>`; we append one line to
+// agentpeeps: hook receiver + installer + terminal view.
+// Hooks pipe their JSON into `agentpeeps emit <agent>`; we append one line to
 // ~/.agent-presence/events.jsonl. The overlay (and `watch`) tail that file.
 const fs = require('fs');
 const path = require('path');
@@ -40,6 +40,7 @@ function patchFiles(text) {
   return [...String(text).matchAll(/^\*\*\* (?:Add|Update|Delete) File: (.+)$/gm)].map(m => m[1].trim());
 }
 
+const modelOf = m => (m && typeof m === 'object' ? m.id || m.display_name || m.name : m) || null;
 const asObject = v => { if (typeof v !== 'string') return v; try { return JSON.parse(v); } catch { return null; } };
 // Copilot's camelCase events; the rest map by capitalizing (preToolUse -> PreToolUse).
 const EVENT_ALIAS = { userPromptSubmitted: 'UserPromptSubmit', agentStop: 'Stop' };
@@ -88,6 +89,8 @@ function normalize(agent, h, argEvent) {
     file,
     detail,
     cwd: h.cwd || (h.workspacePaths || [])[0] || null,
+    // Claude Code sends the model on SessionStart, Antigravity sends modelName; the overlay remembers it per session.
+    model: modelOf(h.model || h.modelName || h.model_name),
   };
 }
 
@@ -108,10 +111,10 @@ function electronBin() {
   } catch { return null; }
 }
 
-function startOverlay() {
+function startOverlay(...args) {
   const bin = electronBin();
   if (!bin) return false;
-  require('child_process').spawn(bin, [path.join(__dirname, 'overlay', 'main.js')], { detached: true, stdio: 'ignore', windowsHide: true }).unref();
+  require('child_process').spawn(bin, [path.join(__dirname, 'overlay', 'main.js'), ...args], { detached: true, stdio: 'ignore', windowsHide: true }).unref();
   return true;
 }
 
@@ -143,7 +146,7 @@ const CODEX_EVENTS = ['SessionStart', 'UserPromptSubmit', 'PreToolUse', 'PostToo
 // events that can't block anything: tool calls are reported after they finish ("ToolUse"), not before.
 const COPILOT_EVENTS = { sessionStart: 'sessionStart', userPromptSubmitted: 'userPromptSubmitted', postToolUse: 'ToolUse', notification: 'notification', subagentStart: 'subagentStart', subagentStop: 'subagentStop', agentStop: 'agentStop', sessionEnd: 'sessionEnd' };
 const ANTIGRAVITY_EVENTS = { SessionStart: 'SessionStart', PostToolUse: 'ToolUse', Stop: 'Stop' };
-const isOurs = h => JSON.stringify(h).includes('agent-presence') && JSON.stringify(h).includes('emit');
+const isOurs = h => /agent-presence|agentpeeps/.test(JSON.stringify(h)) && JSON.stringify(h).includes('emit');
 
 function editHooksFile(file, events, makeHook, remove) {
   let json = {};
@@ -170,7 +173,7 @@ function permanentCli() {
   if (!isEphemeral(__dirname)) return CLI;
   const { execSync } = require('child_process');
   const { version } = require('./package.json');
-  console.log(`Installing agent-presence ${version} into ${APP} so the hooks keep working after npx clears its cache...`);
+  console.log(`Installing agentpeeps ${version} into ${APP} so the hooks keep working after npx clears its cache...`);
   try {
     fs.mkdirSync(APP, { recursive: true });
     fs.writeFileSync(path.join(APP, 'package.json'), JSON.stringify({ private: true }) + '\n');
@@ -179,10 +182,10 @@ function permanentCli() {
     execSync(`npm install "./${tgz}" --omit=dev --no-audit --no-fund --loglevel=error`, { cwd: APP, stdio: 'inherit' });
     fs.rmSync(path.join(APP, tgz), { force: true });
   } catch (err) {
-    console.error(`\nCould not install a permanent copy (${String(err.message).split('\n')[0]}).\nInstall it globally instead:  npm i -g agent-presence && agent-presence init`);
+    console.error(`\nCould not install a permanent copy (${String(err.message).split('\n')[0]}).\nInstall it globally instead:  npm i -g agentpeeps && agentpeeps init`);
     process.exit(1);
   }
-  return path.join(APP, 'node_modules', 'agent-presence', 'cli.js');
+  return path.join(APP, 'node_modules', require('./package.json').name, 'cli.js');
 }
 
 // Copilot (VS Code agent mode and Copilot CLI): we own the whole file ~/.copilot/hooks/agent-presence.json.
@@ -226,33 +229,42 @@ function install(remove) {
     ['copilot', copilotHome, 'Copilot (~/.copilot/hooks/agent-presence.json)', (cli, rm) => copilotHooks(path.join(copilotHome, 'hooks', 'agent-presence.json'), cli, rm)],
     ['antigravity', path.join(home, '.gemini', 'antigravity'), 'Antigravity (~/.gemini/config/hooks.json)', (cli, rm) => antigravityHooks(path.join(home, '.gemini', 'config', 'hooks.json'), cli, rm)],
   ].filter(([name, dir]) => (which.length ? which.includes(name) : fs.existsSync(dir)));
-  if (!targets.length) return console.log('No supported agent found. Name one explicitly: agent-presence init claude|codex|copilot|antigravity');
+  if (!targets.length) return console.log('No supported agent found. Name one explicitly: agentpeeps init claude|codex|copilot|antigravity');
 
   const cli = remove ? CLI : permanentCli();
   for (const [, , , apply] of targets) apply(cli, remove);
   const names = targets.map(t => t[2]);
   console.log((remove ? 'Removed hooks from: ' : 'Installed hooks for: ') + names.join(', '));
   if (remove) return;
-  if (names.some(d => d.startsWith('Codex'))) console.log('Codex: open /hooks in Codex once and trust the agent-presence hooks.');
+  if (names.some(d => d.startsWith('Codex'))) console.log('Codex: open /hooks in Codex once and trust the Agent Peeps hooks.');
   if (names.some(d => /^(Copilot|Antigravity)/.test(d))) console.log('Copilot / Antigravity: stickers show each tool call as it finishes (their hooks can\'t run in the background). Restart them to load the hooks.');
-  const run = isEphemeral(__dirname) ? 'npx agent-presence' : 'agent-presence';
+  const run = isEphemeral(__dirname) ? 'npx agentpeeps' : 'agentpeeps';
   console.log(`The stickers appear on your next agent session. To start them now: ${run} overlay`);
 }
 
-// ---- terminal view ----
+// ---- terminal view: every agent, its helpers, and the files each one touched ----
 function watch() {
-  const agents = new Map();
+  const agents = new Map(); // key -> last event + files: Map(path -> { t, state })
   let offset = 0;
   const icon = { idle: '·', thinking: '…', reading: '🔍', writing: '✏️', running: '▶', delegating: '🧩', browsing: '🌐', waiting: '❗', done: '✓', working: '⚙' };
+  const ago = t => { const s = Math.round((Date.now() - t) / 1000); return s < 60 ? s + 's' : Math.round(s / 60) + 'm'; };
+  const show = (a, f) => { const r = path.relative(a.cwd || '', f); return r && !r.startsWith('..') && !path.isAbsolute(r) ? r : f; };
+  const row = (a, pad) => {
+    const who = a.sub ? `${pad}└ ${a.subType || 'subagent'}` : `${a.agent} ${a.session.slice(0, 6)}`;
+    const doing = a.detail && ['running', 'browsing', 'delegating', 'waiting'].includes(a.state) ? a.detail : a.file ? show(a, a.file) : a.detail || '';
+    console.log(`  ${icon[a.state] || '?'}  ${who.padEnd(24)} ${a.state.padEnd(10)} ${doing}  (${ago(a.t)})`);
+    for (const [f, x] of [...a.files].sort((p, q) => q[1].t - p[1].t).slice(0, 4))
+      console.log(`  ${' '.repeat(pad.length + 6)}${(icon[x.state] || '·')} ${show(a, f)}  ${ago(x.t)}`);
+  };
   const render = () => {
     console.clear();
-    console.log('agent-presence  (Ctrl+C to exit)\n');
+    console.log('Agent Peeps  (Ctrl+C to exit)\n');
+    const mains = [...agents.values()].filter(a => !a.sub).sort((p, q) => q.t - p.t);
     if (!agents.size) console.log('  no agents active');
-    for (const a of agents.values()) {
-      const ago = Math.round((Date.now() - a.t) / 1000);
-      const who = a.sub ? `   └ ${a.subType || 'subagent'}` : `${a.agent} ${a.session.slice(0, 6)}`;
-      const what = a.file ? path.basename(a.file) : a.detail || '';
-      console.log(`  ${icon[a.state] || '?'}  ${who.padEnd(22)} ${a.state.padEnd(10)} ${what}  (${ago}s)`);
+    for (const m of mains) {
+      row(m, '');
+      for (const s of agents.values()) if (s.sub && s.main === m.key) row(s, '   ');
+      console.log();
     }
   };
   const pump = () => {
@@ -263,9 +275,13 @@ function watch() {
       fs.readSync(fd, buf, 0, buf.length, offset); fs.closeSync(fd); offset = size;
       for (const line of buf.toString('utf8').split('\n')) {
         let e; try { e = JSON.parse(line); } catch { continue; }
-        const key = e.agent + e.session + (e.sub || '');
-        if (e.state === 'gone') { agents.delete(key); if (!e.sub) for (const k of agents.keys()) if (k.startsWith(e.agent + e.session)) agents.delete(k); }
-        else agents.set(key, e);
+        const main = e.agent + ':' + e.session, key = main + (e.sub ? ':' + e.sub : '');
+        if (e.state === 'gone') { for (const k of agents.keys()) if (k === key || (!e.sub && k.startsWith(main + ':'))) agents.delete(k); continue; }
+        if (!agents.has(main)) agents.set(main, { ...e, sub: null, subType: null, key: main, files: new Map() }); // helper seen before its parent
+        const prev = agents.get(key) || { files: new Map() };
+        const a = { ...e, key, main, cwd: e.cwd || prev.cwd, files: prev.files };
+        if (e.file) a.files.set(path.resolve(a.cwd || '', e.file), { t: e.t, state: e.state });
+        agents.set(key, a);
       }
     }
     for (const [k, a] of agents) if (Date.now() - a.t > 15 * 60e3) agents.delete(k);
@@ -282,19 +298,113 @@ function overlay() {
   }
   if (overlayRunning()) return console.log('Overlay already running.');
   if (!electronBin()) { console.log('First run: fetching Electron (one time)...'); try { require('electron'); } catch {} }
-  console.log(startOverlay() ? 'Overlay started. Stop it with: agent-presence overlay --quit' : 'Electron not found. Install with: npm i -g agent-presence');
+  console.log(startOverlay() ? 'Overlay started. Stop it with: agentpeeps overlay --quit' : 'Electron not found. Install with: npm i -g agentpeeps');
 }
 
-const HELP = `agent-presence — sticker chibis for your AI coding agents
+// ---- sticker packs: any folder of images in ~/.agent-presence/stickers/ (or the bundled avatars/free/ and avatars/stickers/) ----
+const IMG = /\.(png|gif|svg|webp|jpe?g)$/i;
+const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const expandPath = s => path.resolve(String(s).replace(/^~(?=$|[\/])/, os.homedir()));
 
-  agent-presence init [agent...]           install hooks (claude, codex, copilot, antigravity; default: every one found)
-  agent-presence uninstall [agent...]      remove hooks
-  agent-presence overlay [--quit]          start/stop the floating stickers
-  agent-presence watch                     live view in the terminal
-  agent-presence emit <agent> [event]      (used by hooks; reads hook JSON on stdin)
+// slug -> { name, dir, files, mine }. A pack is named after its folder; the user's own folders win over bundled ones.
+function packs() {
+  const out = new Map();
+  const walk = (dir, top, mine) => {
+    let entries; try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    const files = entries.filter(d => d.isFile() && IMG.test(d.name)).map(d => path.join(dir, d.name));
+    if (files.length && !top && !out.has(slug(path.basename(dir)))) out.set(slug(path.basename(dir)), { name: path.basename(dir), dir, files, mine });
+    for (const d of entries) if (d.isDirectory()) walk(path.join(dir, d.name), false, mine);
+  };
+  walk(path.join(HOME, 'stickers'), true, true);
+  walk(path.join(__dirname, 'avatars', 'free'), true, false); // free packs shipped on npm
+  walk(path.join(__dirname, 'avatars', 'stickers'), true, false);
+  return out;
+}
 
-Custom stickers: ~/.agent-presence/config.json
-  { "avatars": { "claude": "C:/stickers/fox.png", "codex": "...", "subagent": "...", "Explore": "..." } }`;
+// "dinosaur" finds the dinosaurs pack and the other way round
+const findPack = (all, name) => { const s = slug(name); return [s, s + 's', s.replace(/s$/, '')].find(k => all.has(k)); };
+
+// A config value ("pack:dinosaur", an image path, or a list of both) -> existing image files.
+function stickerFiles(value, all = packs()) {
+  return [].concat(value || []).flatMap(v => {
+    const s = String(v);
+    if (s.startsWith('pack:')) { const p = all.get(findPack(all, s.slice(5))); return p ? p.files : []; }
+    const f = expandPath(s);
+    return fs.existsSync(f) ? [f] : [];
+  });
+}
+
+// What people type -> config key: claude, helpers -> subagent, claude-helpers -> claude-subagent, model:opus, or a helper type.
+const AGENT_NAMES = ['claude', 'codex', 'copilot', 'antigravity'];
+function targetKey(t) {
+  const s = String(t || '');
+  const low = s.toLowerCase();
+  if (AGENT_NAMES.includes(low)) return low;
+  if (low === 'helpers' || low === 'subagents' || low === 'subagent') return 'subagent';
+  const m = low.match(/^(\w+)-(helpers|subagents?)$/);
+  if (m && AGENT_NAMES.includes(m[1])) return m[1] + '-subagent';
+  if (low.startsWith('model:')) return 'model:' + s.slice(6).trim();
+  return s; // a helper type such as Explore
+}
+
+function listPacks() {
+  const all = [...packs().values()];
+  if (!all.length) return console.log(`No packs yet. A pack is a folder of images: put some in ${path.join(HOME, 'stickers', '<pack name>')}`);
+  console.log('Sticker packs (use one with: agentpeeps set <target> <pack>)\n');
+  for (const p of all.sort((a, b) => a.name.localeCompare(b.name))) console.log(`  ${slug(p.name).padEnd(26)} ${String(p.files.length).padStart(3)} stickers${p.mine ? '' : '  (bundled)'}`);
+}
+
+// agentpeeps set <target> <pack|image|default> [more packs or images...]
+function setStickers(target, values) {
+  if (!target || !values.length) return console.log(SET_HELP);
+  const key = targetKey(target);
+  const cfg = readConfig();
+  const avatars = { ...(cfg.avatars || {}) };
+  const all = packs();
+  if (/^(default|none|reset)$/i.test(values[0])) delete avatars[key];
+  else {
+    const picked = [];
+    for (const v of values) {
+      if (findPack(all, v)) picked.push('pack:' + findPack(all, v));
+      else if (fs.existsSync(expandPath(v))) picked.push(expandPath(v));
+      else return console.log(`No pack or image called "${v}". See your packs with: agentpeeps packs`);
+    }
+    avatars[key] = picked.length === 1 ? picked[0] : picked;
+  }
+  fs.mkdirSync(HOME, { recursive: true });
+  fs.writeFileSync(CONFIG, JSON.stringify({ ...cfg, avatars }, null, 2) + '\n');
+  const n = stickerFiles(avatars[key], all).length;
+  console.log(avatars[key] ? `${key} -> ${[].concat(avatars[key]).map(v => String(v).replace(/^pack:/, '') + (String(v).startsWith('pack:') ? ' pack' : '')).join(', ')} (${n} sticker${n === 1 ? '' : 's'})` : `${key} -> default`);
+  if (n > 1) console.log('Each session gets its own sticker from the set. The overlay updates live.');
+}
+
+const SET_HELP = `agentpeeps set <target> <pack|image|default> [more...]
+
+  targets:  claude  codex  copilot  antigravity
+            helpers            every subagent
+            claude-helpers     one agent's subagents (codex-helpers, ...)
+            Explore            one subagent type
+            model:opus         sessions whose model contains "opus" (e.g. model:fable, model:opus-5-5)
+
+  examples: agentpeeps set claude dinosaur
+            agentpeeps set codex anime
+            agentpeeps set model:fable cats
+            agentpeeps set helpers robots
+            agentpeeps set Explore ~/stickers/detective.png
+            agentpeeps set claude default`;
+
+const HELP = `Agent Peeps — stickers for your AI coding agents
+
+  agentpeeps init [agent...]           install hooks (claude, codex, copilot, antigravity; default: every one found)
+  agentpeeps uninstall [agent...]      remove hooks
+  agentpeeps overlay [--quit]          start/stop the floating stickers
+  agentpeeps control [claude|...]      open the control room (optionally on one agent's stickers)
+  agentpeeps packs                     list sticker packs
+  agentpeeps set <target> <pack>       e.g. set claude dinosaur, set model:opus cats, set helpers robots
+  agentpeeps watch                     live view in the terminal
+  agentpeeps emit <agent> [event]      (used by hooks; reads hook JSON on stdin)
+
+Packs are folders of images in ~/.agent-presence/stickers/<pack>. Settings live in ~/.agent-presence/config.json.`;
 
 if (require.main === module) {
   const cmd = process.argv[2];
@@ -303,7 +413,10 @@ if (require.main === module) {
   else if (cmd === 'uninstall') install(true);
   else if (cmd === 'watch') watch();
   else if (cmd === 'overlay') overlay();
+  else if (cmd === 'packs') listPacks();
+  else if (cmd === 'set') setStickers(process.argv[3], process.argv.slice(4));
+  else if (cmd === 'control' || cmd === 'stickers' || cmd === 'settings') console.log(startOverlay('--control' + (process.argv[3] ? '=' + targetKey(process.argv[3]) : '')) ? 'Opening the control room...' : 'Electron not found. Install with: npm i -g agentpeeps');
   else console.log(HELP);
 }
 
-module.exports = { normalize, patchFiles, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, HOME, EVENTS, CONFIG };
+module.exports = { normalize, patchFiles, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };

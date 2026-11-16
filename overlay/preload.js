@@ -1,9 +1,19 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('ap', {
+  // overlay
   onConfig: cb => ipcRenderer.on('config', (_, c) => cb(c)),
   onEvent: cb => ipcRenderer.on('event', (_, e) => cb(e)),
+  onResetPositions: cb => ipcRenderer.on('reset-positions', () => cb()),
   mouse: over => ipcRenderer.send('mouse', over),
   reveal: (file, cwd) => ipcRenderer.send('reveal', file, cwd),
-  menu: () => ipcRenderer.send('menu'),
+  menu: target => ipcRenderer.send('menu', target),
+  // control room
+  onRoom: cb => ipcRenderer.on('room', (_, d) => cb(d)),
+  setAvatars: (key, files) => ipcRenderer.send('set-avatars', key, files),
+  browse: key => ipcRenderer.send('browse', key),
+  setConfig: patch => ipcRenderer.send('set-config', patch),
+  setVisible: on => ipcRenderer.send('visible', on),
+  resetPositions: () => ipcRenderer.send('reset-positions'),
+  openFolder: () => ipcRenderer.send('open-folder'),
 });

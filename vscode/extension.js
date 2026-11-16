@@ -9,6 +9,8 @@ const NAMES = { claude: 'Claude', codex: 'Codex', copilot: 'Copilot', antigravit
 const base = p => path.basename(p || '');
 const ago = t => { const s = Math.round((Date.now() - t) / 1000); return s < 60 ? s + 's ago' : Math.round(s / 60) + 'm ago'; };
 const who = h => (NAMES[h.agent] || h.agent) + (h.sub ? ' · ' + (h.subType || 'subagent') : '');
+// Filled-circle letter (🅐..🅩, U+1F150): a text glyph, so the badge takes the agent's theme color.
+const solid = name => { const c = String(name || 's').toUpperCase().charCodeAt(0); return c >= 65 && c <= 90 ? String.fromCodePoint(0x1F150 + c - 65) : String(name)[0]; };
 const colorId = h => (h.sub ? 'agentPresence.subagent' : NAMES[h.agent] ? 'agentPresence.' + h.agent : 'agentPresence.other');
 
 function activate(ctx) {
@@ -28,7 +30,7 @@ function activate(ctx) {
       if (process.env.AGENT_PRESENCE_DEBUG) log.info(`decorate? ${uri.fsPath} -> ${h ? h.agent + ' ' + h.state : 'none'} | known: ${p.list().map(a => a.file).filter(Boolean).join(', ')}`);
       if (!h) return;
       const b = cfg().get('badges') || {};
-      const badge = (h.sub ? b[h.subType] || b.subagent : b[h.agent]) || h.agent[0].toUpperCase();
+      const badge = h.sub ? b[h.subType] || b.subagent || solid(h.subType) : b[h.agent] || solid(h.agent);
       return {
         badge: [...String(badge)].slice(0, 2).join(''),
         color: new vscode.ThemeColor(colorId(h)),
@@ -39,12 +41,15 @@ function activate(ctx) {
   }));
 
   // ---- "Agents" view: stickers as icons, subagents and recent files underneath ----
+  // The sticker chosen in the control room (a list gives each session its own, same pick as the overlay);
+  // otherwise a dot in the agent's color.
+  const hash = s => [...String(s)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
   const avatar = (a) => {
     const custom = readUserConfig().avatars || {};
-    const pick = a.sub ? custom[a.subType] || custom[a.agent + '-subagent'] || custom.subagent : custom[a.agent];
+    const set = [].concat((a.sub ? custom[a.subType] || custom[a.agent + '-subagent'] || custom.subagent : custom[a.agent]) || []);
+    const pick = set.length && set[hash(a.session + (a.sub || '')) % set.length];
     if (pick) { const f = path.resolve(String(pick).replace(/^~(?=$|[\\/])/, os.homedir())); if (fs.existsSync(f)) return vscode.Uri.file(f); }
-    const media = a.sub ? 'subagent' : NAMES[a.agent] ? a.agent : 'subagent';
-    return vscode.Uri.joinPath(ctx.extensionUri, 'media', media + '.svg');
+    return new vscode.ThemeIcon(a.sub ? 'circle-large-outline' : 'circle-large-filled', new vscode.ThemeColor(colorId(a)));
   };
   const treeChanged = new vscode.EventEmitter();
   const tree = {

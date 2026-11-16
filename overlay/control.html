@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src file: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>Agent Peeps · control room</title>
+<style>
+  :root { --ink: #33262a; --soft: #7a6a66; --paper: #fffdf8; --chip: #f4ece3; --line: #ece2d7; --pick: #ee8f62; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--paper); color: var(--ink);
+    font: 600 13px/1.4 ui-rounded, "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; }
+  body { display: grid; grid-template-columns: 210px 1fr; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  nav { border-right: 1px solid var(--line); padding: 12px 10px; overflow: auto; }
+  nav h3 { margin: 14px 8px 4px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--soft); }
+  nav button { width: 100%; display: flex; align-items: center; gap: 9px; border: 0; background: none; padding: 5px 8px; border-radius: 10px; text-align: left; }
+  nav button:hover { background: #faf4ed; }
+  nav button[aria-current="true"] { background: var(--chip); font-weight: 800; }
+  nav .thumbs { display: flex; flex: none; width: 30px; height: 30px; position: relative; }
+  nav .thumbs img { width: 30px; height: 30px; object-fit: contain; }
+  nav .count { position: absolute; right: -4px; bottom: -3px; background: var(--ink); color: #fff; font-size: 9px; border-radius: 8px; padding: 0 4px; line-height: 14px; }
+  nav .gear { width: 30px; height: 30px; display: grid; place-items: center; }
+  nav span.n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  main { overflow: auto; padding: 18px 22px 28px; }
+  h1 { font-size: 17px; margin: 0 0 2px; }
+  .sub { color: var(--soft); font-weight: 500; margin: 0 0 14px; }
+
+  /* settings */
+  .row { display: grid; grid-template-columns: 190px 1fr; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .row > :last-child { justify-self: start; }
+  .row > div:first-child small { display: block; color: var(--soft); font-weight: 500; }
+  .seg { display: inline-flex; background: var(--chip); border-radius: 11px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+  .seg button { border: 0; background: none; padding: 6px 11px; border-radius: 8px; }
+  .seg button[aria-pressed="true"] { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.12); font-weight: 800; }
+  .checks { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  label.ck { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; cursor: pointer; }
+  input[type=checkbox] { accent-color: var(--pick); width: 15px; height: 15px; }
+  .btn { border: 1px solid var(--line); background: #fff; padding: 7px 12px; border-radius: 10px; }
+  .btn:hover { background: #faf4ed; }
+  .note { color: var(--soft); font-weight: 500; font-size: 12px; margin-top: 18px; }
+  code { background: var(--chip); padding: 1px 5px; border-radius: 5px; font-size: 12px; }
+
+  /* stickers */
+  .bar { position: sticky; top: -18px; margin: -18px -22px 0; padding: 18px 22px 12px; background: var(--paper); border-bottom: 1px solid var(--line); z-index: 1; }
+  .chosen { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 64px; }
+  .chosen .pick { position: relative; width: 60px; height: 60px; border-radius: 12px; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; }
+  .chosen .pick img { width: 48px; height: 48px; object-fit: contain; }
+  .chosen .pick button { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--ink); color: #fff; font-size: 11px; line-height: 18px; padding: 0; }
+  .chosen .def { display: flex; align-items: center; gap: 10px; color: var(--soft); font-weight: 500; }
+  .chosen .def img { width: 48px; height: 48px; }
+  .actions { display: flex; gap: 8px; margin-top: 10px; }
+  h2 { font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--soft); margin: 18px 0 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+  .tile { position: relative; border: 2px solid transparent; background: #fff; border-radius: 12px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .tile:hover { border-color: var(--line); }
+  .tile[aria-pressed="true"] { border-color: var(--pick); background: #fff5ee; }
+  .tile[aria-pressed="true"]::after { content: attr(data-n); position: absolute; top: 4px; right: 4px; min-width: 16px; height: 16px; border-radius: 8px; background: var(--pick); color: #fff; font-size: 10px; line-height: 16px; }
+  .tile img { width: 56px; height: 56px; object-fit: contain; }
+  .tile span { font-size: 10px; font-weight: 500; color: var(--soft); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .empty { color: var(--soft); font-weight: 500; }
+  .chosen .pick.pack { width: auto; padding: 0 10px 0 6px; display: flex; gap: 6px; }
+  .chosen .pick.pack img { width: 40px; height: 40px; }
+  .chosen .pick.pack b { font-size: 12px; }
+  .chosen .pick.pack small { display: block; color: var(--soft); font-weight: 500; font-size: 10.5px; }
+  h2 { display: flex; align-items: center; gap: 10px; }
+  h2 .use { text-transform: none; letter-spacing: 0; font-size: 11.5px; font-weight: 700; color: var(--ink); border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 3px 9px; }
+  h2 .use[aria-pressed="true"] { border-color: var(--pick); background: #fff5ee; }
+  nav form { display: flex; gap: 4px; padding: 4px 8px; }
+  nav input { min-width: 0; flex: 1; font: inherit; font-weight: 500; border: 1px solid var(--line); border-radius: 8px; padding: 4px 7px; background: #fff; }
+  nav form button { width: auto; padding: 4px 8px; border: 1px solid var(--line); background: #fff; }
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<main id="main"></main>
+<script>
+  let d = null, tab = 'settings';
+  const extra = []; // model rules added here that have no stickers yet
+  const h = (tag, props = {}, ...kids) => { const el = Object.assign(document.createElement(tag), props); el.append(...kids.filter(k => k != null)); return el; };
+  const img = (src, cls) => h('img', { src, alt: '', className: cls || '', loading: 'lazy' });
+  const GEAR = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>';
+
+  function nav() {
+    const items = [h('button', { onclick: () => go('settings'), innerHTML: `<span class="gear">${GEAR}</span><span class="n">Settings</span>` })];
+    items[0].setAttribute('aria-current', String(tab === 'settings'));
+    let group = '';
+    const targets = [...d.targets, ...extra.filter(x => !d.targets.some(t => t.key === x.key))];
+    if (!targets.some(t => t.group === 'Models')) targets.push({ group: 'Models', placeholder: true });
+    for (const t of targets) {
+      if (t.placeholder) { items.push(h('h3', { textContent: group = t.group })); continue; }
+      if (t.group !== group) items.push(h('h3', { textContent: group = t.group }));
+      const urls = d.urls[t.key] || [];
+      const b = h('button', { onclick: () => go(t.key) }, h('span', { className: 'thumbs' }, img(urls[0] || t.def), urls.length > 1 ? h('span', { className: 'count', textContent: urls.length }) : null), h('span', { className: 'n', textContent: t.name }));
+      b.setAttribute('aria-current', String(tab === t.key));
+      items.push(b);
+    }
+    items.push(h('form', { onsubmit: ev => { ev.preventDefault(); const v = ev.target.m.value.trim(); if (!v) return;
+      const key = 'model:' + v; if (!extra.some(x => x.key === key)) extra.push({ key, name: v, group: 'Models', def: d.targets[0].def.replace(/%3EC%3C|%3EX%3C|%3EP%3C|%3EA%3C/, '%3EM%3C') }); go(key); } },
+      h('input', { name: 'm', placeholder: 'model, e.g. opus', title: 'Sessions whose model contains this text use these stickers' }), h('button', { textContent: 'Add' })));
+    document.getElementById('nav').replaceChildren(...items);
+  }
+
+  const seg = (key, options) => h('div', { className: 'seg' }, ...options.map(([v, text]) => {
+    const b = h('button', { textContent: text, onclick: () => ap.setConfig({ [key]: v }) });
+    b.setAttribute('aria-pressed', String(d.settings[key] === v)); return b;
+  }));
+  const row = (title, hint, control) => h('div', { className: 'row' }, h('div', {}, title, hint ? h('small', { textContent: hint }) : null), control);
+  const check = (text, on, change) => h('label', { className: 'ck' }, h('input', { type: 'checkbox', checked: on, onchange: e => change(e.target.checked) }), text);
+
+  function settings() {
+    const s = d.settings;
+    return [
+      h('h1', { textContent: 'Control room' }),
+      h('p', { className: 'sub', textContent: 'Everything here applies right away. No agent or config editing needed.' }),
+      row('Stickers on screen', 'Ctrl+Alt+Shift+A toggles them anywhere', check('Show the stickers', s.visible, on => ap.setVisible(on))),
+      row('Size', null, seg('size', [['small', 'Small'], ['medium', 'Medium'], ['large', 'Large']])),
+      row('When to show an agent', null, seg('show', [['working', 'While it works'], ['alerts', 'Only when it needs me'], ['always', 'Always']])),
+      row('Details', 'What it is doing and which files', seg('details', [['hover', 'On hover'], ['always', 'Always']])),
+      row('Agents', null, h('div', { className: 'checks' }, ...[...d.agents, ['subagent', 'Helpers']].map(([k, n]) =>
+        check(n, s.agents[k] !== false, on => ap.setConfig({ agents: { ...s.agents, [k]: on } }))))),
+      row('Start with agents', 'Open the stickers when an agent session starts', check('Start automatically', s.autostart, on => ap.setConfig({ autostart: on }))),
+      row('Positions', 'Drag a sticker to move that agent', h('button', { className: 'btn', textContent: 'Reset positions', onclick: () => ap.resetPositions() })),
+      h('p', { className: 'note', innerHTML: 'Saved in <code>~/.agent-presence/config.json</code>, shared with the VS Code extension. Choose stickers in the list on the left.' }),
+    ];
+  }
+
+  function stickers(t) {
+    const chosen = d.chosen[t.key] || [];
+    const set = list => ap.setAvatars(t.key, list);
+    const packOf = v => String(v).startsWith('pack:') && d.library.find(g => g.pack === v.slice(5));
+    const urlOf = f => (d.library.flatMap(g => g.items).find(i => i.file === f) || {}).url || (d.urls[t.key] || [])[0];
+    const chip = f => { const g = packOf(f);
+      return g ? h('div', { className: 'pick pack', title: g.group + ' pack' }, img(g.items[0].url), h('div', {}, h('b', { textContent: g.group }), h('small', { textContent: g.items.length + ' stickers, whole pack' })), h('button', { textContent: '×', title: 'Remove', onclick: () => set(chosen.filter(x => x !== f)) }))
+        : h('div', { className: 'pick', title: f }, img(urlOf(f)), h('button', { textContent: '×', title: 'Remove', onclick: () => set(chosen.filter(x => x !== f)) })); };
+    const who = t.group === 'Agents' || t.group === 'Models' ? 'session' : 'helper';
+    const total = (d.urls[t.key] || []).length;
+    const bar = h('div', { className: 'bar' },
+      h('h1', { textContent: t.name }),
+      h('p', { className: 'sub', textContent: (t.group === 'Models' ? `Sessions whose model contains “${t.name}”. ` : '') + (total > 1 ? `${total} stickers: each ${who} gets one of them.` : `Click stickers, or use a whole pack. With several, each ${who} gets its own.`) }),
+      h('div', { className: 'chosen' }, ...(chosen.length ? chosen.map(chip)
+        : [h('div', { className: 'def' }, img(t.def), 'Default: a colored circle with the initial')])),
+      h('div', { className: 'actions' },
+        h('button', { className: 'btn', textContent: 'Add from my computer…', onclick: () => ap.browse(t.key) }),
+        chosen.length ? h('button', { className: 'btn', textContent: 'Use default', onclick: () => set([]) }) : null,
+        h('button', { className: 'btn', textContent: 'Open my sticker folder', onclick: () => ap.openFolder() })));
+    const blocks = d.library.flatMap(g => { const id = g.pack && 'pack:' + g.pack, on = id && chosen.includes(id);
+      const use = id ? h('button', { className: 'use', textContent: on ? '✓ Using whole pack' : 'Use whole pack', onclick: () => set(on ? chosen.filter(x => x !== id) : [...chosen, id]) }) : null;
+      if (use) use.setAttribute('aria-pressed', String(!!on));
+      return [h('h2', {}, g.group + (g.mine ? '' : ''), use), h('div', { className: 'grid' }, ...g.items.map(i => {
+      const n = chosen.indexOf(i.file);
+      const b = h('button', { className: 'tile', title: i.name, onclick: () => set(n >= 0 ? chosen.filter(f => f !== i.file) : [...chosen, i.file]) }, img(i.url), h('span', { textContent: i.name }));
+      b.setAttribute('aria-pressed', String(n >= 0)); b.dataset.n = n + 1;
+      return b;
+    }))]; });
+    return [bar, ...(blocks.length ? blocks : [h('p', { className: 'empty', innerHTML: 'No stickers yet. Put images in <code>~/.agent-presence/stickers</code> (subfolders become groups), or add them from your computer.' })])];
+  }
+
+  function render() {
+    nav();
+    const t = d.targets.find(x => x.key === tab) || extra.find(x => x.key === tab);
+    if (!t) tab = 'settings';
+    const main = document.getElementById('main'), y = main.scrollTop;
+    main.replaceChildren(...(t ? stickers(t) : settings()));
+    main.scrollTop = y;
+  }
+  function go(k) { tab = k; render(); document.getElementById('main').scrollTop = 0; }
+
+  ap.onRoom(data => { d = data; if (data.tab) tab = data.tab; render(); });
+</script>
+</body>
+</html>
