@@ -16,7 +16,7 @@ const pre = (tool, tool_input, extra) => ({ hook_event_name: 'PreToolUse', tool_
 const f = p => path.join(cwd, p);
 
 const steps = [
-  () => C({ hook_event_name: 'SessionStart' }),
+  () => C({ hook_event_name: 'SessionStart', model: 'claude-opus-5-5' }),
   () => C({ hook_event_name: 'UserPromptSubmit', prompt: 'add login' }),
   () => C(pre('Read', { file_path: f('src/auth.ts') })),
   () => X({ hook_event_name: 'SessionStart' }),

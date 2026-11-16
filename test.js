@@ -13,6 +13,11 @@ assert.equal(e.state, 'writing'); assert.equal(e.file, 'C:\\repo\\src\\auth.ts')
 e = normalize('claude', { hook_event_name: 'PreToolUse', session_id: 's1', agent_id: 'a1', agent_type: 'Explore', tool_name: 'Grep', tool_input: { pattern: 'TODO' } });
 assert.equal(e.state, 'reading'); assert.equal(e.sub, 'a1'); assert.equal(e.subType, 'Explore'); assert.equal(e.detail, 'TODO');
 
+// model, as a string (Claude SessionStart), an object, or Antigravity's modelName
+assert.equal(normalize('claude', { hook_event_name: 'SessionStart', session_id: 's1', model: 'claude-opus-5-5' }).model, 'claude-opus-5-5');
+assert.equal(normalize('claude', { hook_event_name: 'SessionStart', session_id: 's1', model: { id: 'claude-fable-5-2' } }).model, 'claude-fable-5-2');
+assert.equal(normalize('antigravity', { conversationId: 'v', modelName: 'gemini-3-pro' }, 'SessionStart').model, 'gemini-3-pro');
+
 // lifecycle
 assert.equal(normalize('claude', { hook_event_name: 'SubagentStop', session_id: 's1', agent_id: 'a1' }).state, 'gone');
 assert.equal(normalize('claude', { hook_event_name: 'Stop', session_id: 's1' }).state, 'done');

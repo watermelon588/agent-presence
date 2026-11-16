@@ -6,7 +6,7 @@
     {
       "name": "agent-presence",
       "source": "./",
-      "description": "Sticker chibis that show what your Claude Code agents and subagents are doing."
+      "description": "Agent Peeps: small stickers that show what your Claude Code agents and subagents are doing."
     }
   ]
 }
