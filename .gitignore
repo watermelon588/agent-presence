@@ -2,8 +2,6 @@ node_modules/
 *.png
 *.vsix
 
-# Third-party art: kept local, never pushed (fan stickers, source sheets, brand cutouts)
-avatars/stickers/
+# Third-party source art: kept local (sheets and cutouts the stickers were made from)
 sticks/
 brand/
-website/web/src/stickers-fan/
