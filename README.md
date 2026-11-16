@@ -1,15 +1,47 @@
-<p align="center"><img src="logo.png" width="120" alt="Agent Peeps logo"></p>
+<p align="center"><img src="logo.png" width="112" alt="Agent Peeps logo"></p>
 
-# Agent Peeps
+<h1 align="center">Agent Peeps</h1>
 
-[agentpeeps.space](https://agentpeeps.space) · npm: `agentpeeps` (the old `agent-presence` command still works; settings stay in `~/.agent-presence`)
+<p align="center"><b>A tiny sticker for every AI coding agent, live on your screen.</b><br>
+See which agent is on which file, what it's doing, and when it needs you.</p>
 
-Small stickers that float over your screen and show what your AI coding agents are doing, live.
+<p align="center">
+  <a href="https://www.npmjs.com/package/agentpeeps"><img src="https://img.shields.io/npm/v/agentpeeps?color=2f4bff&label=npm" alt="npm"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-121214" alt="MIT license"></a>
+  <img src="https://img.shields.io/badge/local%20only-no%20account%2C%20no%20network-7fd99a" alt="Local only">
+</p>
+
+<p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#commands">Commands</a> ·
+  <a href="#your-own-stickers">Stickers</a> ·
+  <a href="#how-it-works">How it works</a> ·
+  <a href="https://agentpeeps.space">Website</a> ·
+  <a href="https://agentpeeps.space/docs.html">Docs</a>
+</p>
+
+<p align="center"><img src="docs/readme/demo.gif" width="760" alt="A capybara sticker in the corner of the screen shows Claude writing login.ts while a helper sticker reads the tests"></p>
+
+<p align="center"><code>npx agentpeeps init</code></p>
+
+<div align="center">
+<table>
+  <tr>
+    <td align="center" width="120"><img src="docs/readme/agents/claude.svg" width="36" height="36" alt=""><br><sub><b>Claude Code</b></sub></td>
+    <td align="center" width="120"><img src="docs/readme/agents/codex.svg" width="36" height="36" alt=""><br><sub><b>Codex</b></sub></td>
+    <td align="center" width="120"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/agents/copilot-dark.svg"><img src="docs/readme/agents/copilot.svg" width="36" height="36" alt=""></picture><br><sub><b>GitHub Copilot</b></sub></td>
+    <td align="center" width="120"><img src="docs/readme/agents/antigravity.svg" width="36" height="36" alt=""><br><sub><b>Antigravity</b></sub></td>
+    <td align="center" width="120"><img src="docs/readme/agents/vscode.svg" width="36" height="36" alt=""><br><sub><b>VS Code</b></sub></td>
+  </tr>
+</table>
+</div>
+
 One sticker per Claude Code, Codex, Copilot or Antigravity session, a smaller one for each subagent (helper), and a tiny icon for what it's doing: reading, writing, running, done, or needs you. Hover for the file it's on.
 
-- Works with Claude Code (CLI, desktop app, IDE), Codex, GitHub Copilot (VS Code agent mode and Copilot CLI) and Antigravity, because it listens to the agents' own hooks, not to an editor.
+- Works with **Claude Code** (CLI, desktop app, IDE), **Codex**, **GitHub Copilot** (VS Code agent mode and Copilot CLI) and **Antigravity**, because it listens to the agents' own hooks, not to an editor.
 - Floats above everything, VS Code included. Clicks pass straight through except on the stickers.
 - Local only: no server, no account, no network.
+- npm: `agentpeeps`. The old `agent-presence` command still works, and settings stay in `~/.agent-presence`.
 
 ## Install
 
@@ -41,6 +73,9 @@ Codex asks you to trust new hooks once: open `/hooks` in Codex and approve the A
 Copilot and Antigravity load hooks at startup, so restart them after `init`. Their hooks can't run in the background, so Agent Peeps only listens to events that can't hold up or block the agent: a tool call shows up when it finishes, not when it starts.
 
 ### Or as plugins (hooks + a customize-my-sticker skill; the overlay still comes from npm)
+
+<p align="center"><img src="docs/readme/ask-your-agent.gif" width="760" alt="Claude Code is asked to set up Agent Peeps, runs agentpeeps init and three set commands, and the new stickers appear in the corner on the next session"></p>
+<p align="center"><sub>Or skip the commands: ask your agent to set it up and pick its own stickers.</sub></p>
 
 **Claude Code**
 
@@ -99,9 +134,13 @@ By default the stickers are small, show only a line icon, and disappear a few se
 
 ## Your own stickers
 
+<p align="center"><img src="docs/readme/stickers.png" width="760" alt="Ten stickers from the built-in packs: plush blobs, gradient icons, pixel characters, color blobs, a flame and a purple octopus"></p>
+
 ### Packs, from the terminal
 
-15 free packs come built in (capybaras, cats, seals-and-sea-lions, fruit-cats, critters and more). Your own pack is a folder of images in `~/.agent-presence/stickers/<pack name>/`. Point any agent, model or helper at one:
+<p align="center"><img src="docs/readme/customize.gif" width="760" alt="The terminal runs agentpeeps set claude capybaras, set codex cats and set helpers fruit-cats, and the stickers in the corner swap as each command runs"></p>
+
+15 free packs come built in: plush-blobs, gradient-icons, pixel-food, color-blobs, flame-expressions, monster-icons, retro-windows, capybaras, cats and more. Your own pack is a folder of images in `~/.agent-presence/stickers/<pack name>/`. Point any agent, model or helper at one:
 
 ```bash
 agentpeeps packs                       # list your packs
@@ -126,7 +165,7 @@ The control room writes `~/.agent-presence/config.json`, which you (or an agent)
 ```json
 {
   "avatars": {
-    "claude": "pack:dinosaurs",
+    "claude": "pack:plush-blobs",
     "model:opus": ["~/stickers/fox.gif", "~/stickers/owl.png"],
     "codex": "~/stickers/robot.png",
     "subagent": "~/stickers/sprout.svg",
