@@ -5,167 +5,524 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src file: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
 <title>Agent Peeps · control room</title>
 <style>
-  :root { --ink: #33262a; --soft: #7a6a66; --paper: #fffdf8; --chip: #f4ece3; --line: #ece2d7; --pick: #ee8f62; }
+  :root { --bg: #0a0b0d; --panel: #111317; --panel2: #161a1f; --line: #1e2228; --line2: #2a3038; --text: #e7e9ec; --muted: #8a919b; --dim: #5d646e;
+    --accent: #8ab4ff; --ok: #3ddc97; --warn: #f5b84b; --bad: #ff6b6b;
+    --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; background: var(--paper); color: var(--ink);
-    font: 600 13px/1.4 ui-rounded, "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; }
-  body { display: grid; grid-template-columns: 210px 1fr; }
-  button { font: inherit; color: inherit; cursor: pointer; }
-  nav { border-right: 1px solid var(--line); padding: 12px 10px; overflow: auto; }
-  nav h3 { margin: 14px 8px 4px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--soft); }
-  nav button { width: 100%; display: flex; align-items: center; gap: 9px; border: 0; background: none; padding: 5px 8px; border-radius: 10px; text-align: left; }
-  nav button:hover { background: #faf4ed; }
-  nav button[aria-current="true"] { background: var(--chip); font-weight: 800; }
-  nav .thumbs { display: flex; flex: none; width: 30px; height: 30px; position: relative; }
-  nav .thumbs img { width: 30px; height: 30px; object-fit: contain; }
-  nav .count { position: absolute; right: -4px; bottom: -3px; background: var(--ink); color: #fff; font-size: 9px; border-radius: 8px; padding: 0 4px; line-height: 14px; }
-  nav .gear { width: 30px; height: 30px; display: grid; place-items: center; }
-  nav span.n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  main { overflow: auto; padding: 18px 22px 28px; }
-  h1 { font-size: 17px; margin: 0 0 2px; }
-  .sub { color: var(--soft); font-weight: 500; margin: 0 0 14px; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 450 13px/1.45 var(--sans); }
+  body { display: grid; grid-template-columns: 228px 1fr; grid-template-rows: 40px 1fr; overflow: hidden; }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  ::-webkit-scrollbar { width: 10px; } ::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 10px; border: 3px solid var(--bg); }
+  kbd { font: 600 10.5px var(--mono); color: var(--muted); border: 1px solid var(--line2); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--panel2); }
+  code { font: 500 12px var(--mono); color: var(--text); background: var(--panel2); border: 1px solid var(--line); padding: 1px 5px; border-radius: 5px; }
+
+  /* title bar (the window's own bar is hidden; buttons sit over the right edge on Windows/Linux) */
+  .brand, .top { -webkit-app-region: drag; display: flex; align-items: center; border-bottom: 1px solid var(--line); }
+  .brand { gap: 9px; padding: 0 14px; background: var(--bg); border-right: 1px solid var(--line); font: 600 12.5px var(--mono); }
+  .mac .brand { padding-left: 82px; }
+  .brand img { width: 20px; height: 20px; border-radius: 5px; }
+  .brand span { color: var(--dim); font-weight: 500; }
+  .top { gap: 12px; padding: 0 150px 0 18px; font: 500 12px var(--mono); color: var(--muted); }
+  .mac .top { padding-right: 18px; }
+  .top b { color: var(--text); font-weight: 600; }
+  .top .live { margin-left: auto; display: flex; align-items: center; gap: 7px; }
+  .top .live i, .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--dim); display: inline-block; }
+  .top .live.on i, .pulse.on { background: var(--ok); box-shadow: 0 0 0 0 rgba(61,220,151,.6); animation: ping 1.8s ease-out infinite; }
+  .top .vis { -webkit-app-region: no-drag; }
+
+  /* sidebar */
+  nav { grid-row: 2; overflow: auto; padding: 10px 8px 16px; border-right: 1px solid var(--line); background: var(--bg); }
+  nav h3 { margin: 16px 10px 6px; font: 600 10.5px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--dim); }
+  nav button { width: 100%; display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 6px 10px; border-radius: 8px; text-align: left; color: var(--muted); }
+  nav button:hover { background: var(--panel); color: var(--text); }
+  nav button[aria-current="true"] { background: var(--panel2); color: var(--text); box-shadow: inset 2px 0 0 var(--accent); }
+  nav button svg { flex: none; width: 16px; height: 16px; }
+  nav button kbd { margin-left: auto; }
+  nav button .badge { margin-left: auto; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--bad); color: #fff; font: 700 10px/16px var(--mono); text-align: center; }
+  nav .th { position: relative; flex: none; width: 26px; height: 26px; display: grid; place-items: center; }
+  nav .th img { max-width: 26px; max-height: 26px; object-fit: contain; }
+  nav .th.unset img { opacity: .45; filter: grayscale(.4); }
+  nav .th .count { position: absolute; right: -5px; bottom: -4px; background: var(--accent); color: #0a0b0d; font: 700 9px/13px var(--mono); border-radius: 7px; padding: 0 4px; }
+  nav .n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .logo-chip { background: #fff; border-radius: 50%; padding: 4px; }
+  nav form { display: flex; gap: 4px; padding: 4px 6px; }
+  nav input { min-width: 0; flex: 1; border: 1px solid var(--line2); border-radius: 7px; padding: 5px 8px; background: var(--panel); font: 500 12px var(--mono); }
+  nav input:focus { outline: none; border-color: var(--accent); }
+  nav form button { width: auto; padding: 4px 9px; border: 1px solid var(--line2); background: var(--panel); color: var(--text); }
+
+  main { grid-row: 2; overflow: auto; padding: 22px 26px 40px; }
+  h1 { font-size: 18px; font-weight: 650; margin: 0 0 3px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  h2 { display: flex; align-items: center; gap: 10px; margin: 26px 0 10px; font: 600 10.5px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--dim); }
+  h2 .use { text-transform: none; letter-spacing: 0; font: 600 11.5px var(--sans); color: var(--text); border: 1px solid var(--line2); background: var(--panel); border-radius: 7px; padding: 3px 9px; }
+  h2 .use[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+
+  /* overview */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .stat { background: var(--panel); padding: 12px 14px; }
+  .stat b { display: block; font: 600 22px/1.1 var(--mono); letter-spacing: -.02em; }
+  .stat span { font: 500 11px var(--mono); color: var(--muted); }
+  .stat.alert b { color: var(--bad); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; }
+  .card { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; transition: border-color .2s; }
+  .card.waiting { border-color: color-mix(in srgb, var(--bad) 60%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bad) 12%, transparent); }
+  .card.rest { opacity: .62; }
+  .card .hd { display: flex; gap: 12px; align-items: center; }
+  .av { position: relative; flex: none; width: 46px; height: 46px; display: grid; place-items: center; }
+  .av > img { max-width: 46px; max-height: 46px; object-fit: contain; }
+  .av > img.logo-chip { width: 40px; height: 40px; padding: 8px; }
+  .av .mark { position: absolute; right: -4px; bottom: -4px; width: 18px; height: 18px; padding: 2.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px var(--panel); }
+  .card .nm { font-weight: 650; }
+  .card .nm small { margin-left: 6px; font: 500 11px var(--mono); color: var(--muted); background: var(--panel2); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
+  .card .cwd { font: 500 11.5px var(--mono); color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .state { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 10px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); font: 500 12px var(--mono); overflow: hidden; white-space: nowrap; }
+  .state b { font-weight: 600; color: var(--sc, var(--text)); }
+  .state span { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--sc, var(--dim)); }
+  .busy .dot { animation: blink 1.2s ease-in-out infinite; }
+  .helpers { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--agent); }
+  .helper { display: flex; align-items: center; gap: 7px; font: 500 11.5px var(--mono); color: var(--muted); white-space: nowrap; overflow: hidden; }
+  .helper img { width: 18px; height: 18px; object-fit: contain; flex: none; }
+  .helper img.logo-chip { padding: 2px; }
+  .helper b { color: var(--text); font-weight: 600; }
+  .card .ft { display: flex; align-items: center; gap: 6px; margin-top: 12px; font: 500 11px var(--mono); color: var(--dim); }
+  .card .ft button { border: 1px solid var(--line2); background: none; color: var(--muted); border-radius: 6px; padding: 2px 8px; font: 500 11px var(--sans); }
+  .card .ft button:first-of-type { margin-left: auto; }
+  .card .ft button:hover { color: var(--text); border-color: var(--muted); }
+  .empty { display: flex; align-items: center; gap: 16px; padding: 22px; border: 1px dashed var(--line2); border-radius: 12px; color: var(--muted); }
+  .empty .pile { display: flex; } .empty .pile img { width: 40px; height: 40px; object-fit: contain; margin-right: -8px; }
+  .log { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); font: 500 11.5px/1.5 var(--mono); max-height: 340px; overflow: auto; }
+  .log div { display: grid; grid-template-columns: 70px 18px 130px 92px 1fr; gap: 8px; align-items: center; padding: 5px 12px; border-top: 1px solid var(--line); white-space: nowrap; }
+  .log div:first-child { border-top: 0; }
+  .log div.new { animation: flash 1s ease-out; }
+  .log time { color: var(--dim); }
+  .log img { width: 14px; height: 14px; border-radius: 50%; background: #fff; padding: 1.5px; }
+  .log .who { color: var(--text); overflow: hidden; text-overflow: ellipsis; }
+  .log .st { color: var(--sc, var(--muted)); }
+  .log .x { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .s-thinking { --sc: #a78bfa; } .s-reading { --sc: #60a5fa; } .s-writing { --sc: #f5b84b; } .s-running { --sc: #3ddc97; } .s-delegating { --sc: #f472b6; }
+  .s-browsing { --sc: #38bdf8; } .s-working { --sc: #fbbf24; } .s-waiting { --sc: #ff6b6b; } .s-done { --sc: #22c55e; } .s-idle, .s-gone { --sc: #6b7280; }
 
   /* settings */
-  .row { display: grid; grid-template-columns: 190px 1fr; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); }
-  .row > :last-child { justify-self: start; }
-  .row > div:first-child small { display: block; color: var(--soft); font-weight: 500; }
-  .seg { display: inline-flex; background: var(--chip); border-radius: 11px; padding: 3px; gap: 2px; flex-wrap: wrap; }
-  .seg button { border: 0; background: none; padding: 6px 11px; border-radius: 8px; }
-  .seg button[aria-pressed="true"] { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.12); font-weight: 800; }
-  .checks { display: flex; flex-wrap: wrap; gap: 8px 16px; }
-  label.ck { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; cursor: pointer; }
-  input[type=checkbox] { accent-color: var(--pick); width: 15px; height: 15px; }
-  .btn { border: 1px solid var(--line); background: #fff; padding: 7px 12px; border-radius: 10px; }
-  .btn:hover { background: #faf4ed; }
-  .note { color: var(--soft); font-weight: 500; font-size: 12px; margin-top: 18px; }
-  code { background: var(--chip); padding: 1px 5px; border-radius: 5px; font-size: 12px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+  .row { display: grid; grid-template-columns: 220px 1fr; align-items: center; gap: 16px; padding: 13px 16px; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .row > :last-child { justify-self: start; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .row .t { font-weight: 550; }
+  .row .t small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; }
+  .seg { display: inline-flex; background: var(--bg); border: 1px solid var(--line2); border-radius: 9px; padding: 2px; gap: 2px; }
+  .seg button { border: 0; background: none; padding: 5px 11px; border-radius: 7px; color: var(--muted); }
+  .seg button:hover { color: var(--text); }
+  .seg button[aria-pressed="true"] { background: var(--panel2); color: var(--text); box-shadow: 0 0 0 1px var(--line2); font-weight: 600; }
+  .sw { appearance: none; width: 34px; height: 20px; border-radius: 10px; background: var(--line2); position: relative; cursor: pointer; margin: 0; transition: background .15s; flex: none; }
+  .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform .15s; }
+  .sw:checked { background: var(--accent); } .sw:checked::after { transform: translateX(14px); }
+  .ck { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line2); background: var(--bg); border-radius: 8px; padding: 4px 10px 4px 5px; color: var(--muted); }
+  .chip img { width: 18px; height: 18px; padding: 2px; border-radius: 50%; background: #fff; }
+  .chip[aria-pressed="true"] { color: var(--text); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
+  .chip[aria-pressed="false"] img { filter: grayscale(1); opacity: .5; }
+  .btn { border: 1px solid var(--line2); background: var(--panel2); padding: 6px 12px; border-radius: 8px; color: var(--text); }
+  .btn:hover { border-color: var(--muted); }
+  input[type=range] { accent-color: var(--accent); width: 180px; }
+  .val { font: 500 12px var(--mono); color: var(--muted); min-width: 40px; }
+  .keyhint { font: 500 11px var(--mono); color: var(--dim); }
+  .note { color: var(--dim); font-size: 12px; margin-top: 16px; }
+  .row.apps > :last-child { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .front { font: 500 12px var(--mono); color: var(--muted); } .front b { color: var(--text); } .front .yes { color: var(--ok); } .front .no { color: var(--warn); } .front.bad { color: var(--warn); }
+  .chip.app { padding: 4px 10px; font: 500 12px var(--mono); }
+  .chip.app.seen:not([aria-pressed="true"]) { border-style: dashed; }
+  .add { display: flex; gap: 6px; } .add input { width: 200px; border: 1px solid var(--line2); border-radius: 8px; padding: 5px 9px; background: var(--bg); font: 500 12px var(--mono); }
+  .add input:focus { outline: none; border-color: var(--accent); }
 
-  /* stickers */
-  .bar { position: sticky; top: -18px; margin: -18px -22px 0; padding: 18px 22px 12px; background: var(--paper); border-bottom: 1px solid var(--line); z-index: 1; }
+  /* bubble preview: two desktops, the same bubble as the overlay */
+  .stage { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+  .desk { position: relative; height: 170px; display: flex; align-items: flex-end; justify-content: flex-end; padding: 16px 26px; }
+  .desk.dark { background: radial-gradient(120% 90% at 20% 0%, #26304a, #0d1018 70%); }
+  .desk.light { background: radial-gradient(120% 90% at 20% 0%, #fff, #dde3ec 75%); }
+  .desk > small { position: absolute; left: 12px; top: 10px; font: 600 10px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: #8892a6; }
+  .pv { position: relative; display: flex; flex-direction: column; align-items: flex-end; --bfs: 12px; font-size: var(--bfs); }
+  .pv.bs-small { --bfs: 11px; } .pv.bs-large { --bfs: 13.5px; }
+  .pv.th-l { --bb: rgba(255,255,255,.97); --bt: #0b0b0c; --bl: rgba(0,0,0,.14); --bsh: 0 0 2px #fff, 0 0 7px rgba(255,255,255,.95); }
+  .pv.th-d { --bb: rgba(17,18,22,.95); --bt: #f5f5f6; --bl: rgba(255,255,255,.16); --bsh: 0 1px 2px rgba(0,0,0,.9), 0 0 7px rgba(0,0,0,.65); }
+  .pv .bub { position: relative; margin-bottom: 9px; min-width: 150px; padding: 7px 10px 8px; border-radius: 11px; color: var(--bt); background: var(--bb); border: 1px solid var(--bl);
+    box-shadow: 0 6px 20px rgba(0,0,0,.18); white-space: nowrap; --bm: color-mix(in srgb, var(--bt) 62%, transparent); line-height: 1.35; }
+  .pv .bub::after { content: ""; position: absolute; bottom: -5px; right: 21px; width: 8px; height: 8px; background: var(--bb); border-right: 1px solid var(--bl); border-bottom: 1px solid var(--bl); transform: rotate(45deg); }
+  .pv.noborder .bub, .pv.noborder .bub::after { border-color: transparent; }
+  .pv.text .bub { background: none; border-color: transparent; box-shadow: none; padding: 0; text-shadow: var(--bsh); }
+  .pv.text .bub::after { display: none; }
+  .pv.off .bub { visibility: hidden; }
+  .pv .bub .h { display: flex; gap: 6px; align-items: baseline; } .pv .bub .h b { font-weight: 700; } .pv .bub .h span { color: var(--bm); font-size: .9em; }
+  .pv .bub .w { display: flex; align-items: center; gap: 6px; margin-top: 3px; } .pv .bub .w i { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; }
+  .pv .bub .w code { all: unset; font: 500 .92em var(--mono); color: var(--bm); }
+  .pv .bub .s { margin-top: 5px; font: 500 .82em var(--mono); color: var(--bm); }
+  .pv.nostats .bub .s { display: none; }
+  .pv > img { width: 56px; height: 56px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(0,0,0,.3)); }
+  .swatches { display: flex; gap: 6px; align-items: center; }
+  .swatch { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line2); padding: 0; background: var(--c); }
+  .swatch.auto { background: linear-gradient(135deg, #fff 50%, #0b0b0c 50%); }
+  .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+  input[type=color] { width: 28px; height: 26px; border: 1px solid var(--line2); border-radius: 7px; background: var(--panel2); padding: 2px; cursor: pointer; }
+
+  /* shortcuts */
+  .keys { display: grid; grid-template-columns: 1fr; }
+  .key { display: grid; grid-template-columns: 210px 1fr auto; gap: 14px; align-items: center; padding: 10px 16px; border-top: 1px solid var(--line); }
+  .key:first-child { border-top: 0; }
+  .key .combo { display: flex; gap: 4px; }
+  .key .combo kbd { font-size: 11.5px; padding: 1px 7px; color: var(--text); }
+  .key .ok { font: 500 11px var(--mono); color: var(--ok); } .key .taken { font: 500 11px var(--mono); color: var(--warn); } .key .offk { font: 500 11px var(--mono); color: var(--dim); }
+
+  /* sticker picker */
+  .bar { position: sticky; top: -22px; margin: -22px -26px 0; padding: 22px 26px 14px; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); z-index: 1; }
   .chosen { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 64px; }
-  .chosen .pick { position: relative; width: 60px; height: 60px; border-radius: 12px; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; }
-  .chosen .pick img { width: 48px; height: 48px; object-fit: contain; }
-  .chosen .pick button { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--ink); color: #fff; font-size: 11px; line-height: 18px; padding: 0; }
-  .chosen .def { display: flex; align-items: center; gap: 10px; color: var(--soft); font-weight: 500; }
-  .chosen .def img { width: 48px; height: 48px; }
-  .actions { display: flex; gap: 8px; margin-top: 10px; }
-  h2 { font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--soft); margin: 18px 0 8px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
-  .tile { position: relative; border: 2px solid transparent; background: #fff; border-radius: 12px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .tile:hover { border-color: var(--line); }
-  .tile[aria-pressed="true"] { border-color: var(--pick); background: #fff5ee; }
-  .tile[aria-pressed="true"]::after { content: attr(data-n); position: absolute; top: 4px; right: 4px; min-width: 16px; height: 16px; border-radius: 8px; background: var(--pick); color: #fff; font-size: 10px; line-height: 16px; }
-  .tile img { width: 56px; height: 56px; object-fit: contain; }
-  .tile span { font-size: 10px; font-weight: 500; color: var(--soft); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .empty { color: var(--soft); font-weight: 500; }
-  .chosen .pick.pack { width: auto; padding: 0 10px 0 6px; display: flex; gap: 6px; }
+  .chosen .pick { position: relative; width: 60px; height: 60px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line2); display: grid; place-items: center; }
+  .chosen .pick img { width: 46px; height: 46px; object-fit: contain; }
+  .chosen .pick button { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--text); color: var(--bg); font-size: 11px; line-height: 18px; padding: 0; }
+  .chosen .pick.pack { width: auto; padding: 0 12px 0 6px; display: flex; gap: 8px; }
   .chosen .pick.pack img { width: 40px; height: 40px; }
-  .chosen .pick.pack b { font-size: 12px; }
-  .chosen .pick.pack small { display: block; color: var(--soft); font-weight: 500; font-size: 10.5px; }
-  h2 { display: flex; align-items: center; gap: 10px; }
-  h2 .use { text-transform: none; letter-spacing: 0; font-size: 11.5px; font-weight: 700; color: var(--ink); border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 3px 9px; }
-  h2 .use[aria-pressed="true"] { border-color: var(--pick); background: #fff5ee; }
-  nav form { display: flex; gap: 4px; padding: 4px 8px; }
-  nav input { min-width: 0; flex: 1; font: inherit; font-weight: 500; border: 1px solid var(--line); border-radius: 8px; padding: 4px 7px; background: #fff; }
-  nav form button { width: auto; padding: 4px 8px; border: 1px solid var(--line); background: #fff; }
+  .chosen .pick.pack b { font-size: 12px; } .chosen .pick.pack small { display: block; color: var(--muted); font-size: 11px; }
+  .chosen .def { display: flex; align-items: center; gap: 12px; color: var(--muted); }
+  .chosen .def img { width: 44px; height: 44px; object-fit: contain; }
+  .chosen .def img.logo-chip { padding: 8px; }
+  .actions { display: flex; gap: 8px; margin-top: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
+  .tile { position: relative; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 8px 4px 6px; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: transform .12s, border-color .12s; }
+  .tile:hover { border-color: var(--line2); transform: translateY(-2px); }
+  .tile[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--panel)); }
+  .tile[aria-pressed="true"]::after { content: attr(data-n); position: absolute; top: 4px; right: 4px; min-width: 16px; height: 16px; border-radius: 8px; background: var(--accent); color: var(--bg); font: 700 10px/16px var(--mono); }
+  .tile img { width: 54px; height: 54px; object-fit: contain; }
+  .tile span { font-size: 10.5px; color: var(--muted); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mt { margin-top: 14px; }
+
+  @keyframes ping { to { box-shadow: 0 0 0 7px rgba(61,220,151,0); } }
+  @keyframes blink { 50% { opacity: .3; } }
+  @keyframes flash { from { background: color-mix(in srgb, var(--accent) 12%, transparent); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
+<div class="brand"><img src="../logo.png" alt=""> agentpeeps <span>control room</span></div>
+<div class="top" id="top"></div>
 <nav id="nav"></nav>
 <main id="main"></main>
 <script>
-  let d = null, tab = 'settings';
+  let d = null, tab = 'overview';
   const extra = []; // model rules added here that have no stickers yet
-  const h = (tag, props = {}, ...kids) => { const el = Object.assign(document.createElement(tag), props); el.append(...kids.filter(k => k != null)); return el; };
-  const img = (src, cls) => h('img', { src, alt: '', className: cls || '', loading: 'lazy' });
-  const GEAR = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>';
+  const live = new Map(), log = []; // sessions seen in the event stream, newest events first
+  const TOOL = new Set(['reading', 'writing', 'running', 'delegating', 'browsing', 'working']);
+  const REST = new Set(['done', 'idle']);
+  const VERB = { thinking: 'thinking', reading: 'reading', writing: 'writing', running: 'running', delegating: 'handing off', browsing: 'browsing', working: 'working', waiting: 'needs you', done: 'done', idle: 'idle', gone: 'ended' };
+  const NAMES = { claude: 'Claude Code', codex: 'Codex', copilot: 'Copilot', antigravity: 'Antigravity' };
+  const STALE = 15 * 60e3;
+  const h = (tag, props = {}, ...kids) => { const el = Object.assign(document.createElement(tag), props); el.append(...kids.flat().filter(k => k != null && k !== false)); return el; };
+  const img = (src, cls) => h('img', { src, alt: '', className: cls || '', loading: 'lazy', decoding: 'async' });
+  const logo = a => NAMES[a] ? 'agents/' + a + '.svg' : null;
+  const hash = s => [...String(s)].reduce((x, c) => (x * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const base = p => String(p).split(/[\\/]/).filter(Boolean).pop() || String(p);
+  const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+  const dur = ms => { const s = Math.max(0, Math.round(ms / 1000)); return s < 60 ? s + 's' : s < 3600 ? Math.floor(s / 60) + 'm ' + (s % 60) + 's' : Math.floor(s / 3600) + 'h ' + Math.floor(s / 60) % 60 + 'm'; };
+  const what = e => e.state === 'waiting' ? (e.detail && e.detail !== 'needs you' ? e.detail : '') : REST.has(e.state) ? '' : e.state === 'running' || e.state === 'browsing' || e.state === 'delegating' ? e.detail || (e.file ? base(e.file) : '') : e.file ? base(e.file) : e.detail || '';
+  const MODK = () => d && d.mac ? ['⌘', '⌥', '⇧'] : ['Ctrl', 'Alt', 'Shift'];
+  const ICONS = {
+    overview: '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+    display: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+    bubbles: '<path d="M4 5h16v11H9l-5 4z"/>',
+    shortcuts: '<rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>',
+  };
+  const svg = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+  const VIEWS = [['overview', 'Overview'], ['display', 'Display'], ['bubbles', 'Bubbles'], ['shortcuts', 'Shortcuts']];
+
+  /* ---------- live event stream ---------- */
+  function track(e) {
+    log.unshift(e); if (log.length > 120) log.pop();
+    const mk = e.agent + ':' + e.session;
+    if (e.state === 'gone') { if (e.sub) live.get(mk)?.subs.delete(e.sub); else live.delete(mk); return soon(); }
+    let m = live.get(mk);
+    if (!m) live.set(mk, m = { e, since: e.t, tools: 0, touched: new Set(), subs: new Map() });
+    let x = m;
+    if (e.sub) { x = m.subs.get(e.sub); if (!x) m.subs.set(e.sub, x = { e, since: e.t, tools: 0, touched: new Set() }); }
+    x.e = e; if (TOOL.has(e.state)) x.tools++; if (e.file) x.touched.add(e.file); if (e.model) x.model = e.model;
+    soon();
+  }
+  const sessions = () => [...live.values()].filter(m => Date.now() - m.e.t < STALE).sort((a, b) => (b.e.state === 'waiting') - (a.e.state === 'waiting') || b.e.t - a.e.t);
+  let queued = false;
+  // live redraws wait while a mouse button is down, so a redraw never swallows a click
+  let pressing = false, held = false;
+  addEventListener('pointerdown', () => { pressing = true; });
+  addEventListener('pointerup', () => { pressing = false; if (held) { held = false; setTimeout(soon, 50); } });
+  const soon = () => { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; if (!d) return; if (pressing) { held = true; return; } topbar(); if (tab === 'overview') render(); else nav(); }); };
+
+  /* ---------- stickers for a session, a helper or a target ---------- */
+  const pickUrl = (list, seed) => list && list.length ? list[hash(seed) % list.length] : null;
+  const stickerOf = m => pickUrl(byModel(m.model) || d.urls[m.e.agent], m.e.session);
+  const helperOf = (m, s) => pickUrl(d.urls[s.e.subType] || d.urls[m.e.agent + '-subagent'] || d.urls.subagent, m.e.session + s.e.sub);
+  function byModel(model) {
+    const low = String(model || '').toLowerCase();
+    const k = low && Object.keys(d.urls).filter(k => k.startsWith('model:') && low.includes(k.slice(6).toLowerCase())).sort((a, b) => b.length - a.length)[0];
+    return k ? d.urls[k] : null;
+  }
+  // placeholders come only from the free packs that ship with the app
+  const samples = () => d.library.filter(g => g.pack && !g.mine && /[\\/]avatars[\\/]free[\\/]/.test(g.items[0].file)).flatMap(g => g.items.filter(i => !/animated/i.test(i.name))).filter(i => /\.(webp|png)$/i.test(i.file));
+  function thumb(t) {
+    const urls = d.urls[t.key] || [];
+    if (urls.length) return h('span', { className: 'th' }, img(urls[0]), urls.length > 1 ? h('span', { className: 'count', textContent: urls.length }) : null);
+    if (t.agent) return h('span', { className: 'th' }, img(logo(t.agent), 'logo-chip'));
+    const s = samples(); return h('span', { className: 'th unset', title: 'Not set yet' }, s.length ? img(s[hash(t.key) % s.length].url) : null);
+  }
+
+  /* ---------- chrome ---------- */
+  function topbar() {
+    const n = sessions().length, crumb = (VIEWS.find(v => v[0] === tab) || [, (d.targets.find(t => t.key === tab) || extra.find(t => t.key === tab) || {}).name || tab])[1];
+    const vis = h('label', { className: 'ck vis', title: MODK().join('+') + '+A' }, sw(d.settings.visible, on => ap.setVisible(on)), 'On screen');
+    document.getElementById('top').replaceChildren(h('span', {}, 'agentpeeps / ', h('b', { textContent: crumb.toLowerCase() })),
+      h('span', { className: 'live' + (n ? ' on' : '') }, h('i'), n ? plural(n, 'live session') : 'no live sessions'), vis);
+  }
 
   function nav() {
-    const items = [h('button', { onclick: () => go('settings'), innerHTML: `<span class="gear">${GEAR}</span><span class="n">Settings</span>` })];
-    items[0].setAttribute('aria-current', String(tab === 'settings'));
+    const waiting = sessions().filter(m => m.e.state === 'waiting' || [...m.subs.values()].some(s => s.e.state === 'waiting')).length;
+    const items = VIEWS.map(([k, n], i) => {
+      const b = h('button', { onclick: () => go(k), innerHTML: svg(ICONS[k]) }, h('span', { className: 'n', textContent: n }),
+        k === 'overview' && waiting ? h('span', { className: 'badge', textContent: waiting }) : h('kbd', { textContent: i + 1 }));
+      b.setAttribute('aria-current', String(tab === k)); return b;
+    });
     let group = '';
     const targets = [...d.targets, ...extra.filter(x => !d.targets.some(t => t.key === x.key))];
     if (!targets.some(t => t.group === 'Models')) targets.push({ group: 'Models', placeholder: true });
+    items.push(h('h3', { textContent: 'Stickers' }));
     for (const t of targets) {
-      if (t.placeholder) { items.push(h('h3', { textContent: group = t.group })); continue; }
       if (t.group !== group) items.push(h('h3', { textContent: group = t.group }));
-      const urls = d.urls[t.key] || [];
-      const b = h('button', { onclick: () => go(t.key) }, h('span', { className: 'thumbs' }, img(urls[0] || t.def), urls.length > 1 ? h('span', { className: 'count', textContent: urls.length }) : null), h('span', { className: 'n', textContent: t.name }));
+      if (t.placeholder) continue;
+      const b = h('button', { onclick: () => go(t.key) }, thumb(t), h('span', { className: 'n', textContent: t.name }));
       b.setAttribute('aria-current', String(tab === t.key));
       items.push(b);
     }
     items.push(h('form', { onsubmit: ev => { ev.preventDefault(); const v = ev.target.m.value.trim(); if (!v) return;
-      const key = 'model:' + v; if (!extra.some(x => x.key === key)) extra.push({ key, name: v, group: 'Models', def: d.targets[0].def.replace(/%3EC%3C|%3EX%3C|%3EP%3C|%3EA%3C/, '%3EM%3C') }); go(key); } },
-      h('input', { name: 'm', placeholder: 'model, e.g. opus', title: 'Sessions whose model contains this text use these stickers' }), h('button', { textContent: 'Add' })));
-    document.getElementById('nav').replaceChildren(...items);
+      const key = 'model:' + v; if (!extra.some(x => x.key === key)) extra.push({ key, name: v, group: 'Models' }); go(key); } },
+      h('input', { name: 'm', placeholder: 'model, e.g. opus', title: 'Sessions whose model contains this text use these stickers  ( / )' }), h('button', { textContent: 'Add' })));
+    const el = document.getElementById('nav'), y = el.scrollTop;
+    el.replaceChildren(...items); el.scrollTop = y;
   }
 
-  const seg = (key, options) => h('div', { className: 'seg' }, ...options.map(([v, text]) => {
-    const b = h('button', { textContent: text, onclick: () => ap.setConfig({ [key]: v }) });
-    b.setAttribute('aria-pressed', String(d.settings[key] === v)); return b;
-  }));
-  const row = (title, hint, control) => h('div', { className: 'row' }, h('div', {}, title, hint ? h('small', { textContent: hint }) : null), control);
-  const check = (text, on, change) => h('label', { className: 'ck' }, h('input', { type: 'checkbox', checked: on, onchange: e => change(e.target.checked) }), text);
+  /* ---------- controls ---------- */
+  const set = patch => ap.setConfig(patch);
+  const setB = patch => ap.setConfig({ bubble: patch });
+  const sw = (on, change) => h('input', { type: 'checkbox', className: 'sw', checked: !!on, onchange: e => change(e.target.checked) });
+  const seg = (value, options, pick) => h('div', { className: 'seg' }, options.map(([v, text]) => {
+    const b = h('button', { textContent: text, onclick: () => pick(v) }); b.setAttribute('aria-pressed', String(value === v)); return b; }));
+  const row = (title, hint, ...control) => h('div', { className: 'row' }, h('div', { className: 't' }, title, hint ? h('small', { textContent: hint }) : null), h('div', {}, control));
+  const hk = k => h('span', { className: 'keyhint', textContent: MODK().join('+') + '+' + k });
 
-  function settings() {
-    const s = d.settings;
+  /* ---------- overview ---------- */
+  function overview() {
+    const list = sessions(), now = Date.now();
+    const subsOf = m => [...m.subs.values()].filter(s => now - s.e.t < STALE);
+    const helpers = list.reduce((n, m) => n + subsOf(m).length, 0);
+    const waiting = list.filter(m => m.e.state === 'waiting' || subsOf(m).some(s => s.e.state === 'waiting')).length;
+    const tools = list.reduce((n, m) => n + m.tools + subsOf(m).reduce((k, s) => k + s.tools, 0), 0);
+    const files = new Set(list.flatMap(m => [...m.touched, ...subsOf(m).flatMap(s => [...s.touched])])).size;
+    const stat = (n, label, cls) => h('div', { className: 'stat ' + (cls || '') }, h('b', { textContent: n }), h('span', { textContent: label }));
+    const card = m => {
+      const e = m.e, url = stickerOf(m), subs = subsOf(m), off = d.settings.agents[e.agent] === false;
+      const c = h('div', { className: 'card' + (e.state === 'waiting' ? ' waiting' : '') + (REST.has(e.state) ? ' rest' : '') });
+      c.style.setProperty('--agent', d.colors[e.agent] || '#888');
+      c.append(...[
+        h('div', { className: 'hd' },
+          h('div', { className: 'av' }, url ? img(url) : img(logo(e.agent), 'logo-chip'), url && logo(e.agent) ? img(logo(e.agent), 'mark') : null),
+          h('div', { style: 'min-width:0' }, h('div', { className: 'nm' }, NAMES[e.agent] || e.agent, m.model ? h('small', { textContent: m.model }) : null),
+            h('div', { className: 'cwd', textContent: e.cwd ? base(e.cwd) : e.session, title: e.cwd || '' }))),
+        h('div', { className: 'state s-' + e.state + (TOOL.has(e.state) || e.state === 'waiting' ? ' busy' : '') }, h('i', { className: 'dot' }), h('b', { textContent: VERB[e.state] || e.state }), h('span', { textContent: what(e) })),
+        subs.length ? h('div', { className: 'helpers' }, subs.map(s => { const u = helperOf(m, s);
+          return h('div', { className: 'helper s-' + s.e.state }, u ? img(u) : img(logo(e.agent), 'logo-chip'), h('b', { textContent: s.e.subType || 'helper' }), h('span', { textContent: (VERB[s.e.state] || s.e.state) + ' ' + what(s.e) })); })) : null,
+        h('div', { className: 'ft' }, plural(m.tools, 'tool') + ' · ' + plural(m.touched.size, 'file') + ' · ' + dur(now - m.since),
+          h('button', { textContent: 'Sticker', onclick: () => go(e.agent) }),
+          h('button', { textContent: off ? 'Show' : 'Hide', onclick: () => set({ agents: { ...d.settings.agents, [e.agent]: off } }) }))].filter(Boolean));
+      return c;
+    };
+    const pile = samples().filter((_, i) => i % 37 === 3).slice(0, 4);
     return [
-      h('h1', { textContent: 'Control room' }),
-      h('p', { className: 'sub', textContent: 'Everything here applies right away. No agent or config editing needed.' }),
-      row('Stickers on screen', 'Ctrl+Alt+Shift+A toggles them anywhere', check('Show the stickers', s.visible, on => ap.setVisible(on))),
-      row('Size', null, seg('size', [['small', 'Small'], ['medium', 'Medium'], ['large', 'Large']])),
-      row('When to show an agent', null, seg('show', [['working', 'While it works'], ['alerts', 'Only when it needs me'], ['always', 'Always']])),
-      row('Details', 'What it is doing and which files', seg('details', [['hover', 'On hover'], ['always', 'Always']])),
-      row('Agents', null, h('div', { className: 'checks' }, ...[...d.agents, ['subagent', 'Helpers']].map(([k, n]) =>
-        check(n, s.agents[k] !== false, on => ap.setConfig({ agents: { ...s.agents, [k]: on } }))))),
-      row('Start with agents', 'Open the stickers when an agent session starts', check('Start automatically', s.autostart, on => ap.setConfig({ autostart: on }))),
-      row('Positions', 'Drag a sticker to move that agent', h('button', { className: 'btn', textContent: 'Reset positions', onclick: () => ap.resetPositions() })),
-      h('p', { className: 'note', innerHTML: 'Saved in <code>~/.agent-presence/config.json</code>, shared with the VS Code extension. Choose stickers in the list on the left.' }),
+      h('h1', { textContent: 'Overview' }),
+      h('p', { className: 'sub', textContent: 'Every agent session on this machine, live from its hooks.' }),
+      h('div', { className: 'stats' }, stat(list.length, 'live sessions'), stat(helpers, 'helpers'), stat(waiting, 'need you', waiting ? 'alert' : ''), stat(tools, 'tool calls'), stat(files, 'files touched')),
+      h('h2', { textContent: 'Sessions' }),
+      list.length ? h('div', { className: 'cards' }, list.map(card))
+        : h('div', { className: 'empty' }, h('div', { className: 'pile' }, pile.map(i => img(i.url))), h('div', {}, 'No agent is running right now. Start Claude Code, Codex, Copilot or Antigravity and it shows up here.')),
+      h('h2', { textContent: 'Activity' }),
+      log.length ? h('div', { className: 'log' }, log.slice(0, 80).map((e, i) => h('div', { className: (i === 0 && now - e.t < 1500 ? 'new ' : '') + 's-' + e.state },
+        h('time', { textContent: new Date(e.t).toLocaleTimeString([], { hour12: false }) }), logo(e.agent) ? img(logo(e.agent)) : h('span'),
+        h('span', { className: 'who', textContent: (NAMES[e.agent] || e.agent) + (e.sub ? ' › ' + (e.subType || 'helper') : '') }),
+        h('span', { className: 'st', textContent: VERB[e.state] || e.state }), h('span', { className: 'x', textContent: what(e) || (e.cwd ? base(e.cwd) : '') }))))
+        : h('div', { className: 'empty' }, 'Nothing yet. Events appear here as agents read, write and run things.'),
     ];
   }
 
+  /* ---------- display ---------- */
+  function display() {
+    const s = d.settings, opv = h('span', { className: 'val', textContent: s.opacity + '%' });
+    return [
+      h('h1', { textContent: 'Display' }),
+      h('p', { className: 'sub', textContent: 'How the stickers sit on your screen. Changes apply right away.' }),
+      h('div', { className: 'panel' },
+        row('Stickers on screen', 'Toggle from anywhere', sw(s.visible, on => ap.setVisible(on)), hk('A')),
+        row('Where to show', 'Over every window, or only while one of your coding apps is in front',
+          seg(s.scope, [['everywhere', 'Everywhere'], ['apps', 'Only over my apps']], v => set({ scope: v })), hk('F')),
+        s.scope === 'apps' ? myApps(s) : null,
+        row('Size', null, seg(s.size, [['small', 'Small'], ['medium', 'Medium'], ['large', 'Large']], v => set({ size: v })), hk('S')),
+        row('When to show an agent', null, seg(s.show, [['working', 'While it works'], ['alerts', 'Only when it needs me'], ['always', 'Always']], v => set({ show: v })), hk('W')),
+        row('Details', 'One short line under each sticker, or only in the bubble', seg(s.details, [['hover', 'In the bubble'], ['always', 'Always under it']], v => set({ details: v })), hk('D')),
+        row('Motion', 'Lively adds a pulse when an agent needs you and a bounce when it finishes', seg(s.motion, [['lively', 'Lively'], ['calm', 'Calm'], ['off', 'Off']], v => set({ motion: v })), hk('M')),
+        row('Status icon', 'The small reading / writing / done badge', sw(s.icon, on => set({ icon: on }))),
+        row('Resting opacity', 'Stickers fade to this until you hover them',
+          h('input', { type: 'range', min: 30, max: 100, step: 5, value: s.opacity, oninput: e => opv.textContent = e.target.value + '%', onchange: e => set({ opacity: +e.target.value }) }), opv)),
+      h('h2', { textContent: 'Helpers (subagents)' }),
+      h('div', { className: 'panel' },
+        row('Show helpers', 'A smaller sticker for each subagent', sw(s.agents.subagent !== false, on => set({ agents: { ...s.agents, subagent: on } }))),
+        row('Layout', 'How a helper shows which agent it belongs to', seg(s.helpers, [['line', 'Joining line'], ['pod', 'Dashed pod'], ['none', 'Side by side']], v => set({ helpers: v })), hk('L'))),
+      h('h2', { textContent: 'Agents' }),
+      h('div', { className: 'panel' },
+        row('Show stickers for', 'Right-click a sticker to hide that agent', h('div', { className: 'chips' }, d.agents.map(([k, n]) => {
+          const on = s.agents[k] !== false, b = h('button', { className: 'chip', onclick: () => set({ agents: { ...s.agents, [k]: !on } }) }, img(logo(k)), n);
+          b.setAttribute('aria-pressed', String(on)); return b; }))),
+        row('Start with agents', 'Open the stickers when an agent session starts', sw(s.autostart, on => set({ autostart: on }))),
+        row('Positions', 'Drag a sticker to move that agent', h('button', { className: 'btn', textContent: 'Reset positions', onclick: () => ap.resetPositions() }), hk('R'))),
+      h('p', { className: 'note', innerHTML: 'Saved in <code>~/.agent-presence/config.json</code>, shared with the CLI and the VS Code extension.' }),
+    ];
+  }
+
+  // the apps that count as "mine": your list plus whatever was in front lately; click to switch one on or off
+  function myApps(s) {
+    const f = d.front || {}, mine = new Set(s.apps.map(a => a.toLowerCase()));
+    const names = [...new Map([...f.seen, ...s.apps].map(n => [n.toLowerCase(), n])).values()];
+    const toggle = n => set({ apps: mine.has(n.toLowerCase()) ? s.apps.filter(a => a.toLowerCase() !== n.toLowerCase()) : [...s.apps, n] });
+    const now = f.failed ? h('span', { className: 'front bad', textContent: 'Can’t tell which app is in front on this system, so stickers show everywhere.' })
+      : f.name ? h('span', { className: 'front' }, 'In front now: ', h('b', { textContent: f.name }), h('span', { className: f.ok ? 'yes' : 'no', textContent: f.ok ? ' · stickers on' : ' · stickers hidden' }))
+      : h('span', { className: 'front', textContent: 'Switch to another app and its name shows up here.' });
+    return h('div', { className: 'row apps' }, h('div', { className: 't' }, 'My apps', h('small', { textContent: 'Recently in front first. Highlighted ones show the stickers.' })),
+      h('div', {}, now,
+        h('div', { className: 'chips' }, names.map(n => { const b = h('button', { className: 'chip app' + (f.seen.includes(n) ? ' seen' : ''), textContent: n, onclick: () => toggle(n) });
+          b.setAttribute('aria-pressed', String(mine.has(n.toLowerCase()))); return b; })),
+        h('form', { className: 'add', onsubmit: ev => { ev.preventDefault(); const v = ev.target.a.value.trim(); if (v && !mine.has(v.toLowerCase())) set({ apps: [...s.apps, v] }); } },
+          h('input', { name: 'a', placeholder: 'App or process name', title: 'As it shows above, e.g. Code or WindowsTerminal' }), h('button', { className: 'btn', textContent: 'Add' }))));
+  }
+
+  /* ---------- bubbles ---------- */
+  function bubbles() {
+    const b = d.settings.bubble, custom = b.text !== 'auto';
+    const sample = (d.urls.claude || [])[0] ? { url: d.urls.claude[0] } : samples().find(i => /plush/.test(i.file));
+    const pv = theme => {
+      const t = b.theme === 'auto' ? theme : b.theme === 'dark' ? 'd' : 'l';
+      const el = h('div', { className: ['pv', 'th-' + t, 'bs-' + b.size, b.style === 'text' && 'text', !b.border && 'noborder', !b.on && 'off', !b.stats && 'nostats'].filter(Boolean).join(' ') },
+        h('div', { className: 'bub' }, h('div', { className: 'h' }, h('b', { textContent: 'Claude' }), h('span', { textContent: 'opus-5-5 · agent-peeps' })),
+          h('div', { className: 'w' }, h('i'), h('span', { textContent: 'writing' }), h('code', { textContent: 'src/auth.ts' })),
+          h('div', { className: 's', textContent: '14 tools · 5 files · 6m 12s' })),
+        sample ? img(sample.url) : null);
+      if (custom) el.style.setProperty('--bt', b.text);
+      return el;
+    };
+    const COLORS = ['#ffffff', '#0b0b0c', '#ffd166', '#7dd3fc', '#86efac', '#f9a8d4'];
+    const swatch = c => { const el = h('button', { className: 'swatch' + (c === 'auto' ? ' auto' : ''), title: c === 'auto' ? 'Auto: white on dark, black on light' : c, onclick: () => setB({ text: c }) });
+      if (c !== 'auto') el.style.setProperty('--c', c); el.setAttribute('aria-pressed', String(b.text === c)); return el; };
+    return [
+      h('h1', { textContent: 'Speech bubbles' }),
+      h('p', { className: 'sub', textContent: 'The card that shows what an agent is doing. Hover a sticker, click it to pin, or peek at all of them.' }),
+      h('div', { className: 'stage' }, h('div', { className: 'desk dark' }, h('small', { textContent: 'dark desktop' }), pv('d')), h('div', { className: 'desk light' }, h('small', { textContent: 'light desktop' }), pv('l'))),
+      h('div', { className: 'panel' },
+        row('Speech bubbles', 'Turn every bubble and detail line off', sw(b.on, on => setB({ on })), hk('B')),
+        row('Style', 'A card, or plain text with a soft shadow', seg(b.style, [['card', 'Card'], ['text', 'Text only']], v => setB({ style: v }))),
+        row('Border', 'A thin outline around the card', sw(b.border, on => setB({ border: on }))),
+        row('Theme', 'Auto follows your system: white text in dark mode, black in light', seg(b.theme, [['auto', 'Auto'], ['dark', 'Dark'], ['light', 'Light']], v => setB({ theme: v })), hk('T')),
+        row('Text color', null, h('div', { className: 'swatches' }, swatch('auto'), COLORS.map(swatch),
+          h('input', { type: 'color', value: custom ? b.text : '#8ab4ff', title: 'Any color', onchange: e => setB({ text: e.target.value }) }))),
+        row('Text size', null, seg(b.size, [['small', 'Small'], ['medium', 'Medium'], ['large', 'Large']], v => setB({ size: v }))),
+        row('Open when it needs you', 'The bubble pops open by itself when an agent waits on you', sw(b.auto, on => setB({ auto: on }))),
+        row('Stats line', 'Tool calls, files touched and time on task', sw(b.stats, on => setB({ stats: on })))),
+      h('p', { className: 'note', textContent: 'Click a sticker to pin its bubble open. ' + MODK().join('+') + '+P opens every bubble at once.' }),
+    ];
+  }
+
+  /* ---------- shortcuts ---------- */
+  function shortcuts() {
+    const s = d.settings;
+    const combo = k => h('div', { className: 'combo' }, [...MODK(), k].map(x => h('kbd', { textContent: x })));
+    return [
+      h('h1', { textContent: 'Keyboard shortcuts' }),
+      h('p', { className: 'sub', textContent: 'Work from anywhere, without opening this window. A toast near the bottom of the screen confirms each one.' }),
+      h('div', { className: 'panel' }, row('Global shortcuts', 'Turn off if they clash with another app. Show / hide always works.', sw(s.shortcuts, on => set({ shortcuts: on })))),
+      h('h2', { textContent: 'Anywhere' }),
+      h('div', { className: 'panel keys' }, d.keys.map(k => h('div', { className: 'key' }, combo(k.k), h('span', { textContent: k.text }),
+        k.state === true ? h('span', { className: 'ok', textContent: 'ready' }) : k.state === false ? h('span', { className: 'taken', textContent: 'used by another app' }) : h('span', { className: 'offk', textContent: 'off' })))),
+      h('h2', { textContent: 'In this window' }),
+      h('div', { className: 'panel keys' }, [['1 – 4', 'Overview, Display, Bubbles, Shortcuts'], ['?', 'This page'], ['Esc', 'Back to Overview'], ['/', 'Add a model rule'], [d.mac ? '⌘ W' : 'Ctrl W', 'Close the window (it keeps running)']]
+        .map(([k, t]) => h('div', { className: 'key' }, h('div', { className: 'combo' }, k.split(' ').map(x => h('kbd', { textContent: x }))), h('span', { textContent: t }), h('span')))),
+    ];
+  }
+
+  /* ---------- sticker picker ---------- */
   function stickers(t) {
     const chosen = d.chosen[t.key] || [];
-    const set = list => ap.setAvatars(t.key, list);
+    const pick = list => ap.setAvatars(t.key, list);
     const packOf = v => String(v).startsWith('pack:') && d.library.find(g => g.pack === v.slice(5));
     const urlOf = f => (d.library.flatMap(g => g.items).find(i => i.file === f) || {}).url || (d.urls[t.key] || [])[0];
     const chip = f => { const g = packOf(f);
-      return g ? h('div', { className: 'pick pack', title: g.group + ' pack' }, img(g.items[0].url), h('div', {}, h('b', { textContent: g.group }), h('small', { textContent: g.items.length + ' stickers, whole pack' })), h('button', { textContent: '×', title: 'Remove', onclick: () => set(chosen.filter(x => x !== f)) }))
-        : h('div', { className: 'pick', title: f }, img(urlOf(f)), h('button', { textContent: '×', title: 'Remove', onclick: () => set(chosen.filter(x => x !== f)) })); };
+      return g ? h('div', { className: 'pick pack', title: g.group + ' pack' }, img(g.items[0].url), h('div', {}, h('b', { textContent: g.group }), h('small', { textContent: g.items.length + ' stickers, whole pack' })), h('button', { textContent: '×', title: 'Remove', onclick: () => pick(chosen.filter(x => x !== f)) }))
+        : h('div', { className: 'pick', title: f }, img(urlOf(f)), h('button', { textContent: '×', title: 'Remove', onclick: () => pick(chosen.filter(x => x !== f)) })); };
     const who = t.group === 'Agents' || t.group === 'Models' ? 'session' : 'helper';
     const total = (d.urls[t.key] || []).length;
+    const def = t.agent ? h('div', { className: 'def' }, img(logo(t.agent), 'logo-chip'), `Default: the ${NAMES[t.agent]} logo`)
+      : h('div', { className: 'def' }, 'Default: ' + (t.group === 'Models' ? 'the agent’s own sticker' : 'its agent’s logo'));
     const bar = h('div', { className: 'bar' },
       h('h1', { textContent: t.name }),
       h('p', { className: 'sub', textContent: (t.group === 'Models' ? `Sessions whose model contains “${t.name}”. ` : '') + (total > 1 ? `${total} stickers: each ${who} gets one of them.` : `Click stickers, or use a whole pack. With several, each ${who} gets its own.`) }),
-      h('div', { className: 'chosen' }, ...(chosen.length ? chosen.map(chip)
-        : [h('div', { className: 'def' }, img(t.def), 'Default: a colored circle with the initial')])),
+      h('div', { className: 'chosen' }, chosen.length ? chosen.map(chip) : def),
       h('div', { className: 'actions' },
         h('button', { className: 'btn', textContent: 'Add from my computer…', onclick: () => ap.browse(t.key) }),
-        chosen.length ? h('button', { className: 'btn', textContent: 'Use default', onclick: () => set([]) }) : null,
+        chosen.length ? h('button', { className: 'btn', textContent: 'Use default', onclick: () => pick([]) }) : null,
         h('button', { className: 'btn', textContent: 'Open my sticker folder', onclick: () => ap.openFolder() })));
     const blocks = d.library.flatMap(g => { const id = g.pack && 'pack:' + g.pack, on = id && chosen.includes(id);
-      const use = id ? h('button', { className: 'use', textContent: on ? '✓ Using whole pack' : 'Use whole pack', onclick: () => set(on ? chosen.filter(x => x !== id) : [...chosen, id]) }) : null;
+      const use = id ? h('button', { className: 'use', textContent: on ? '✓ Using whole pack' : 'Use whole pack', onclick: () => pick(on ? chosen.filter(x => x !== id) : [...chosen, id]) }) : null;
       if (use) use.setAttribute('aria-pressed', String(!!on));
-      return [h('h2', {}, g.group + (g.mine ? '' : ''), use), h('div', { className: 'grid' }, ...g.items.map(i => {
-      const n = chosen.indexOf(i.file);
-      const b = h('button', { className: 'tile', title: i.name, onclick: () => set(n >= 0 ? chosen.filter(f => f !== i.file) : [...chosen, i.file]) }, img(i.url), h('span', { textContent: i.name }));
-      b.setAttribute('aria-pressed', String(n >= 0)); b.dataset.n = n + 1;
-      return b;
-    }))]; });
+      return [h('h2', {}, g.group, use), h('div', { className: 'grid' }, g.items.map(i => {
+        const n = chosen.indexOf(i.file);
+        const b = h('button', { className: 'tile', title: i.name, onclick: () => pick(n >= 0 ? chosen.filter(f => f !== i.file) : [...chosen, i.file]) }, img(i.url), h('span', { textContent: i.name }));
+        b.setAttribute('aria-pressed', String(n >= 0)); b.dataset.n = n + 1;
+        return b;
+      }))]; });
     return [bar, ...(blocks.length ? blocks : [h('p', { className: 'empty', innerHTML: 'No stickers yet. Put images in <code>~/.agent-presence/stickers</code> (subfolders become groups), or add them from your computer.' })])];
   }
 
+  const PAGES = { overview, display, bubbles, shortcuts };
   function render() {
-    nav();
+    nav(); topbar();
     const t = d.targets.find(x => x.key === tab) || extra.find(x => x.key === tab);
-    if (!t) tab = 'settings';
+    if (!t && !PAGES[tab]) tab = 'overview';
     const main = document.getElementById('main'), y = main.scrollTop;
-    main.replaceChildren(...(t ? stickers(t) : settings()));
+    main.replaceChildren(...(t ? stickers(t) : d.keys ? PAGES[tab]() : stale()));
     main.scrollTop = y;
   }
+  // Updated on disk while an older Agent Peeps keeps running: this page is new, the data it gets is old.
+  const stale = () => [h('h1', { textContent: 'Restart Agent Peeps to finish updating' }),
+    h('p', { className: 'sub', textContent: 'A newer version is installed, but the copy that is running started before it. Quit it (tray icon → Quit Agent Peeps, or the first command), then start it again:' }),
+    h('p', {}, h('code', { textContent: 'agentpeeps overlay --quit' })), h('p', {}, h('code', { textContent: 'agentpeeps overlay' })),
+    h('p', { className: 'note', textContent: 'Sticker choices on the left still work until then.' })];
   function go(k) { tab = k; render(); document.getElementById('main').scrollTop = 0; }
 
-  ap.onRoom(data => { d = data; if (data.tab) tab = data.tab; render(); });
+  addEventListener('keydown', ev => {
+    if (ev.target.closest && ev.target.closest('input') && ev.key !== 'Escape') return;
+    if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === 'w') { ev.preventDefault(); window.close(); return; }
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    const i = '1234'.indexOf(ev.key);
+    if (i >= 0) go(VIEWS[i][0]);
+    else if (ev.key === '?') go('shortcuts');
+    else if (ev.key === 'Escape') { document.activeElement.blur(); go('overview'); }
+    else if (ev.key === '/') { ev.preventDefault(); document.querySelector('nav input').focus(); }
+  });
+  setInterval(() => { if (tab === 'overview' && !document.hidden && live.size) soon(); }, 1000); // timers tick
+
+  ap.onRoom(data => { d = data; document.body.classList.toggle('mac', !!data.mac); if (data.tab) tab = data.tab === 'settings' ? 'display' : data.tab; render(); });
+  ap.onEvent(track);
+  ap.onFront(f => { if (!d) return; d.front = f; if (tab === 'display' && !document.activeElement.closest('form')) render(); });
 </script>
 </body>
 </html>

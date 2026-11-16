@@ -1,0 +1,2 @@
+Agent Peeps: a tiny sticker on your screen for every AI coding agent and helper, showing which file it is on. Works with Claude Code, Codex, Copilot and Antigravity.
+npx agentpeeps init · agentpeeps.space

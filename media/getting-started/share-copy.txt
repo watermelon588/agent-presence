@@ -1,0 +1,2 @@
+Agent Peeps puts a tiny sticker in the corner of your screen for every AI coding agent, and shows which file it is on.
+One command: npx agentpeeps init. agentpeeps.space

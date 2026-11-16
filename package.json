@@ -11,7 +11,8 @@
   "scripts": {
     "test": "node test.js",
     "overlay": "electron overlay/main.js",
-    "demo": "node demo.js"
+    "demo": "node demo.js",
+    "terminal-stickers": "python scripts/terminal-stickers.py"
   },
   "files": [
     "cli.js",
@@ -23,7 +24,8 @@
     ".codex-plugin/",
     ".agents/",
     "logo.png",
-    "avatars/free/"
+    "avatars/free/",
+    "avatars/terminal.json"
   ],
   "keywords": [
     "claude-code",

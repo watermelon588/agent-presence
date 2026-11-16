@@ -242,33 +242,118 @@ function install(remove) {
   console.log(`The stickers appear on your next agent session. To start them now: ${run} overlay`);
 }
 
-// ---- terminal view: every agent, its helpers, and the files each one touched ----
+// ---- terminal stickers: a hand-picked set of clean stickers as small color pixel art, baked by
+// scripts/terminal-stickers.py into avatars/terminal.json (20x20 RGBA pixels each, drawn two per character cell) ----
+let ART;
+const art = () => (ART ??= (() => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'avatars', 'terminal.json'), 'utf8')); } catch { return { w: 20, h: 20, art: {} }; } })());
+const artKey = file => path.relative(path.join(__dirname, 'avatars'), file).split(path.sep).join('/');
+// Terminal art for an image file, or null when it isn't in the terminal set (your own images, busy stickers).
+const termArt = file => { const a = art().art, k = artKey(file); return a[k] || a[k.replace(/-animated(\.\w+)$/, '$1')] || null; };
+const logoArt = agent => art().art[`stickers/model-logos/${agent}-logo.webp`] || null;
+// Same pick as the overlay: config sticker set (one per session, from its id), else the agent's logo.
+const hash = s => [...String(s)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+function stickerFor(e, cfg, all) {
+  const av = cfg.avatars || {}, m = String(e.model || '').toLowerCase();
+  const mk = m && Object.keys(av).filter(k => k.startsWith('model:') && m.includes(k.slice(6).toLowerCase())).sort((x, y) => y.length - x.length)[0];
+  const files = stickerFiles(e.sub ? av[e.subType] || av[e.agent + '-subagent'] || av.subagent : (mk && av[mk]) || av[e.agent], all);
+  const f = files.length ? files[hash(e.session + (e.sub || '')) % files.length] : null;
+  return (f && termArt(f)) || logoArt(e.agent);
+}
+const HOP = [2, 1, 0, 1]; // pixels from the top: sits at 2, hops up while working
+// One sticker at time t: h/2 + 1 lines, each w cells wide. Each cell is a half block: top pixel as the glyph color,
+// bottom pixel as the background. Color codes are only written when they change, which keeps frames small.
+// motion: 'still' (idle, done), 'move' (working), 'shake' (needs you)
+function stickerLines(st, t, motion = 'move') {
+  const { w, h } = art(), rows = h / 2 + 1;
+  if (!st) return Array(rows).fill(' '.repeat(w));
+  st.px ??= st.f.map(b => Buffer.from(b, 'base64'));
+  const buf = st.px[motion === 'still' ? 0 : Math.floor(t / (st.ms || 150)) % st.px.length];
+  const oy = motion === 'move' && st.px.length === 1 ? HOP[Math.floor(t / 160) % 4] : 2;
+  const dx = motion === 'shake' ? [0, 1, 0, -1][Math.floor(t / 90) % 4] : 0;
+  const px = (x, y) => { y -= oy; x -= dx; if (x < 0 || x >= w || y < 0 || y >= h) return null; const i = (y * w + x) * 4; return buf[i + 3] ? `${buf[i]};${buf[i + 1]};${buf[i + 2]}` : null; };
+  return Array.from({ length: rows }, (_, r) => {
+    let line = '', prev = '';
+    for (let x = 0; x < w; x++) {
+      const tp = px(x, 2 * r), bt = px(x, 2 * r + 1), key = tp + '|' + bt;
+      if (key !== prev) line += !tp && !bt ? '\x1b[0m' : !tp ? `\x1b[0;38;2;${bt}m` : !bt ? `\x1b[0;38;2;${tp}m` : `\x1b[38;2;${tp};48;2;${bt}m`;
+      line += !tp && !bt ? ' ' : !tp ? '▄' : '▀';
+      prev = key;
+    }
+    return line + '\x1b[0m';
+  });
+}
+// Cards side by side, wrapped to the terminal width. card = { st, motion, caption: [lines] }
+function cardRows(cards, t, cols) {
+  const cw = art().w + 4, per = Math.max(1, Math.floor((cols - 2) / cw)), out = [];
+  for (let i = 0; i < cards.length; i += per) {
+    const row = cards.slice(i, i + per).map(c => [...stickerLines(c.st, t, c.motion).map(l => '  ' + l + '  '), ...c.caption.map(s => (' ' + s).slice(0, cw - 1).padEnd(cw))]);
+    for (let y = 0; y < Math.max(...row.map(r => r.length)); y++) out.push(' ' + row.map(r => r[y] || ' '.repeat(cw)).join('').trimEnd());
+    out.push('');
+  }
+  return out;
+}
+// Cut a line to n visible characters, keeping its color codes whole.
+const clip = (l, n) => { let v = 0, o = ''; for (const [s] of l.matchAll(/\x1b\[[0-9;]*m|[^\x1b]/gu)) { if (s[0] !== '\x1b' && ++v > n) break; o += s; } return o + '\x1b[0m'; };
+// Redraws in place under the cursor instead of clearing the screen, so it only takes the lines it needs.
+// frame(t, cols) -> lines.
+function liveView(frame, ms = 80) {
+  const out = process.stdout;
+  if (!out.isTTY) return console.log(frame(0, out.columns || 100).join('\n'));
+  let drawn = 0, last = '', size = '';
+  const draw = () => {
+    // Ask for the size every time: on Windows the 'resize' event only fires while stdin is being read.
+    const [cols, rows] = out.getWindowSize ? out.getWindowSize() : [out.columns || 100, out.rows || 40];
+    // A resize rewraps what's on screen, so counting lines back up no longer lands on our first line: start clean.
+    if (size && size !== cols + 'x' + rows) { out.write('\x1b[2J\x1b[H'); drawn = 0; last = ''; }
+    size = cols + 'x' + rows;
+    const lines = frame(Date.now(), cols).slice(0, rows - 1).map(l => clip(l, cols - 1));
+    const s = lines.join('\n');
+    if (s === last) return; // nothing moved: don't repaint
+    out.write((drawn ? `\x1b[${drawn}F` : '') + '\x1b[0J' + s + '\n');
+    drawn = lines.length; last = s;
+  };
+  out.write('\x1b[?25l');
+  process.on('SIGINT', () => { out.write('\x1b[?25h'); process.exit(0); });
+  process.on('exit', () => out.write('\x1b[?25h'));
+  draw(); setInterval(draw, ms);
+}
+
+// ---- terminal view: a sticker per agent and helper, then the files each one touched ----
+const VERB = { idle: 'waiting for a prompt', thinking: 'thinking', reading: 'reading', writing: 'writing', running: 'running',
+  delegating: 'handing off', browsing: 'browsing', waiting: 'needs you', done: 'done', working: 'working' };
 function watch() {
   const agents = new Map(); // key -> last event + files: Map(path -> { t, state })
-  let offset = 0;
-  const icon = { idle: '·', thinking: '…', reading: '🔍', writing: '✏️', running: '▶', delegating: '🧩', browsing: '🌐', waiting: '❗', done: '✓', working: '⚙' };
+  let offset = 0, cfg = readConfig(), all = packs();
+  setInterval(() => { cfg = readConfig(); all = packs(); }, 5000); // pick up `agentpeeps set` while running
+  const icon = { idle: '·', thinking: '…', reading: '»', writing: '✎', running: '▶', delegating: '⇢', browsing: '◎', waiting: '!', done: '✓', working: '*' };
   const ago = t => { const s = Math.round((Date.now() - t) / 1000); return s < 60 ? s + 's' : Math.round(s / 60) + 'm'; };
   const show = (a, f) => { const r = path.relative(a.cwd || '', f); return r && !r.startsWith('..') && !path.isAbsolute(r) ? r : f; };
-  const row = (a, pad) => {
+  const doing = a => (a.detail && ['running', 'browsing', 'delegating', 'waiting'].includes(a.state) ? a.detail : a.file ? show(a, a.file) : a.detail || '');
+  const row = (a, pad, out) => {
     const who = a.sub ? `${pad}└ ${a.subType || 'subagent'}` : `${a.agent} ${a.session.slice(0, 6)}`;
-    const doing = a.detail && ['running', 'browsing', 'delegating', 'waiting'].includes(a.state) ? a.detail : a.file ? show(a, a.file) : a.detail || '';
-    console.log(`  ${icon[a.state] || '?'}  ${who.padEnd(24)} ${a.state.padEnd(10)} ${doing}  (${ago(a.t)})`);
+    out.push(`  ${icon[a.state] || '?'}  ${who.padEnd(24)} ${a.state.padEnd(10)} ${doing(a)}  (${ago(a.t)})`);
     for (const [f, x] of [...a.files].sort((p, q) => q[1].t - p[1].t).slice(0, 4))
-      console.log(`  ${' '.repeat(pad.length + 6)}${(icon[x.state] || '·')} ${show(a, f)}  ${ago(x.t)}`);
+      out.push(`  ${' '.repeat(pad.length + 6)}${(icon[x.state] || '·')} ${show(a, f)}  ${ago(x.t)}`);
   };
-  const render = () => {
-    console.clear();
-    console.log('Agent Peeps  (Ctrl+C to exit)\n');
+  const frame = (t, cols = 100) => {
+    const out = ['Agent Peeps  (Ctrl+C to exit)', ''];
     const mains = [...agents.values()].filter(a => !a.sub).sort((p, q) => q.t - p.t);
-    if (!agents.size) console.log('  no agents active');
+    if (!agents.size) return [...out, '  no agents active'];
+    const list = mains.flatMap(m => [m, ...[...agents.values()].filter(s => s.sub && s.main === m.key)]);
+    out.push(...cardRows(list.map(a => ({
+      st: stickerFor(a, cfg, all),
+      motion: a.state === 'waiting' ? 'shake' : a.state === 'idle' || a.state === 'done' ? 'still' : 'move',
+      caption: [a.sub ? `└ ${a.subType || 'helper'}` : `${a.agent}${a.cwd ? ' · ' + path.basename(a.cwd) : ''}`, `${icon[a.state] || '?'} ${VERB[a.state] || a.state} ${a.state === 'idle' || a.state === 'done' ? '' : doing(a) ? path.basename(doing(a)) : ''}`],
+    })), t, cols));
     for (const m of mains) {
-      row(m, '');
-      for (const s of agents.values()) if (s.sub && s.main === m.key) row(s, '   ');
-      console.log();
+      row(m, '', out);
+      for (const s of agents.values()) if (s.sub && s.main === m.key) row(s, '   ', out);
+      out.push('');
     }
+    return out;
   };
   const pump = () => {
-    let size; try { size = fs.statSync(EVENTS).size; } catch { return render(); }
+    let size; try { size = fs.statSync(EVENTS).size; } catch { return; }
     if (size < offset) offset = 0;
     if (size > offset) {
       const fd = fs.openSync(EVENTS, 'r'); const buf = Buffer.alloc(size - offset);
@@ -279,16 +364,36 @@ function watch() {
         if (e.state === 'gone') { for (const k of agents.keys()) if (k === key || (!e.sub && k.startsWith(main + ':'))) agents.delete(k); continue; }
         if (!agents.has(main)) agents.set(main, { ...e, sub: null, subType: null, key: main, files: new Map() }); // helper seen before its parent
         const prev = agents.get(key) || { files: new Map() };
-        const a = { ...e, key, main, cwd: e.cwd || prev.cwd, files: prev.files };
+        const a = { ...e, key, main, cwd: e.cwd || prev.cwd, model: e.model || prev.model, files: prev.files };
         if (e.file) a.files.set(path.resolve(a.cwd || '', e.file), { t: e.t, state: e.state });
         agents.set(key, a);
       }
     }
     for (const [k, a] of agents) if (Date.now() - a.t > 15 * 60e3) agents.delete(k);
-    render();
   };
   try { offset = Math.max(0, fs.statSync(EVENTS).size - 64 * 1024); } catch {}
   pump(); setInterval(pump, 500);
+  liveView(frame);
+}
+
+// agentpeeps show [pack|sticker|agent|all...] [--once]: preview terminal stickers. No name: the model logos.
+function showStickers(args) {
+  const a = art().art, name = k => path.basename(k).replace(/\.\w+$/, '');
+  const termPacks = new Map();
+  for (const k of Object.keys(a)) { const p = k.split('/').slice(-2)[0]; termPacks.set(p, [...(termPacks.get(p) || []), k]); }
+  const names = args.filter(x => !x.startsWith('-'));
+  const keys = (names.length ? names : ['model-logos']).flatMap(x => {
+    if (/^all$/i.test(x)) return Object.keys(a);
+    const p = findPack(termPacks, x);
+    if (p) return termPacks.get(p);
+    const k = Object.keys(a).find(k => name(k) === slug(x) || name(k) === slug(x) + '-logo');
+    return k ? [k] : [];
+  });
+  if (!keys.length) return console.log(`No terminal sticker called "${names.join(' ')}". Try: ${['all', ...termPacks.keys()].join(', ')}, or an agent (claude, codex...)`);
+  const cards = keys.map(k => ({ st: a[k], motion: 'move', caption: [name(k).replace(/-logo$/, '')] }));
+  const frame = (t, cols = process.stdout.columns || 100) => cardRows(cards, t, cols);
+  if (args.includes('--once')) return console.log(frame(0).join('\n'));
+  liveView(frame);
 }
 
 function overlay() {
@@ -401,7 +506,8 @@ const HELP = `Agent Peeps — stickers for your AI coding agents
   agentpeeps control [claude|...]      open the control room (optionally on one agent's stickers)
   agentpeeps packs                     list sticker packs
   agentpeeps set <target> <pack>       e.g. set claude dinosaur, set model:opus cats, set helpers robots
-  agentpeeps watch                     live view in the terminal
+  agentpeeps watch                     live view in the terminal, with a sticker per agent
+  agentpeeps show [pack|agent|all]     preview terminal stickers (show, show claude, show pixel-food, show all)
   agentpeeps emit <agent> [event]      (used by hooks; reads hook JSON on stdin)
 
 Packs are folders of images in ~/.agent-presence/stickers/<pack>. Settings live in ~/.agent-presence/config.json.`;
@@ -414,9 +520,10 @@ if (require.main === module) {
   else if (cmd === 'watch') watch();
   else if (cmd === 'overlay') overlay();
   else if (cmd === 'packs') listPacks();
+  else if (cmd === 'show') showStickers(process.argv.slice(3));
   else if (cmd === 'set') setStickers(process.argv[3], process.argv.slice(4));
   else if (cmd === 'control' || cmd === 'stickers' || cmd === 'settings') console.log(startOverlay('--control' + (process.argv[3] ? '=' + targetKey(process.argv[3]) : '')) ? 'Opening the control room...' : 'Electron not found. Install with: npm i -g agentpeeps');
   else console.log(HELP);
 }
 
-module.exports = { normalize, patchFiles, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };
+module.exports = { normalize, patchFiles, termArt, stickerLines, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };

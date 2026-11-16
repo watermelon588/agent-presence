@@ -1,0 +1,817 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 2 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\customize\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"sceneA\"> is a timeline element that contains nested <div id=\"aWrap\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#sceneA",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\customize\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"sceneA\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"sceneE\"> is a timeline element that contains nested <div id=\"end\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#sceneE",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\customize\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"sceneE\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 7,
+    "findings": [
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "warning",
+        "time": 4.667,
+        "selector": "#term",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": 24,
+          "top": -259.5,
+          "right": 1418.9,
+          "bottom": 787.4,
+          "width": 1394.9,
+          "height": 1046.9
+        },
+        "containerSelector": "#root",
+        "text": "Terminal ~ $agentpeeps packs Sticker packs (use ",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 259.5
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 24,
+          "y": -259.5,
+          "width": 1394.9,
+          "height": 1046.9
+        },
+        "firstSeen": 3.333,
+        "lastSeen": 7.333,
+        "occurrences": 4,
+        "heldMs": 0,
+        "times": [
+          3.333,
+          4.667,
+          6,
+          7.333
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 3.333,
+        "selector": "div.bar > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 746.48,
+          "top": -166.14,
+          "right": 827.94,
+          "bottom": -140.16,
+          "width": 81.46,
+          "height": 25.98
+        },
+        "containerSelector": "#root",
+        "text": "Terminal",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 166.14
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 746.48,
+          "y": -166.14,
+          "width": 81.46,
+          "height": 25.98
+        },
+        "firstSeen": 3.333,
+        "lastSeen": 7.333,
+        "occurrences": 4,
+        "heldMs": 0,
+        "times": [
+          3.333,
+          4.667,
+          6,
+          7.333
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 3.333,
+        "selector": "div.body > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 177.21,
+          "top": -83.4,
+          "right": 236.3,
+          "bottom": -41,
+          "width": 59.09,
+          "height": 42.4
+        },
+        "containerSelector": "#root",
+        "text": "~ $",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 83.4
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 177.21,
+          "y": -83.4,
+          "width": 59.09,
+          "height": 42.4
+        },
+        "firstSeen": 3.333,
+        "lastSeen": 7.333,
+        "occurrences": 4,
+        "heldMs": 0,
+        "times": [
+          3.333,
+          4.667,
+          6,
+          7.333
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 3.333,
+        "selector": "#c1",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 255.45,
+          "top": -83.4,
+          "right": 570.58,
+          "bottom": -41,
+          "width": 315.13,
+          "height": 42.4
+        },
+        "containerSelector": "#root",
+        "text": "agentpeeps packs",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 83.4
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 255.45,
+          "y": -83.4,
+          "width": 315.13,
+          "height": 42.4
+        },
+        "firstSeen": 3.333,
+        "lastSeen": 7.333,
+        "occurrences": 4,
+        "heldMs": 0,
+        "times": [
+          3.333,
+          4.667,
+          6,
+          7.333
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 3.333,
+        "selector": "div.muted",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 177.21,
+          "top": -34.16,
+          "right": 1358.91,
+          "bottom": 8.24,
+          "width": 1181.7,
+          "height": 42.4
+        },
+        "containerSelector": "#root",
+        "text": "Sticker packs (use one with: agentpeeps set <target> <pack>)",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 34.16
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 177.21,
+          "y": -34.16,
+          "width": 1181.7,
+          "height": 42.4
+        },
+        "firstSeen": 3.333,
+        "lastSeen": 7.333,
+        "occurrences": 4,
+        "heldMs": 0,
+        "times": [
+          3.333,
+          4.667,
+          6,
+          7.333
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 4.667,
+        "selector": "#rCapy",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 74.75,
+          "top": -27.5,
+          "right": 805.55,
+          "bottom": 17.45,
+          "width": 730.8,
+          "height": 44.95
+        },
+        "containerSelector": "#root",
+        "text": "capybaras 16 stickers",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 27.5
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 74.75,
+          "y": -27.5,
+          "width": 730.8,
+          "height": 44.95
+        },
+        "firstSeen": 4.667,
+        "lastSeen": 7.333,
+        "occurrences": 3,
+        "heldMs": 0,
+        "times": [
+          4.667,
+          6,
+          7.333
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 8.125,
+        "selector": "#rCapy",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 238.97,
+          "top": 71.42,
+          "right": 903.29,
+          "bottom": 112.29,
+          "width": 664.32,
+          "height": 40.87
+        },
+        "containerSelector": "#caption",
+        "text": "capybaras 16 stickers",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 238.97,
+          "y": 71.42,
+          "width": 664.32,
+          "height": 40.87
+        },
+        "firstSeen": 8.125,
+        "lastSeen": 8.125,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.125
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 8.25,
+        "selector": "div.bar > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 977.95,
+          "top": 84.25,
+          "right": 1042.78,
+          "bottom": 104.93,
+          "width": 64.83,
+          "height": 20.68
+        },
+        "containerSelector": "#caption",
+        "text": "Terminal",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 977.95,
+          "y": 84.25,
+          "width": 64.83,
+          "height": 20.68
+        },
+        "firstSeen": 8.25,
+        "lastSeen": 8.25,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.25
+        ]
+      }
+    ],
+    "duration": 12,
+    "samples": [
+      0.667,
+      2,
+      3.333,
+      4.667,
+      6,
+      7.333,
+      8.667,
+      10,
+      11.333
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 8,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.667,
+      3.333,
+      6,
+      8.667,
+      11.333
+    ],
+    "checked": 75,
+    "passed": 75
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 2,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 26 text elements stay under it for 0.5 s or more, the smallest \"C\" at 12 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "C",
+        "selector": "#hClaude > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1721.02,
+          "y": 981,
+          "width": 8.95,
+          "height": 16
+        },
+        "time": 0,
+        "times": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0.875,
+          1.5,
+          1.5,
+          1.625,
+          1.625,
+          1.625,
+          1.75,
+          1.75,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25,
+          8.25
+        ],
+        "fontPx": 12,
+        "floorPx": 28,
+        "seconds": 9.5,
+        "elements": [
+          {
+            "selector": "#hClaude > div:nth-of-type(1)",
+            "text": "C",
+            "fontPx": 12,
+            "time": 0,
+            "seconds": 9.5
+          },
+          {
+            "selector": "#hCodex > div:nth-of-type(1)",
+            "text": "X",
+            "fontPx": 12,
+            "time": 0,
+            "seconds": 9.5
+          },
+          {
+            "selector": "div.bar > span:nth-of-type(1)",
+            "text": "Terminal",
+            "fontPx": 15,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "div.body > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "~ $",
+            "fontPx": 24,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#c1",
+            "text": "age",
+            "fontPx": 24,
+            "time": 0.875,
+            "seconds": 2.375
+          },
+          {
+            "selector": "div.muted",
+            "text": "Sticker packs (use one with: agentpeeps set <target> <pack>)",
+            "fontPx": 24,
+            "time": 1.5,
+            "seconds": 1.75
+          },
+          {
+            "selector": "#rCapy",
+            "text": "capybaras 16 stickers",
+            "fontPx": 24,
+            "time": 1.5,
+            "seconds": 1.75
+          },
+          {
+            "selector": "#rCats",
+            "text": "cats 54 stickers",
+            "fontPx": 24,
+            "time": 1.625,
+            "seconds": 1.625
+          },
+          {
+            "selector": "#list > div:nth-of-type(5)",
+            "text": "color-blobs 6 stickers",
+            "fontPx": 24,
+            "time": 1.625,
+            "seconds": 1.625
+          },
+          {
+            "selector": "#list > div:nth-of-type(6)",
+            "text": "costume-cats 7 stickers",
+            "fontPx": 24,
+            "time": 1.625,
+            "seconds": 1.625
+          },
+          {
+            "selector": "#rFruit",
+            "text": "fruit-cats 6 stickers",
+            "fontPx": 24,
+            "time": 1.75,
+            "seconds": 1.5
+          },
+          {
+            "selector": "#list > div:nth-of-type(8)",
+            "text": "pixel-food 12 stickers",
+            "fontPx": 24,
+            "time": 1.75,
+            "seconds": 1.5
+          },
+          {
+            "selector": "#L2 > span:nth-of-type(1)",
+            "text": "~ $",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#c2",
+            "text": "age",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#o2",
+            "text": "claude -> capybaras pack",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#o2 > span:nth-of-type(2)",
+            "text": "(16 stickers)",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#L3 > span:nth-of-type(1)",
+            "text": "~ $",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#c3",
+            "text": "agentpeeps set codex cats",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#o3",
+            "text": "codex -> cats pack",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#o3 > span:nth-of-type(2)",
+            "text": "(54 stickers)",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#L4 > span:nth-of-type(1)",
+            "text": "~ $",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#c4",
+            "text": "agentpeeps set helpers fruit-cats",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#o4",
+            "text": "subagent -> fruit-cats pack",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#o4 > span:nth-of-type(2)",
+            "text": "(6 stickers)",
+            "fontPx": 24,
+            "time": 8.25,
+            "seconds": 1.25
+          },
+          {
+            "selector": "#hClaude > svg:nth-of-type(1) > text:nth-of-type(1)",
+            "text": "E",
+            "fontPx": 24.47,
+            "time": 0,
+            "seconds": 3.25
+          },
+          {
+            "selector": "#hCodex > svg:nth-of-type(1) > text:nth-of-type(1)",
+            "text": "W",
+            "fontPx": 24.47,
+            "time": 0,
+            "seconds": 3.25
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Sticker packs (use one with: agentpeeps set <target> <pack>)\" (9 words) is on screen 1.84 s (±0.01 s), under its 2.40 s floor: hold it about 0.5 s + 0.3 s a word (3.20 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Sticker packs (use one with: agentpeeps set <target> <pack>)",
+        "selector": "div.muted",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 635,
+          "y": 260,
+          "width": 864,
+          "height": 31
+        },
+        "time": 1.469,
+        "words": 9,
+        "seconds": 1.836,
+        "floorSeconds": 2.4,
+        "measured": [
+          {
+            "time": 1.125,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.5,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 1.625,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 1.75,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 1.875,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 2.875,
+            "opacity": 1,
+            "heightPx": 31
+          },
+          {
+            "time": 3,
+            "opacity": 1,
+            "heightPx": 32
+          },
+          {
+            "time": 3.125,
+            "opacity": 1,
+            "heightPx": 34
+          },
+          {
+            "time": 3.25,
+            "opacity": 1,
+            "heightPx": 40
+          },
+          {
+            "time": 3.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 3.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 3.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 96
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

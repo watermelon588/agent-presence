@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>Agent Peeps · ask your agent</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+  @font-face { font-family: "Bricolage Grotesque"; src: url(assets/bricolage-grotesque-latin-wght-normal.woff2) format("woff2"); font-weight: 200 800; }
+  @font-face { font-family: "Geist"; src: url(assets/geist-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url(assets/geist-mono-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Phosphor-Fill"; src: url(assets/Phosphor-Fill.woff2) format("woff2"); }
+
+  :root { --bg: #fbfbfa; --ink: #121214; --muted: #5d5d66; --line: #e7e7e4; --card: #ffffff; --accent: #2f4bff;
+    --kw: #c2410c; --str: #15803d; --fn: #2f4bff; --cm: #9a9aa4; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Geist", sans-serif; -webkit-font-smoothing: antialiased; }
+  #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bg); }
+  .clip { position: absolute; inset: 0; }
+  .stage { position: absolute; inset: 0; transform-origin: 0 0; }
+
+  /* mac-style window */
+  .win { position: absolute; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 2px rgba(18,18,20,.05), 0 30px 70px -28px rgba(18,18,20,.22); }
+  .bar { height: 44px; display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--line); position: relative; }
+  .dots { display: flex; gap: 8px; }
+  .dots i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .dots i:nth-child(1) { background: #ff5f57; } .dots i:nth-child(2) { background: #febc2e; } .dots i:nth-child(3) { background: #28c840; }
+  .bar .title { position: absolute; left: 0; right: 0; text-align: center; font: 500 14px "Geist"; color: var(--muted); pointer-events: none; }
+  .mono { font-family: "Geist Mono", monospace; }
+  .caret { display: inline-block; width: .55em; height: 1.1em; background: var(--ink); vertical-align: -0.18em; margin-left: 1px; }
+
+  /* cursor: Phosphor "cursor" (fill), white die-cut edge */
+  .cursor { position: absolute; left: 0; top: 0; font: 44px/1 "Phosphor-Fill"; color: var(--ink); z-index: 20;
+    -webkit-text-stroke: 3px #fff; paint-order: stroke fill; filter: drop-shadow(0 2px 3px rgba(18,18,20,.25)); }
+  .cursor::before { content: "\e1dc"; }
+
+  /* shot 1: terminal */
+  #term { left: 430px; top: 300px; width: 1060px; height: 470px; }
+  #term .body { padding: 34px 40px; font: 500 30px/1.7 "Geist Mono"; }
+  .prompt { color: var(--muted); }
+  #t-out, #t-next { opacity: 0; }
+
+  /* shot 2: Claude Code */
+  #cc { left: 330px; top: 190px; width: 1260px; height: 690px; }
+  #cc .body { position: absolute; inset: 44px 0 0 0; padding: 26px 40px; }
+  #cc .head { font: 500 18px "Geist"; color: var(--muted); }
+  #cc .log { margin-top: 22px; font: 500 21px/1.7 "Geist Mono"; }
+  #cc .row { opacity: 0; white-space: pre; }
+  .you { color: var(--muted); }
+  .you b { font-weight: 500; color: var(--ink); background: #f3f3f1; padding: 2px 8px; border-radius: 6px; }
+  .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; background: var(--str); margin: 0 14px 0 2px; vertical-align: 2px; }
+  .dot.ink { background: var(--ink); }
+  .tool b { font-weight: 650; }
+  .arg { color: var(--fn); }
+  .out { color: var(--muted); padding-left: 28px; }
+  .reply { font-weight: 600; }
+  #cc .input { position: absolute; left: 40px; right: 40px; bottom: 30px; height: 66px; border: 1.5px solid var(--line); border-radius: 12px;
+    display: flex; align-items: center; padding: 0 22px; font: 500 23px "Geist Mono"; }
+  #cc .input .gt { color: var(--muted); margin-right: 14px; }
+  #cc .hint { position: absolute; left: 62px; bottom: 6px; font: 500 14px "Geist"; color: var(--cm); }
+
+  /* shot 3: editor + real overlay capture */
+  #ed { left: 30px; top: 150px; width: 1860px; height: 740px; }
+  #ed .edbody { position: absolute; inset: 44px 0 0 0; display: flex; }
+  #ed .side { width: 380px; flex: none; border-right: 1px solid var(--line); background: var(--bg); padding: 22px 0; font: 500 18px/2.15 "Geist"; color: var(--muted); }
+  #ed .side .h { font: 600 13px/1 "Geist"; letter-spacing: .08em; color: var(--cm); padding: 4px 26px 14px; }
+  #ed .side .f { padding-left: calc(26px + var(--d, 0) * 22px); }
+  #ed .side .on { background: rgba(47,75,255,.07); color: var(--ink); }
+  #ed .main { flex: 1; min-width: 0; }
+  #ed .tabs { height: 46px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-end; padding-left: 20px; }
+  #ed .tab { font: 500 15px "Geist"; padding: 0 22px; height: 38px; line-height: 38px; border: 1px solid var(--line); border-bottom: 0;
+    border-radius: 8px 8px 0 0; background: var(--card); margin-bottom: -1px; }
+  #ed .code { padding: 22px 0; font: 500 22px/1.6 "Geist Mono"; white-space: pre; }
+  #ed .ln { display: inline-block; width: 70px; text-align: right; padding-right: 30px; color: var(--cm); }
+  #ed .live { background: rgba(47,75,255,.06); }
+  #ed-type { display: inline-block; }
+  .kw { color: var(--kw); } .s { color: var(--str); } .fn { color: var(--fn); } .cm { color: var(--cm); }
+  /* real overlay captures at 2.4x, shown at true size in the default dock (bottom-right); each stage adds agents */
+  .dock { position: absolute; right: 0; bottom: 4px; width: 614px; height: 316px; }
+  .dock img { position: absolute; right: 0; bottom: 0; height: 316px; opacity: 0; }
+  #dk-a { transform-origin: 89% 79%; }
+  #cap { position: absolute; left: 60px; bottom: 56px; opacity: 0; }
+  #cap span { font: 700 44px/1 "Bricolage Grotesque"; letter-spacing: -0.03em; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 14px 32px 16px; box-shadow: 0 10px 30px -16px rgba(18,18,20,.2); }
+
+  /* end card */
+  #endcard { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  #end-logo { width: 190px; height: 190px; opacity: 0; }
+  #end-name { margin-top: 18px; font: 700 104px/1 "Bricolage Grotesque"; letter-spacing: -0.035em; opacity: 0; }
+  #end-url { margin-top: 22px; font: 500 32px "Geist Mono"; color: var(--muted); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="13">
+
+  <!-- 0–2.5 · install -->
+  <section id="shot1" class="clip" data-start="0" data-duration="2.5" data-track-index="0">
+    <div class="stage" id="st1">
+      <div class="win" id="term">
+        <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="title">Terminal — ~/my-app</div></div>
+        <div class="body">
+          <div><span class="prompt">~/my-app $ </span><span id="t-cmd"></span><span class="caret" id="t-caret"></span></div>
+          <div id="t-out" class="prompt">added 1 package in 2s</div>
+          <div id="t-next"><span class="prompt">~/my-app $ </span><span class="caret"></span></div>
+        </div>
+      </div>
+      <div class="cursor" id="c1"></div>
+    </div>
+  </section>
+
+  <!-- 2.5–7 · ask your agent -->
+  <section id="shot2" class="clip" data-start="2.5" data-duration="4.5" data-track-index="0">
+    <div class="stage" id="st2">
+      <div class="win" id="cc">
+        <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="title">claude — ~/my-app</div></div>
+        <div class="body">
+          <div class="head">Claude Code · ~/my-app</div>
+          <div class="log">
+            <div class="row you" id="r0">&gt; <b>Set up Agent Peeps for Claude, Codex and their helpers.</b></div>
+            <div class="row tool" id="r1"><span class="dot"></span><b>Bash</b>(<span class="arg">agentpeeps init</span>)</div>
+            <div class="row out" id="r2">└ Installed hooks for: Claude Code (~/.claude/settings.json), Codex (~/.codex/hooks.json)</div>
+            <div class="row tool" id="r3"><span class="dot"></span><b>Bash</b>(<span class="arg">agentpeeps set claude monster-icons</span>)</div>
+            <div class="row tool" id="r4"><span class="dot"></span><b>Bash</b>(<span class="arg">agentpeeps set codex pixel-food</span>)</div>
+            <div class="row tool" id="r5"><span class="dot"></span><b>Bash</b>(<span class="arg">agentpeeps set helpers color-blobs</span>)</div>
+            <div class="row reply" id="r6"><span class="dot ink"></span>Done. Stickers show from your next session.</div>
+          </div>
+          <div class="input"><span class="gt">&gt;</span><span id="cc-in"></span><span class="caret"></span></div>
+        </div>
+      </div>
+      <div class="cursor" id="c2"></div>
+    </div>
+  </section>
+
+  <!-- 7–9.5 · next session -->
+  <section id="shot3" class="clip" data-start="7" data-duration="3.5" data-track-index="0">
+    <div class="stage" id="st3">
+      <div class="win" id="ed">
+        <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="title">auth.ts — my-app</div></div>
+        <div class="edbody"><aside class="side"><div class="h">EXPLORER</div><div class="f">my-app</div><div class="f" style="--d:1">src</div><div class="f on" style="--d:2">auth.ts</div><div class="f" style="--d:2">session.ts</div><div class="f" style="--d:2">users.ts</div><div class="f" style="--d:1">tests</div><div class="f" style="--d:1">package.json</div><div class="f" style="--d:1">README.md</div></aside><div class="main"><div class="tabs"><div class="tab">auth.ts</div></div><div class="code"><div><span class="ln">1</span><span class="kw">import</span> { createSession, endSession } <span class="kw">from</span> <span class="s">"./session"</span>;</div><div><span class="ln">2</span><span class="kw">import</span> { findUser, verify } <span class="kw">from</span> <span class="s">"./users"</span>;</div><div><span class="ln">3</span></div><div><span class="ln">4</span><span class="cm">// Sign a user in and start a session.</span></div><div><span class="ln">5</span><span class="kw">export async function</span> <span class="fn">login</span>(email: <span class="kw">string</span>, password: <span class="kw">string</span>) {</div><div><span class="ln">6</span>  <span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">findUser</span>(email);</div><div><span class="ln">7</span>  <span class="kw">if</span> (!user) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="s">"No account for this email"</span>);</div><div><span class="ln">8</span></div><div><span class="ln">9</span>  <span class="kw">const</span> ok = <span class="kw">await</span> <span class="fn">verify</span>(password, user.passwordHash);</div><div><span class="ln">10</span>  <span class="kw">if</span> (!ok) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="s">"Wrong password"</span>);</div><div><span class="ln">11</span></div><div class="live"><span class="ln">12</span>  <span id="ed-type"><span class="kw">return</span> <span class="fn">createSession</span>(user.id, { remember: <span class="kw">true</span>, ttl: <span class="s">"30d"</span> });</span><span class="caret" id="ed-caret"></span></div><div><span class="ln">13</span>}</div><div><span class="ln">14</span></div><div><span class="ln">15</span><span class="kw">export function</span> <span class="fn">logout</span>(sessionId: <span class="kw">string</span>) {</div><div><span class="ln">16</span>  <span class="kw">return</span> <span class="fn">endSession</span>(sessionId);</div><div><span class="ln">17</span>}</div></div></div></div>
+      </div>
+      <div class="dock">
+        <img id="dk-a" src="assets/dock-a.png" alt="" />
+        <img id="dk-b" src="assets/dock-b.png" alt="" />
+        <img id="dk-c" src="assets/dock-c.png" alt="" />
+        <img id="dk-d" src="assets/dock-d.png" alt="" />
+      </div>
+      <div class="cursor" id="c3"></div>
+    </div>
+    <div id="cap"><span>Next session</span></div>
+  </section>
+
+  <!-- 9.5–12 · end card -->
+  <section id="endcard" class="clip" data-start="10.5" data-duration="2.5" data-track-index="0">
+    <img id="end-logo" src="assets/logo.png" alt="" />
+    <div id="end-name">Agent Peeps</div>
+    <div id="end-url">agentpeeps.space</div>
+  </section>
+
+  <!-- music bed: quiet, fades in, fades out under the end card -->
+  <audio id="music" data-automation='{"version":1,"lanes":[{"target":"fx.n1.gain","points":[{"t":0,"v":0},{"t":0.213,"v":0},{"t":0.299,"v":-3.4},{"t":0.384,"v":-5.3},{"t":0.469,"v":-3.8},{"t":0.555,"v":-2.7},{"t":0.64,"v":-3.5},{"t":0.725,"v":-2.5},{"t":0.811,"v":-1.8},{"t":0.896,"v":-1.3},{"t":0.981,"v":-0.9},{"t":1.067,"v":-0.6},{"t":1.323,"v":-0.2},{"t":1.408,"v":0},{"t":2.773,"v":0},{"t":2.859,"v":-3.1},{"t":2.944,"v":-3.4},{"t":3.029,"v":-2.4},{"t":3.115,"v":-4.1},{"t":3.2,"v":-3},{"t":3.285,"v":-3},{"t":3.371,"v":-2.3},{"t":3.456,"v":-1.6},{"t":3.541,"v":-1.4},{"t":3.627,"v":-1},{"t":3.712,"v":-0.7},{"t":3.797,"v":-0.5},{"t":3.968,"v":-0.3},{"t":4.053,"v":0},{"t":5.248,"v":0},{"t":5.333,"v":-1.6},{"t":5.419,"v":-4.3},{"t":5.504,"v":-4.3},{"t":5.589,"v":-3},{"t":5.675,"v":-4},{"t":5.76,"v":-2.8},{"t":5.845,"v":-2},{"t":5.931,"v":-1.4},{"t":6.016,"v":-1},{"t":6.101,"v":-0.7},{"t":6.187,"v":-0.5},{"t":6.187,"v":0}]},{"target":"fx.n2.gain","points":[{"t":0,"v":0},{"t":0.213,"v":0},{"t":0.299,"v":-1.5},{"t":0.469,"v":-1.4},{"t":0.555,"v":-1},{"t":0.64,"v":-8},{"t":0.725,"v":-7.4},{"t":0.811,"v":-6},{"t":0.896,"v":-4.2},{"t":0.981,"v":-3},{"t":1.067,"v":-2.1},{"t":1.152,"v":-1.5},{"t":1.237,"v":-1.1},{"t":1.323,"v":-0.8},{"t":1.493,"v":-0.4},{"t":1.579,"v":-0.3},{"t":2.688,"v":0},{"t":2.773,"v":-2},{"t":2.859,"v":-6.2},{"t":2.944,"v":-6.2},{"t":3.029,"v":-4.4},{"t":3.115,"v":-3.8},{"t":3.2,"v":-3.3},{"t":3.285,"v":-2.4},{"t":3.371,"v":-1.7},{"t":3.456,"v":-2.8},{"t":3.541,"v":-2},{"t":3.627,"v":-1.4},{"t":3.712,"v":-1},{"t":3.797,"v":-0.7},{"t":4.053,"v":-0.3},{"t":4.139,"v":0},{"t":5.333,"v":0},{"t":5.419,"v":-8.2},{"t":5.504,"v":-8.8},{"t":5.589,"v":-6.2},{"t":5.675,"v":-5.4},{"t":5.76,"v":-4.7},{"t":5.845,"v":-3.3},{"t":5.931,"v":-2.4},{"t":6.016,"v":-1.7},{"t":6.101,"v":-1.2},{"t":6.187,"v":-0.8},{"t":6.187,"v":0}]},{"target":"fx.n3.gain","points":[{"t":0,"v":0},{"t":0.213,"v":0},{"t":0.299,"v":-1.3},{"t":0.469,"v":-1},{"t":0.555,"v":-2.5},{"t":0.64,"v":-8.6},{"t":0.725,"v":-7},{"t":0.811,"v":-7.1},{"t":0.896,"v":-5.3},{"t":0.981,"v":-3.8},{"t":1.067,"v":-2.7},{"t":1.152,"v":-1.9},{"t":1.237,"v":-1.4},{"t":1.323,"v":-1},{"t":1.408,"v":-0.7},{"t":1.664,"v":-0.2},{"t":1.749,"v":0},{"t":2.688,"v":0},{"t":2.773,"v":-3.6},{"t":2.859,"v":-8.8},{"t":2.944,"v":-7.7},{"t":3.029,"v":-5.7},{"t":3.115,"v":-7.1},{"t":3.2,"v":-6.3},{"t":3.285,"v":-4.5},{"t":3.371,"v":-3.2},{"t":3.456,"v":-2.9},{"t":3.541,"v":-2},{"t":3.627,"v":-1.5},{"t":3.712,"v":-1},{"t":3.797,"v":-0.7},{"t":3.883,"v":-0.5},{"t":4.053,"v":-0.3},{"t":4.139,"v":0},{"t":5.248,"v":0},{"t":5.333,"v":-0.7},{"t":5.419,"v":-7.5},{"t":5.504,"v":-8.6},{"t":5.589,"v":-6.3},{"t":5.675,"v":-5.8},{"t":5.76,"v":-5.3},{"t":5.845,"v":-3.7},{"t":5.931,"v":-2.7},{"t":6.016,"v":-1.9},{"t":6.101,"v":-1.4},{"t":6.187,"v":-1},{"t":6.187,"v":0}]},{"target":"fx.n4.gain","points":[{"t":0,"v":0},{"t":0.213,"v":0},{"t":0.299,"v":-4.1},{"t":0.384,"v":-3.4},{"t":0.469,"v":-2.8},{"t":0.555,"v":-2.3},{"t":0.64,"v":-2.9},{"t":0.725,"v":-2},{"t":0.811,"v":-1.8},{"t":0.896,"v":-1.5},{"t":0.981,"v":-1.4},{"t":1.067,"v":-1},{"t":1.152,"v":-0.7},{"t":1.237,"v":-0.5},{"t":1.408,"v":-0.2},{"t":1.493,"v":0},{"t":2.688,"v":0},{"t":2.773,"v":-1.7},{"t":2.859,"v":-2.9},{"t":2.944,"v":-2.4},{"t":3.029,"v":-2.1},{"t":3.115,"v":-3.4},{"t":3.2,"v":-4.3},{"t":3.285,"v":-4},{"t":3.371,"v":-3.4},{"t":3.456,"v":-2.7},{"t":3.541,"v":-1.9},{"t":3.627,"v":-1.4},{"t":3.712,"v":-1},{"t":3.797,"v":-0.7},{"t":4.053,"v":-0.3},{"t":4.139,"v":0},{"t":5.248,"v":0},{"t":5.333,"v":-0.5},{"t":5.419,"v":-2.6},{"t":5.504,"v":-2.6},{"t":5.589,"v":-2.1},{"t":5.675,"v":-3},{"t":5.76,"v":-3.3},{"t":5.845,"v":-2.4},{"t":5.931,"v":-2.1},{"t":6.016,"v":-1.5},{"t":6.101,"v":-1.1},{"t":6.187,"v":-0.7},{"t":6.187,"v":0}]},{"target":"fx.n5.gain","points":[{"t":0,"v":0},{"t":0.213,"v":0},{"t":0.299,"v":-7.6},{"t":0.384,"v":-7.6},{"t":0.469,"v":-11.2},{"t":0.555,"v":-11.9},{"t":1.067,"v":-11.6},{"t":1.152,"v":-11.2},{"t":1.237,"v":-10.8},{"t":1.323,"v":-10.4},{"t":1.408,"v":-10},{"t":1.493,"v":-9.7},{"t":1.579,"v":-9.4},{"t":1.664,"v":-9},{"t":1.749,"v":-8.7},{"t":1.835,"v":-8.4},{"t":1.92,"v":-8.1},{"t":2.005,"v":-7.8},{"t":2.091,"v":-7.6},{"t":2.176,"v":-7.3},{"t":2.261,"v":-7},{"t":2.347,"v":-6.8},{"t":2.432,"v":-6.6},{"t":2.517,"v":-6.3},{"t":2.688,"v":-5.9},{"t":2.773,"v":-10.9},{"t":2.859,"v":-10.7},{"t":2.944,"v":-10.4},{"t":3.029,"v":-11.7},{"t":3.712,"v":-11.6},{"t":3.797,"v":-11.2},{"t":3.883,"v":-10.8},{"t":3.968,"v":-10.4},{"t":4.053,"v":-10},{"t":4.139,"v":-9.7},{"t":4.224,"v":-9.4},{"t":4.309,"v":-9},{"t":4.395,"v":-8.7},{"t":4.48,"v":-8.4},{"t":4.565,"v":-8.1},{"t":4.651,"v":-7.8},{"t":4.736,"v":-7.6},{"t":4.821,"v":-7.3},{"t":4.907,"v":-7},{"t":4.992,"v":-6.8},{"t":5.077,"v":-6.6},{"t":5.163,"v":-6.3},{"t":5.248,"v":-6.1},{"t":5.333,"v":-10.9},{"t":5.504,"v":-10.5},{"t":5.589,"v":-11.7},{"t":6.016,"v":-11.6},{"t":6.101,"v":-11.2},{"t":6.187,"v":-10.8},{"t":6.272,"v":-10.4},{"t":6.357,"v":-10},{"t":6.443,"v":-9.7},{"t":6.528,"v":-9.3},{"t":6.613,"v":-9},{"t":6.699,"v":-8.7},{"t":6.784,"v":-8.4},{"t":6.869,"v":-8.1},{"t":6.955,"v":-7.8},{"t":7.04,"v":-7.6},{"t":7.125,"v":-7.3},{"t":7.211,"v":-7},{"t":7.296,"v":-6.8},{"t":7.381,"v":-6.6},{"t":7.467,"v":-6.3},{"t":7.637,"v":-5.9},{"t":7.723,"v":-5.7},{"t":7.893,"v":-5.3},{"t":7.979,"v":-5.1},{"t":8.149,"v":-4.8},{"t":8.235,"v":-4.6},{"t":8.405,"v":-4.3},{"t":8.491,"v":-4.1},{"t":8.832,"v":-3.6},{"t":8.917,"v":-3.5},{"t":9.173,"v":-3.1},{"t":9.259,"v":-3},{"t":9.6,"v":-2.6},{"t":9.685,"v":-2.5},{"t":10.112,"v":-2.1},{"t":10.197,"v":-2},{"t":10.795,"v":-1.6},{"t":10.88,"v":-1.5},{"t":11.733,"v":-1.1},{"t":11.819,"v":-1},{"t":13.269,"v":-0.6},{"t":13.355,"v":-0.5},{"t":15.744,"v":-0.2},{"t":15.829,"v":0}]},{"target":"volume","points":[{"t":0,"v":0},{"t":0.8,"v":1},{"t":11.4,"v":1},{"t":13,"v":0}]}]}' data-audio-group="music" src="assets/music.mp3" data-start="0" data-duration="13" data-track-index="9" data-volume="0.3" data-fx-carve="{&quot;enabled&quot;:true,&quot;sources&quot;:[&quot;voiceover&quot;],&quot;strength&quot;:0.5}" data-fx-chain="{&quot;version&quot;:1,&quot;nodes&quot;:[{&quot;type&quot;:&quot;peaking&quot;,&quot;id&quot;:&quot;n1&quot;,&quot;fromCarve&quot;:true,&quot;params&quot;:{&quot;frequency&quot;:250,&quot;gain&quot;:-5.75,&quot;q&quot;:1.7}},{&quot;type&quot;:&quot;peaking&quot;,&quot;id&quot;:&quot;n2&quot;,&quot;fromCarve&quot;:true,&quot;params&quot;:{&quot;frequency&quot;:1000,&quot;gain&quot;:-9.97,&quot;q&quot;:1.7}},{&quot;type&quot;:&quot;peaking&quot;,&quot;id&quot;:&quot;n3&quot;,&quot;fromCarve&quot;:true,&quot;params&quot;:{&quot;frequency&quot;:1600,&quot;gain&quot;:-10,&quot;q&quot;:1.7}},{&quot;type&quot;:&quot;peaking&quot;,&quot;id&quot;:&quot;n4&quot;,&quot;fromCarve&quot;:true,&quot;params&quot;:{&quot;frequency&quot;:2500,&quot;gain&quot;:-5,&quot;q&quot;:1.7}},{&quot;type&quot;:&quot;gain&quot;,&quot;id&quot;:&quot;n5&quot;,&quot;fromCarve&quot;:true,&quot;params&quot;:{&quot;gain&quot;:0}}]}"></audio>
+
+  <!-- voiceover -->
+  <audio data-audio-group="voiceover" id="vo1" src="assets/vo-install.wav" data-start="0.25" data-duration="0.92" data-track-index="10" data-volume="1"></audio>
+  <audio data-audio-group="voiceover" id="vo2" src="assets/vo-ask.wav" data-start="2.7" data-duration="1.1" data-track-index="10" data-volume="0.55"></audio>
+  <audio data-audio-group="voiceover" id="vo3" src="assets/vo-thats-it.wav" data-start="5.3" data-duration="0.9" data-track-index="10" data-volume="1"></audio>
+
+  <!-- effects: mouse clicks, key clicks, pop, done tick -->
+  <audio data-audio-group="sfx" id="m1" src="assets/click-soft.mp3" data-start="0.55" data-duration="0.36" data-track-index="11" data-volume="0.25"></audio>
+  <audio data-audio-group="sfx" id="m2" src="assets/click-soft.mp3" data-start="2.95" data-duration="0.36" data-track-index="11" data-volume="0.25"></audio>
+  <audio data-audio-group="sfx" id="k01" src="assets/key-press.mp3" data-start="0.66" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k02" src="assets/key-press.mp3" data-start="0.76" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k03" src="assets/key-press.mp3" data-start="0.85" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k04" src="assets/key-press.mp3" data-start="0.95" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k05" src="assets/key-press.mp3" data-start="1.04" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k06" src="assets/key-press.mp3" data-start="1.14" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k07" src="assets/key-press.mp3" data-start="1.24" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k08" src="assets/key-press.mp3" data-start="1.45" data-duration="0.09" data-track-index="13" data-volume="0.2"></audio>
+  <audio data-audio-group="sfx" id="k11" src="assets/key-press.mp3" data-start="3.06" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k12" src="assets/key-press.mp3" data-start="3.15" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k13" src="assets/key-press.mp3" data-start="3.25" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k14" src="assets/key-press.mp3" data-start="3.34" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k15" src="assets/key-press.mp3" data-start="3.44" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k16" src="assets/key-press.mp3" data-start="3.53" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k17" src="assets/key-press.mp3" data-start="3.63" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k18" src="assets/key-press.mp3" data-start="3.72" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k19" src="assets/key-press.mp3" data-start="3.82" data-duration="0.09" data-track-index="12" data-volume="0.16"></audio>
+  <audio data-audio-group="sfx" id="k20" src="assets/key-press.mp3" data-start="3.92" data-duration="0.09" data-track-index="13" data-volume="0.13"></audio>
+  <audio data-audio-group="sfx" id="k21" src="assets/key-press.mp3" data-start="4.15" data-duration="0.09" data-track-index="12" data-volume="0.2"></audio>
+  <audio data-audio-group="sfx" id="tick" src="assets/click.mp3" data-start="5.0" data-duration="0.36" data-track-index="11" data-volume="0.18"></audio>
+  <audio data-audio-group="sfx" id="pop" src="assets/pop.mp3" data-start="7.45" data-duration="0.72" data-track-index="11" data-volume="0.3"></audio>
+  <audio data-audio-group="sfx" id="pop2" src="assets/pop.mp3" data-start="7.95" data-duration="0.72" data-track-index="12" data-volume="0.2"></audio>
+  <audio data-audio-group="sfx" id="pop3" src="assets/pop.mp3" data-start="8.45" data-duration="0.72" data-track-index="13" data-volume="0.2"></audio>
+</div>
+
+<script>
+  const E = "cubic-bezier(.16,1,.3,1)";
+  const ease = "expo.out"; // closest GSAP curve to cubic-bezier(.16,1,.3,1)
+  const W = 1920, H = 1080;
+  const tl = gsap.timeline({ paused: true });
+
+  // camera: scale s, put stage point (fx, fy) at the frame centre, never past the stage edges
+  function cam(stage, at, dur, s, fx, fy) {
+    const x = Math.min(0, Math.max(W * (1 - s), W / 2 - s * fx));
+    const y = Math.min(0, Math.max(H * (1 - s), H / 2 - s * fy));
+    tl.to(stage, { scale: s, x, y, duration: dur, ease: "power2.inOut" }, at);
+  }
+  // seek-safe typing: text is a pure function of tween progress
+  function type(id, text, at, dur) {
+    const el = document.getElementById(id), o = { n: 0 };
+    tl.to(o, { n: text.length, duration: dur, ease: "none", onUpdate: () => { el.textContent = text.slice(0, Math.round(o.n)); } }, at);
+  }
+  const show = (sel, at, d = 0.35) => tl.fromTo(sel, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: d, ease }, at);
+  const move = (sel, at, dur, x, y) => tl.to(sel, { x, y, duration: dur, ease: "power2.inOut" }, at);
+  const click = (sel, at) => tl.to(sel, { scale: 0.86, duration: 0.07, yoyo: true, repeat: 1, ease: "power1.inOut" }, at);
+
+  // ---- shot 1: install (0–2.5) ----
+  tl.fromTo("#st1", { scale: 1, x: 0, y: 0 }, { scale: 1, x: 0, y: 0, duration: 0.01 }, 0);
+  tl.fromTo("#term", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease }, 0);
+  tl.fromTo("#c1", { x: 1260, y: 860 }, { x: 760, y: 410, duration: 0.5, ease: "power2.inOut" }, 0.05);
+  click("#c1", 0.55);
+  type("t-cmd", "npm i -g agentpeeps", 0.65, 0.68);
+  tl.set("#t-caret", { opacity: 0 }, 1.45);
+  show("#t-out", 1.55);
+  show("#t-next", 1.62, 0.2);
+  move("#c1", 0.7, 0.9, 820, 560);
+  cam("#st1", 0.35, 1.5, 1.35, 840, 460);
+
+  // ---- shot 2: ask your agent (2.5–7) ----
+  tl.fromTo("#st2", { scale: 1, x: 0, y: 0 }, { scale: 1, x: 0, y: 0, duration: 0.01 }, 2.5);
+  tl.fromTo("#cc", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease }, 2.5);
+  tl.fromTo("#c2", { x: 1320, y: 960 }, { x: 640, y: 815, duration: 0.45, ease: "power2.inOut" }, 2.5);
+  click("#c2", 2.95);
+  cam("#st2", 2.6, 0.7, 1.3, 760, 800);
+  type("cc-in", "Set up Agent Peeps for Claude, Codex and their helpers.", 3.05, 0.95);
+  tl.set("#cc-in", { textContent: "" }, 4.15);
+  show("#r0", 4.15, 0.3);
+  show("#r1", 4.28); show("#r2", 4.42); show("#r3", 4.56); show("#r4", 4.7); show("#r5", 4.84); show("#r6", 5.0, 0.45);
+  move("#c2", 4.2, 0.8, 1500, 940);
+  cam("#st2", 4.2, 1.4, 1.35, 975, 440);
+
+  // ---- shot 3: next session (7–9.5) ----
+  tl.fromTo("#st3", { scale: 1, x: 0, y: 0 }, { scale: 1, x: 0, y: 0, duration: 0.01 }, 7);
+  tl.fromTo("#ed", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease }, 7);
+  tl.fromTo("#cap", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease }, 7.05);
+  // agent writes line 12: monospace, so reveal one character per step (22px Geist Mono = 13.2px advance)
+  const n12 = document.getElementById("ed-type").textContent.length;
+  tl.fromTo("#ed-type", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.4, ease: `steps(${n12})` }, 7.2);
+  tl.fromTo("#ed-caret", { x: -n12 * 13.2 }, { x: 0, duration: 1.4, ease: `steps(${n12})` }, 7.2);
+  // stickers arrive like the overlay: Claude, then its helpers' pod, then Codex; later layers sit on top, so nothing dips
+  tl.fromTo("#dk-a", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease }, 7.45);
+  tl.fromTo("#dk-b", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 7.95);
+  tl.fromTo("#dk-c", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 8.45);
+  tl.fromTo("#c3", { x: 1150, y: 620 }, { x: 1832, y: 994, duration: 0.55, ease: "power2.inOut" }, 8.4);
+  tl.fromTo("#dk-d", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power1.out" }, 8.98);
+  cam("#st3", 7.5, 1.3, 1.6, 1300, 800);
+
+  // ---- end card (9.5–12) ----
+  tl.fromTo("#end-logo", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease }, 10.55);
+  tl.fromTo("#end-name", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, ease }, 10.65);
+  tl.fromTo("#end-url", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease }, 10.8);
+
+  window.__timelines["main"] = tl;
+</script>
+</body>
+</html>
