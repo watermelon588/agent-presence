@@ -6,7 +6,7 @@
 See which agent is on which file, what it's doing, and when it needs you.</p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/agentpeeps"><img src="https://img.shields.io/npm/v/agentpeeps?color=2f4bff&label=npm" alt="npm"></a>
+  <a href="https://www.npmjs.com/package/agentpeeps"><img src="https://img.shields.io/badge/npm-agentpeeps-2f4bff" alt="npm: agentpeeps"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-121214" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/local%20only-no%20account%2C%20no%20network-7fd99a" alt="Local only">
 </p>
