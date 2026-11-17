@@ -2,6 +2,7 @@
 import { initUI, gsap, ScrollTrigger, reduced } from './lib/ui.js';
 import { createDock } from './lib/dock.js';
 import { packs, fanPacks, byId, packById, agentDisc, helperDisc, shuffle } from './lib/stickers.js';
+import { zip } from './lib/zip.js';
 
 // A slot points at a whole pack (that's what `agentpeeps set` takes); `face` is the sticker you clicked, shown in the preview.
 const SLOTS = [['claude', 'Claude', 'claude'], ['codex', 'Codex', 'codex'], ['helpers', 'Helpers', 'subagent']];
@@ -69,7 +70,7 @@ function renderCommands() {
   for (const [k] of SLOTS) {
     if (custom[k]) lines.push('# save my-sticker.png into ~/.agent-presence/stickers/mine/', `agentpeeps set ${k} mine`);
     else if (state.pack[k]) {
-      if (packById.get(state.pack[k]).fan && !SHIPPED_FAN.has(state.pack[k])) lines.push(`# fan pack: save its stickers into ~/.agent-presence/stickers/${state.pack[k]}/`);
+      if (packById.get(state.pack[k]).fan && !SHIPPED_FAN.has(state.pack[k])) lines.push(`# fan pack: "Download pack", then unzip ${state.pack[k]}.zip into ~/.agent-presence/stickers/`);
       lines.push(`agentpeeps set ${k} ${state.pack[k]}`);
     }
   }
@@ -88,7 +89,10 @@ const section = (p) => `
   <section class="mb-12 scroll-mt-44" id="${p.id}" data-pack="${p.id}">
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <h3 class="text-2xl">${p.label} <span class="ml-1 align-middle font-sans text-sm font-normal text-muted" data-n>${p.items.length}</span></h3>
-      <button class="usepack" data-use="${p.id}"></button>
+      <div class="flex flex-wrap items-center gap-2">
+        <button class="usepack inline-flex items-center gap-1.5" data-zip="${p.id}" title="Unzip into ~/.agent-presence/stickers/"><i class="ph-bold ph-download-simple"></i>Download pack</button>
+        <button class="usepack" data-use="${p.id}"></button>
+      </div>
     </div>
     <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 xl:grid-cols-6">
       ${p.items.map((s) => tile(s, p)).join('')}
@@ -164,7 +168,20 @@ function choose(s) {
   toast(s.url, `${label(k)} now uses <b>${packById.get(s.pack).label}</b>`);
   if (!reduced) gsap.from(`[data-slot="${k}"] img`, { scale: 0.6, rotation: -20, duration: 0.5, ease: 'back.out(2.4)' });
 }
+// A whole pack as <pack>.zip holding <pack>/<file>: unzip it into ~/.agent-presence/stickers/ and the folder name is the pack name.
+async function downloadPack(b) {
+  const p = packById.get(b.dataset.zip), label = b.innerHTML;
+  b.disabled = true; b.textContent = 'Zipping…';
+  try {
+    const files = await Promise.all(p.items.map(async (s) => ({ name: `${p.id}/${s.file}`, data: new Uint8Array(await (await fetch(s.url)).arrayBuffer()) })));
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(zip(files)), download: `${p.id}.zip` });
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 10e3);
+  } catch { toast(p.items[0].url, 'Download failed, try again'); }
+  b.disabled = false; b.innerHTML = label;
+}
 $('grid').addEventListener('click', (e) => {
+  const z = e.target.closest('[data-zip]');
+  if (z) return downloadPack(z);
   const use = e.target.closest('[data-use]');
   if (use) return choose(packById.get(use.dataset.use).items[0]);
   const t = e.target.closest('.tile'); if (!t) return;

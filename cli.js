@@ -444,8 +444,8 @@ function fanHint(name, who = "<agent>") {
   const p = findPack(FAN_PACKS, name);
   return p && [
     `"${p}" is a fan pack: other people's characters, so it lives on the website only and isn't bundled with agentpeeps.`,
-    `  1. Download the stickers: https://agentpeeps.space/stickers.html#${p}`,
-    `  2. Save them into: ${path.join(HOME, 'stickers', p)}`,
+    `  1. Download it (one zip): https://agentpeeps.space/stickers.html#${p}  ("Download pack")`,
+    `  2. Unzip ${p}.zip into: ${path.join(HOME, "stickers")}`,
     `  3. Then run: agentpeeps set ${who} ${p}`,
   ].join('\n');
 }
