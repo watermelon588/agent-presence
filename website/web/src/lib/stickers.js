@@ -20,7 +20,7 @@ export const stickers = Object.entries(files).map((e) => parse(e));
 export const packs = group(stickers);
 
 // Fan & community stickers: other people's characters and real people. Free, never sold, site only
-// (not in the npm package) and never used in marketing. Delete src/stickers-fan/ to remove them all.
+// (not in the npm package, except model-logos and claude) and never used in marketing. Delete src/stickers-fan/ to remove them all.
 const fanFiles = import.meta.glob('../stickers-fan/**/*.{png,svg,gif,webp}', { eager: true, query: '?url', import: 'default' });
 export const fanStickers = Object.entries(fanFiles).map((e) => parse(e, true));
 export const fanPacks = group(fanStickers);

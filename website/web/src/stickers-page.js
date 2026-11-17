@@ -63,12 +63,13 @@ $('slots').addEventListener('click', (e) => {
 });
 
 /* ---------- the commands to paste ---------- */
+const SHIPPED_FAN = new Set(['model-logos', 'claude']); // fan packs that ship in the npm package (avatars/stickers/), no download needed
 function renderCommands() {
   const lines = [];
   for (const [k] of SLOTS) {
     if (custom[k]) lines.push('# save my-sticker.png into ~/.agent-presence/stickers/mine/', `agentpeeps set ${k} mine`);
     else if (state.pack[k]) {
-      if (packById.get(state.pack[k]).fan) lines.push(`# fan pack: save its stickers into ~/.agent-presence/stickers/${state.pack[k]}/`);
+      if (packById.get(state.pack[k]).fan && !SHIPPED_FAN.has(state.pack[k])) lines.push(`# fan pack: save its stickers into ~/.agent-presence/stickers/${state.pack[k]}/`);
       lines.push(`agentpeeps set ${k} ${state.pack[k]}`);
     }
   }
