@@ -294,6 +294,12 @@ function cardRows(cards, t, cols) {
 }
 // Cut a line to n visible characters, keeping its color codes whole.
 const clip = (l, n) => { let v = 0, o = ''; for (const [s] of l.matchAll(/\x1b\[[0-9;]*m|[^\x1b]/gu)) { if (s[0] !== '\x1b' && ++v > n) break; o += s; } return o + '\x1b[0m'; };
+// Keep to n lines without slicing a row of stickers in half: cut at the last blank line that fits and say there's more.
+function fit(lines, n) {
+  if (lines.length <= n) return lines;
+  const cut = lines.lastIndexOf('', n - 2);
+  return [...lines.slice(0, cut > 0 ? cut : n - 1), '  \x1b[2m… more below: make the window taller\x1b[0m'];
+}
 // Redraws in place under the cursor instead of clearing the screen, so it only takes the lines it needs.
 // frame(t, cols) -> lines.
 function liveView(frame, ms = 80) {
@@ -306,7 +312,7 @@ function liveView(frame, ms = 80) {
     // A resize rewraps what's on screen, so counting lines back up no longer lands on our first line: start clean.
     if (size && size !== cols + 'x' + rows) { out.write('\x1b[2J\x1b[H'); drawn = 0; last = ''; }
     size = cols + 'x' + rows;
-    const lines = frame(Date.now(), cols).slice(0, rows - 1).map(l => clip(l, cols - 1));
+    const lines = fit(frame(Date.now(), cols), rows - 1).map(l => clip(l, cols - 1));
     const s = lines.join('\n');
     if (s === last) return; // nothing moved: don't repaint
     out.write((drawn ? `\x1b[${drawn}F` : '') + '\x1b[0J' + s + '\n');
@@ -526,4 +532,4 @@ if (require.main === module) {
   else console.log(HELP);
 }
 
-module.exports = { normalize, patchFiles, termArt, stickerLines, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };
+module.exports = { normalize, patchFiles, termArt, stickerLines, fit, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };

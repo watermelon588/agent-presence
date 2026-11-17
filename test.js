@@ -107,4 +107,10 @@ const visible = l => l.replace(/\x1b\[[0-9;]*m/g, '').length;
 assert.equal(a.length, 11); assert.ok(a.every(l => visible(l) === 20)); assert.notDeepEqual(a, b, 'working stickers hop');
 assert.deepEqual(stickerLines(logo, 0, 'still'), stickerLines(logo, 170, 'still'));
 
+// A short window drops whole sticker rows, never half of one
+const { fit } = require('./cli');
+const rows = ['a', 'a', '', 'b', 'b', ''];
+assert.deepEqual(fit(rows, 6), rows);
+assert.deepEqual(fit(rows, 5).slice(0, 2), ['a', 'a']); assert.equal(fit(rows, 5).length, 3);
+
 console.log('all checks passed');
