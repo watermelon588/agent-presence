@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Presence · Your AI agents, but cute</title>
+<meta name="description" content="Tiny stickers float on your screen and show what Claude Code and Codex are up to. Bring your own stickers. Free, local, MIT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{
+  --bg:#fff0f6; --pink:#ff3d9a; --pink2:#ffc2df; --mint:#c4f2df; --lav:#e3dcff; --ink:#2b1235; --muted:#7b5c84;
+  --ease:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0}
+html{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font:500 17px/1.65 "Zen Maru Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:radial-gradient(var(--pink2) 1.6px,transparent 2px);background-size:26px 26px}
+img{display:block;max-width:100%;user-select:none;-webkit-user-drag:none}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Dela Gothic One",sans-serif;font-weight:400;line-height:1.02;letter-spacing:-.01em}
+.diecut{filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 10px rgba(120,30,90,.2))}
+.soft{filter:drop-shadow(0 8px 10px rgba(120,30,90,.2))}
+
+/* nav */
+nav{padding:18px 0;position:relative;z-index:10}
+.nav{display:flex;align-items:center;justify-content:space-between;background:#fff;border:2.5px solid var(--ink);border-radius:999px;padding:8px 8px 8px 22px;box-shadow:0 5px 0 var(--ink)}
+.logo{display:flex;align-items:baseline;gap:8px;font:400 26px "Dela Gothic One"}
+.logo small{font:700 13px "Zen Maru Gothic";color:var(--pink)}
+.links{display:flex;gap:6px;font-weight:700;font-size:15px}
+.links a{padding:8px 16px;border-radius:999px}
+.links a:hover{background:var(--bg)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 26px;border-radius:999px;border:2.5px solid var(--ink);font:900 16px "Zen Maru Gothic";cursor:pointer;box-shadow:0 5px 0 var(--ink);transition:transform .15s var(--ease),box-shadow .15s var(--ease)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--ink)}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.pink{background:var(--pink);color:#fff}
+.btn.white{background:#fff;color:var(--ink)}
+.nav .btn{height:44px;padding:0 20px;font-size:15px;box-shadow:none}
+.nav .btn:hover{transform:none;box-shadow:none;background:#ff5aab}
+
+/* hero */
+.hero{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;min-height:min(calc(100dvh - 100px),820px);padding:30px 0 90px}
+.kana{position:absolute;left:-10px;bottom:-30px;font:400 clamp(90px,13vw,190px)/1 "Dela Gothic One";color:#fff;-webkit-text-stroke:2px var(--pink2);z-index:-1;letter-spacing:.02em;white-space:nowrap;pointer-events:none}
+.hero h1{font-size:clamp(44px,5.2vw,74px)}
+.hero h1 .hl{color:var(--pink);display:inline-block;rotate:-3deg}
+.hero p{font-size:19px;color:var(--muted);max-width:450px;margin:24px 0 34px}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+.bounce{animation:bounceIn .9s var(--spring) both;animation-delay:var(--d,0s)}
+@keyframes bounceIn{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
+
+/* sticker sheet */
+.sheet{position:relative;background:#fff;border:2.5px solid var(--ink);border-radius:34px;padding:30px;box-shadow:0 10px 0 var(--ink);rotate:2deg;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;overflow:visible}
+.sheet::before{content:"";position:absolute;inset:0;border-radius:32px;pointer-events:none;opacity:.5;
+  background:linear-gradient(125deg,transparent 20%,rgba(255,194,223,.6) 35%,rgba(196,242,223,.6) 50%,rgba(227,220,255,.6) 65%,transparent 80%)}
+.sheet .cell{position:relative;aspect-ratio:1;border:2px dashed #f2b6d3;border-radius:26px;display:grid;place-items:center}
+.sheet .cell .peel{width:84%;animation:bounceIn .7s var(--spring) both;animation-delay:calc(var(--i)*80ms + .3s);z-index:3}
+.sheet .label{position:absolute;top:-20px;left:30px;background:var(--mint);border:2.5px solid var(--ink);border-radius:999px;padding:4px 16px;font:900 14px "Zen Maru Gothic";rotate:-4deg;z-index:4}
+.sheet .note{position:absolute;bottom:-56px;right:10px;font:900 15px "Zen Maru Gothic";color:var(--pink);display:flex;align-items:center;gap:6px;rotate:-2deg}
+
+/* vibe switcher */
+section{padding:110px 0}
+.title{text-align:center;max-width:760px;margin:0 auto 46px}
+.title h2{font-size:clamp(40px,5.2vw,72px)}
+.title p{color:var(--muted);margin-top:14px;font-size:18px}
+.vibes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:46px}
+.vibes button{height:48px;padding:0 22px;border-radius:999px;border:2.5px solid var(--ink);background:#fff;font:900 15px "Zen Maru Gothic";cursor:pointer;color:var(--ink);transition:background .2s,transform .2s var(--spring)}
+.vibes button:hover{transform:rotate(-3deg)}
+.vibes button[aria-pressed=true]{background:var(--ink);color:#fff}
+.stage{display:grid;grid-template-columns:1fr 420px 1fr;gap:30px;align-items:center}
+.side-copy h3{font-size:30px;margin-bottom:10px}
+.side-copy p{color:var(--muted)}
+.bio{position:relative;background:var(--card,#fff);border:2.5px solid var(--ink);border-radius:36px;padding:44px 32px 34px;text-align:center;box-shadow:0 10px 0 var(--ink);transition:background .4s}
+.bio .av{width:110px;height:110px;border-radius:50%;object-fit:cover;margin:0 auto;border:3px solid #fff;box-shadow:0 0 0 2.5px var(--ink)}
+.bio b{display:block;font:400 26px "Dela Gothic One";margin-top:16px}
+.bio span.h{color:var(--muted);font-size:15px}
+.bio .link{display:block;margin-top:12px;padding:14px;border-radius:18px;border:2.5px solid var(--ink);background:#fff;font-weight:900}
+.bio .link:first-of-type{margin-top:26px}
+.bio .dec{position:absolute;width:var(--w);left:var(--l);top:var(--t);rotate:var(--r);animation:bounceIn .6s var(--spring) both;animation-delay:calc(var(--i)*70ms);pointer-events:none}
+
+/* gacha */
+.gacha-wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;background:#fff;border:2.5px solid var(--ink);border-radius:44px;padding:56px;box-shadow:0 10px 0 var(--ink);position:relative;overflow:hidden}
+.gacha-wrap h2{font-size:clamp(38px,4.6vw,64px)}
+.gacha-wrap p{color:var(--muted);margin:16px 0 30px;max-width:420px}
+.machine{position:relative;width:min(340px,100%);margin:0 auto}
+.dome{aspect-ratio:1;border-radius:50%;border:2.5px solid var(--ink);background:radial-gradient(circle at 30% 25%,#fff 0 12%,transparent 13%),var(--lav);position:relative;overflow:hidden}
+.dome img{position:absolute;width:74px;left:var(--l);top:var(--t);rotate:var(--r)}
+.base{height:150px;margin:-12px 20px 0;background:var(--pink);border:2.5px solid var(--ink);border-radius:20px 20px 30px 30px;display:flex;align-items:center;justify-content:space-around;position:relative;z-index:1}
+.knob{width:70px;height:70px;border-radius:50%;background:#fff;border:2.5px solid var(--ink);cursor:pointer;display:grid;place-items:center;font-size:28px;color:var(--ink);transition:rotate .6s var(--spring)}
+.knob.spin{rotate:360deg}
+.slot{width:86px;height:70px;border-radius:14px;background:var(--ink);display:grid;place-items:center}
+.prize{position:absolute;right:-30px;bottom:-30px;width:190px;height:190px;display:grid;place-items:center;z-index:3;pointer-events:none}
+.prize img{width:160px;animation:prize .7s var(--spring) both}
+@keyframes prize{from{opacity:0;transform:translateY(-120px) scale(.2) rotate(-90deg)}to{opacity:1;transform:none}}
+.prize-name{font-weight:900;color:var(--pink);min-height:1.6em}
+
+/* final */
+.final{text-align:center;padding:120px 0 140px;position:relative}
+.final h2{font-size:clamp(48px,7vw,104px);max-width:900px;margin:0 auto}
+.final .cta{display:flex;justify-content:center;gap:14px;margin-top:38px;flex-wrap:wrap}
+.final .f{position:absolute;width:var(--w);rotate:var(--r)}
+footer{background:var(--ink);color:#f5d9e8;padding:44px 0;font-size:15px;border-radius:40px 40px 0 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer .logo{color:#fff}
+footer .row{display:flex;gap:24px}
+
+[data-reveal]{opacity:0;translate:0 40px;scale:.97;transition:opacity .8s var(--ease),translate .8s var(--spring),scale .8s var(--spring)}
+[data-reveal].is-in{opacity:1;translate:0 0;scale:1}
+@media (max-width:960px){
+  .links{display:none}
+  .hero,.gacha-wrap{grid-template-columns:1fr}
+  .stage{grid-template-columns:1fr}
+  .side-copy{text-align:center}
+  .gacha-wrap{padding:34px 24px}
+  .final .f{display:none}
+  section{padding:80px 0}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-reveal]{opacity:1;translate:0 0;scale:1}}
+
+/* extra */
+.sheet .cell .peel{width:74%}
+.sheet .cell .st{position:absolute;bottom:-12px;left:50%;translate:-50% 0;z-index:4;white-space:nowrap;background:#fffdf8;border:2px solid var(--a);border-radius:12px;padding:2px 9px;font:900 12px "Zen Maru Gothic";pointer-events:none}
+.desk{position:relative;background:var(--card,#fff);border:2.5px solid var(--ink);border-radius:36px;padding:26px 24px 20px;box-shadow:0 10px 0 var(--ink);transition:background .4s}
+.desk .top{display:flex;justify-content:space-between;align-items:center;font:900 14px "Zen Maru Gothic"}
+.desk .top span{display:flex;gap:6px}
+.desk .top span i{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+.desk .ap-dock{--ap-s:100px;justify-content:center;gap:16px;min-height:290px;padding-top:90px}
+.kana{font-size:clamp(64px,9vw,140px) !important;bottom:0 !important}
+.desk .names{text-align:center;font:900 14px "Zen Maru Gothic";color:var(--muted);margin-top:8px}
+.prize-cfg{font:700 14px ui-monospace,Consolas,monospace;background:var(--bg);border:2px dashed var(--pink2);border-radius:14px;padding:10px 14px;margin:-14px 0 26px;min-height:44px;color:var(--ink)}
+.prize-cfg b{color:var(--pink)}
+@media (max-width:960px){.desk .ap-dock{--ap-s:64px}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap"><div class="nav">
+  <a class="logo" href="#">presence! <small>プレゼンス</small></a>
+  <div class="links"><a href="#vibes">Vibes</a><a href="#gacha">Pick a sticker</a><a href="#">Docs</a><a href="#">GitHub</a></div>
+  <a class="btn pink" href="#start">Install</a>
+</div></div></nav>
+
+<header class="wrap hero">
+  <div class="kana" aria-hidden="true">エージェント</div>
+  <div>
+    <h1 class="bounce">Your AI agents, but <span class="hl">cute.</span></h1>
+    <p class="bounce" style="--d:.12s">Tiny stickers float on your screen and show what Claude Code and Codex are up to. One sticker per agent.</p>
+    <div class="cta bounce" style="--d:.24s">
+      <a class="btn pink" href="#start">Install <i class="ph-bold ph-heart"></i></a>
+      <a class="btn white" href="#vibes">Pick a vibe</a>
+    </div>
+  </div>
+  <div class="bounce" style="--d:.1s;padding:20px 10px 60px">
+    <div class="sheet">
+      <span class="label">Starter sheet</span>
+      <div class="cell"><img class="peel" data-drag src="assets/avatars/claude.svg" alt="Mochi, the Claude Code sticker" style="--i:0"><span class="st" style="--a:#f7c3a1">✏️ writing</span></div>
+      <div class="cell"><img class="peel" data-drag src="assets/avatars/codex.svg" alt="Bit, the Codex sticker" style="--i:1"><span class="st" style="--a:#bde8c8">▶️ running</span></div>
+      <div class="cell"><img class="peel" data-drag src="assets/avatars/subagent.svg" alt="Pip, the subagent sticker" style="--i:2"><span class="st" style="--a:#bfe3f5">🔍 reading</span></div>
+      <div class="cell"><img class="peel diecut" data-drag src="assets/stickers/anime/jiji-congratulations.png" alt="" style="--i:3"><span class="st" style="--a:#d9d2f5">💭 thinking</span></div>
+      <div class="cell"><img class="peel soft" data-drag src="assets/stickers/cutesy/pink-cat-face.png" alt="" style="--i:4"><span class="st" style="--a:#ff8a80">❗ needs you</span></div>
+      <div class="cell"><img class="peel" data-drag src="assets/avatars/subagent.svg" alt="" style="--i:5;filter:hue-rotate(50deg)"><span class="st" style="--a:#f1cdec">🧩 delegating</span></div>
+      <div class="cell"><img class="peel diecut" data-drag src="assets/fluent/strawberry.png" alt="" style="--i:6"><span class="st" style="--a:#bfe3f5">🌐 browsing</span></div>
+      <div class="cell"><img class="peel diecut" data-drag src="assets/stickers/anime/kiki-well-done.png" alt="" style="--i:7"><span class="st" style="--a:#bde8c8">✓ done</span></div>
+      <div class="cell"><img class="peel soft" data-drag src="assets/stickers/japanese/black-lucky-cat.png" alt="" style="--i:8"><span class="st" style="--a:#e8dccf">idle</span></div>
+      <span class="note"><i class="ph-bold ph-hand-grabbing"></i> peel them off, they're real</span>
+    </div>
+  </div>
+</header>
+
+<section id="vibes">
+  <div class="wrap">
+    <div class="title" data-reveal>
+      <h2>Pick a vibe. Your agents wear it.</h2>
+      <p>Same agents, different stickers. Tap a vibe and watch them change mid-task.</p>
+    </div>
+    <div class="vibes" id="vibeBtns" data-reveal></div>
+    <div class="stage" data-reveal>
+      <div class="side-copy"><h3>Claude Code</h3><p>CLI, desktop app or IDE. Every subagent gets its own little sticker.</p></div>
+      <div class="desk" id="desk">
+        <div class="top"><span><i></i><i></i><i></i></span>momo's laptop</div>
+        <div data-dock id="vibeDock" data-speed="1300" data-project="cafe-app"></div>
+        <div class="names" id="vibeNames"></div>
+      </div>
+      <div class="side-copy"><h3>Codex</h3><p>CLI and app. Approve its hooks once, then forget about it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="gacha">
+  <div class="wrap">
+    <div class="gacha-wrap" data-reveal>
+      <div>
+        <h2>Can't decide? Spin for a sticker.</h2>
+        <p>Turn the knob for your agent's new look, then paste one line into your config.</p>
+        <div class="prize-name" id="prizeName" aria-live="polite"></div>
+        <div class="prize-cfg" id="prizeCfg">"claude": <b>"~/stickers/…"</b></div>
+        <button class="btn pink" id="spin">Turn the knob <i class="ph-bold ph-arrows-clockwise"></i></button>
+      </div>
+      <div class="machine">
+        <div class="dome" id="dome"></div>
+        <div class="base"><button class="knob" id="knob" aria-label="Turn the knob"><i class="ph-bold ph-star"></i></button><div class="slot"></div></div>
+        <div class="prize" id="prize"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="start">
+  <img class="f" data-drag src="assets/avatars/claude.svg" alt="" style="--w:140px;--r:-10deg;left:5%;top:14%">
+  <img class="f" data-drag src="assets/avatars/codex.svg" alt="" style="--w:124px;--r:12deg;right:7%;top:12%">
+  <img class="f soft" data-drag src="assets/stickers/japanese/kokeshi-dolls.png" alt="" style="--w:120px;--r:6deg;left:12%;bottom:8%">
+  <img class="f" data-drag src="assets/avatars/subagent.svg" alt="" style="--w:96px;--r:-12deg;right:14%;bottom:12%;filter:hue-rotate(100deg)">
+  <div class="wrap" data-reveal>
+    <h2>Life's too short for invisible agents.</h2>
+    <div class="cta">
+      <button class="btn pink" data-copy="npm i -g agent-presence"><span data-copy-label>npm i -g agent-presence</span> <i class="ph-bold ph-copy"></i></button>
+      <a class="btn white" href="#">Read the docs</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <a class="logo" href="#">presence! <small>プレゼンス</small></a>
+  <div class="row"><a href="#">Docs</a><a href="#">GitHub</a><a href="#">npm</a><a href="#">VS Code</a></div>
+  <span>Free and open source, MIT</span>
+</div></footer>
+
+<script src="shared.js"></script>
+<script>
+// Vibe switcher: swaps the dock's stickers and names while the session keeps playing
+const S = s => s.startsWith('avatars/') ? 'assets/' + s : 'assets/stickers/' + s + '.png';
+const vibes = {
+  'Original': ['#ffffff', 'avatars/claude.svg', 'avatars/codex.svg', 'avatars/subagent.svg', 'Claude', 'Codex'],
+  'Cute':     ['#ffe1ef', 'anime/jiji-ok', 'cutesy/pink-cat-face', '../fluent/strawberry', 'Jiji', 'Neko'],
+  'Cozy':     ['#ffeedd', 'japanese/sleeping-cat', '../fluent/hot-beverage', 'japanese/paper-lantern', 'Nap', 'Chai'],
+  'Chaotic':  ['#e7ffd6', 'expressions/purple-dizzy-face', '../fluent/exploding-head', 'cutesy/black-starburst', 'Dizzy', 'Boom'],
+  'Dreamy':   ['#ebe5ff', '../fluent/unicorn', '../fluent/crystal-ball', '../fluent/shooting-star', 'Luna', 'Orb'],
+  'Retro':    ['#dff6ff', 'retro-tech/hello-kitty-disc', 'retro-tech/pixel-computer', 'retro-tech/pixel-cursor', 'Disc', 'PC-98'],
+};
+const dock = AP.get('vibeDock'), desk = document.getElementById('desk'), btns = document.getElementById('vibeBtns'), namesEl = document.getElementById('vibeNames');
+function vibe(name){
+  const [tint, c, x, sub, cn, xn] = vibes[name];
+  desk.style.setProperty('--card', tint);
+  dock.setAvatar('claude', S(c)); dock.setAvatar('codex', S(x)); dock.setAvatar('subagent', S(sub));
+  dock.setName('claude', cn); dock.setName('codex', xn);
+  namesEl.textContent = name === 'Original' ? 'Mochi for Claude, Bit for Codex, Pip for helpers' : `Claude is ${cn}, Codex is ${xn}`;
+  [...btns.children].forEach(b => b.setAttribute('aria-pressed', b.textContent === name));
+}
+Object.keys(vibes).forEach(n => { const b = document.createElement('button'); b.textContent = n; b.onclick = () => vibe(n); btns.append(b); });
+vibe('Original');
+
+// Gacha: random sticker + the config line to use it
+const pool = [['anime/jiji-amazing','Jiji, amazed'],['cutesy/star-bunny','Star bunny'],['../fluent/unicorn','Unicorn'],['japanese/goldfish-wind-chime','Goldfish chime'],['cutesy/sun-cat','Sun cat'],['../fluent/lollipop','Lollipop'],['anime/kiki-checked','Kiki'],['cutesy/milk-tea','Milk tea'],['../fluent/frog','Frog'],['expressions/yellow-star-eyes','Star eyes'],['../fluent/panda','Panda'],['japanese/ufo-polka-dots','Polka UFO']];
+const dome = document.getElementById('dome');
+dome.innerHTML = pool.slice(0, 9).map(([s],i) => `<img class="soft" src="assets/stickers/${s}.png" alt="" style="--l:${10 + (i % 3) * 28}%;--t:${12 + Math.floor(i / 3) * 26}%;--r:${(i * 37) % 50 - 25}deg">`).join('');
+const prize = document.getElementById('prize'), prizeName = document.getElementById('prizeName'), prizeCfg = document.getElementById('prizeCfg'), knob = document.getElementById('knob');
+let last = -1;
+function spin(){
+  let i; do { i = Math.floor(Math.random() * pool.length); } while (i === last);
+  last = i;
+  knob.classList.remove('spin'); void knob.offsetWidth; knob.classList.add('spin');
+  prize.innerHTML = `<img class="diecut" src="assets/stickers/${pool[i][0]}.png" alt="${pool[i][1]} sticker">`;
+  prizeName.textContent = `Your agent is now: ${pool[i][1]}!`;
+  prizeCfg.innerHTML = `"claude": <b>"~/stickers/${pool[i][0].split('/').pop()}.png"</b>`;
+}
+document.getElementById('spin').onclick = spin; knob.onclick = spin;
+</script>
+</body>
+</html>

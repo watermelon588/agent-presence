@@ -1,0 +1,5096 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": false,
+    "errorCount": 1,
+    "warningCount": 5,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 2 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\getting-started\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "overlapping_gsap_tweens",
+        "severity": "warning",
+        "message": "GSAP tweens overlap on \"#mainImg\" for rotation between 4.90s and 5.20s.",
+        "selector": "#mainImg",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\getting-started\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`."
+      },
+      {
+        "code": "gsap_fullscreen_overlay_starts_visible",
+        "severity": "error",
+        "message": "Full-frame overlay \"#bWrap\" starts visible before its first GSAP opacity tween at 2.60s. It will cover earlier render frames, often as a blank/white video.",
+        "selector": "#bWrap",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\getting-started\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add `opacity: 0` to \"#bWrap\" in CSS/inline styles, or add an immediate `gsap.set(\"#bWrap\", { opacity: 0 })` (outside the timeline) before the reveal tween."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"sceneA\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#sceneA",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\getting-started\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"sceneA\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"sceneB\"> is a timeline element that contains nested <div id=\"bWrap\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#sceneB",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\getting-started\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"sceneB\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"sceneC\"> is a timeline element that contains nested <div id=\"end\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#sceneC",
+        "dataAttributes": {},
+        "sourceFile": "C:\\Users\\Rohit Maity\\Desktop\\coding\\Webdev\\project\\agent-presence\\media\\getting-started\\composition\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"sceneC\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 6,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"popA\" is 0.19s but its slot (data-duration) is 0.40s — the slot is shortened to the media length when rendered. Set data-duration to ~0.19s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-duration": "11"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"popMain\" is 0.19s but its slot (data-duration) is 0.50s — the slot is shortened to the media length when rendered. Set data-duration to ~0.19s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-duration": "11"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"popSub\" is 0.19s but its slot (data-duration) is 0.50s — the slot is shortened to the media length when rendered. Set data-duration to ~0.19s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-duration": "11"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"hover\" is 0.06s but its slot (data-duration) is 0.40s — the slot is shortened to the media length when rendered. Set data-duration to ~0.06s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-duration": "11"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"tick\" is 0.21s but its slot (data-duration) is 0.60s — the slot is shortened to the media length when rendered. Set data-duration to ~0.21s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-duration": "11"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"logoHit\" is 0.12s but its slot (data-duration) is 1.00s — the slot is shortened to the media length when rendered. Set data-duration to ~0.12s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-width": "1920",
+          "data-height": "1080",
+          "data-duration": "11"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 1,
+    "warningCount": 6,
+    "infoCount": 50,
+    "findings": [
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 5.5,
+        "selector": "#afterEdit > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 433.81,
+          "top": 395.5,
+          "right": 513.02,
+          "bottom": 423.5,
+          "width": 79.2,
+          "height": 28
+        },
+        "containerSelector": "#editBg",
+        "text": "verify",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.11,
+        "lifetime": {
+          "start": 2.6,
+          "end": 9.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 433.81,
+          "y": 395.5,
+          "width": 79.2,
+          "height": 28
+        },
+        "firstSeen": 5.5,
+        "lastSeen": 9.167,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          5.5,
+          9.167
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 2.75,
+        "selector": "#cmdA",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 428.82,
+          "top": 322.39,
+          "right": 873.89,
+          "bottom": 372.41,
+          "width": 445.07,
+          "height": 50.02
+        },
+        "containerSelector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1)",
+        "text": "npx agentpeeps init",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 428.82,
+          "y": 322.39,
+          "width": 445.07,
+          "height": 50.02
+        },
+        "firstSeen": 2.75,
+        "lastSeen": 2.875,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          2.75,
+          2.875
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 2.75,
+        "selector": "#oA1",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 368.26,
+          "top": 384.84,
+          "right": 696.21,
+          "bottom": 434.86,
+          "width": 327.95,
+          "height": 50.02
+        },
+        "containerSelector": "#afterEdit",
+        "text": "✓ Claude Code hooks added",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 368.26,
+          "y": 384.84,
+          "width": 327.95,
+          "height": 50.02
+        },
+        "firstSeen": 2.75,
+        "lastSeen": 2.875,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          2.75,
+          2.875
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 2.75,
+        "selector": "#oA2",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 368.26,
+          "top": 447.29,
+          "right": 555.67,
+          "bottom": 497.31,
+          "width": 187.41,
+          "height": 50.02
+        },
+        "containerSelector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1)",
+        "text": "✓ Codex hooks added",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 368.26,
+          "y": 447.29,
+          "width": 187.41,
+          "height": 50.02
+        },
+        "firstSeen": 2.75,
+        "lastSeen": 2.875,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          2.75,
+          2.875
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 2.75,
+        "selector": "#oA2 > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 339.02,
+          "top": 447.29,
+          "right": 368.26,
+          "bottom": 497.31,
+          "width": 29.24,
+          "height": 50.02
+        },
+        "containerSelector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1) > span:nth-of-type(2)",
+        "text": "✓",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 339.02,
+          "y": 447.29,
+          "width": 29.24,
+          "height": 50.02
+        },
+        "firstSeen": 2.75,
+        "lastSeen": 2.875,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          2.75,
+          2.875
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "warning",
+        "time": 6.722,
+        "selector": "span.c",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1004.9,
+          "top": 257.6,
+          "right": 319.08,
+          "bottom": 305.2,
+          "width": 1323.98,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "// login() used to skip the await, so every password passed",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1004.9
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1004.9,
+          "y": 257.6,
+          "width": 1323.98,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "warning",
+        "time": 6.722,
+        "selector": "#agent",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": 775,
+          "top": -470,
+          "right": 1764.4,
+          "bottom": 417.4,
+          "width": 989.4,
+          "height": 887.4
+        },
+        "containerSelector": "#root",
+        "text": "claude — ~/shop › fix the login bug ● Reading sr",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 470
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 775,
+          "y": -470,
+          "width": 989.4,
+          "height": 887.4
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 2.75,
+        "selector": "#term > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 339.02,
+          "top": 322.39,
+          "right": 409.3,
+          "bottom": 372.41,
+          "width": 70.28,
+          "height": 50.02
+        },
+        "containerSelector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "~ $",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 339.02,
+          "y": 322.39,
+          "width": 70.28,
+          "height": 50.02
+        },
+        "firstSeen": 2.75,
+        "lastSeen": 2.75,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.75
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 2.875,
+        "selector": "#oA1 > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 339.02,
+          "top": 384.84,
+          "right": 368.26,
+          "bottom": 434.86,
+          "width": 29.24,
+          "height": 50.02
+        },
+        "containerSelector": "div.code.mono > div:nth-of-type(4) > span:nth-of-type(1)",
+        "text": "✓",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 339.02,
+          "y": 384.84,
+          "width": 29.24,
+          "height": 50.02
+        },
+        "firstSeen": 2.875,
+        "lastSeen": 2.875,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.875
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#editor > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -300.22,
+          "top": -447.05,
+          "right": -118.38,
+          "bottom": -414.75,
+          "width": 181.84,
+          "height": 32.3
+        },
+        "containerSelector": "#root",
+        "text": "shop — login.ts",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 300.22,
+          "top": 447.05
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -300.22,
+          "y": -447.05,
+          "width": 181.84,
+          "height": 32.3
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.on",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1089.9,
+          "top": -373.95,
+          "right": -993.13,
+          "bottom": -338.25,
+          "width": 96.77,
+          "height": 35.7
+        },
+        "containerSelector": "#root",
+        "text": "login.ts",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1089.9,
+          "top": 373.95
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1089.9,
+          "y": -373.95,
+          "width": 96.77,
+          "height": 35.7
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.tabs > div:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -916.63,
+          "top": -373.95,
+          "right": -831.15,
+          "bottom": -338.25,
+          "width": 85.48,
+          "height": 35.7
+        },
+        "containerSelector": "#root",
+        "text": "auth.ts",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 916.63,
+          "top": 373.95
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -916.63,
+          "y": -373.95,
+          "width": 85.48,
+          "height": 35.7
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.tabs > div:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -754.65,
+          "top": -373.95,
+          "right": -608.69,
+          "bottom": -338.25,
+          "width": 145.96,
+          "height": 35.7
+        },
+        "containerSelector": "#root",
+        "text": "login.test.ts",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 754.65,
+          "top": 373.95
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -754.65,
+          "y": -373.95,
+          "width": 145.96,
+          "height": 35.7
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(1) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": -266,
+          "right": -1057.25,
+          "bottom": -218.4,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "1",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7,
+          "top": 266
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": -266,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -870.25,
+          "top": -266,
+          "right": 49.84,
+          "bottom": -218.4,
+          "width": 920.09,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "{ verify, createSession } ;",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 870.25,
+          "top": 266
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -870.25,
+          "y": -266,
+          "width": 920.09,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1004.9,
+          "top": -266,
+          "right": -870.25,
+          "bottom": -218.4,
+          "width": 134.65,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "import",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1004.9,
+          "top": 266
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1004.9,
+          "y": -266,
+          "width": 134.65,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -264.36,
+          "top": -266,
+          "right": -174.58,
+          "bottom": -218.4,
+          "width": 89.78,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "from",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 264.36,
+          "top": 266
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -264.36,
+          "y": -266,
+          "width": 89.78,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -152.14,
+          "top": -266,
+          "right": 27.4,
+          "bottom": -218.4,
+          "width": 179.54,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "\"./auth\"",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 152.14,
+          "top": 266
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -152.14,
+          "y": -266,
+          "width": 179.54,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(2) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": -200.55,
+          "right": -1057.25,
+          "bottom": -152.95,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "2",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7,
+          "top": 200.55
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": -200.55,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(3) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": -135.1,
+          "right": -1057.25,
+          "bottom": -87.5,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "3",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7,
+          "top": 135.1
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": -135.1,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -533.65,
+          "top": -135.1,
+          "right": -84.83,
+          "bottom": -87.5,
+          "width": 448.82,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "(user, pass) {",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 533.65,
+          "top": 135.1
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -533.65,
+          "y": -135.1,
+          "width": 448.82,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1004.9,
+          "top": -135.1,
+          "right": -533.65,
+          "bottom": -87.5,
+          "width": 471.25,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "export async function",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1004.9,
+          "top": 135.1
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1004.9,
+          "y": -135.1,
+          "width": 471.25,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -511.21,
+          "top": -135.1,
+          "right": -399.01,
+          "bottom": -87.5,
+          "width": 112.2,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "login",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 511.21,
+          "top": 135.1
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -511.21,
+          "y": -135.1,
+          "width": 112.2,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(4) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": -69.65,
+          "right": -1057.25,
+          "bottom": -22.05,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "4",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7,
+          "top": 69.65
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": -69.65,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(4) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1004.9,
+          "top": -69.65,
+          "right": -713.16,
+          "bottom": -22.05,
+          "width": 291.74,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "ok =",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1004.9,
+          "top": 69.65
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1004.9,
+          "y": -69.65,
+          "width": 291.74,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(4) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -960.01,
+          "top": -69.65,
+          "right": -847.81,
+          "bottom": -22.05,
+          "width": 112.2,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "const",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 960.01,
+          "top": 69.65
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -960.01,
+          "y": -69.65,
+          "width": 112.2,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#editTxt",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -713.16,
+          "top": -69.65,
+          "right": -578.52,
+          "bottom": -22.05,
+          "width": 134.64,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "await",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 713.16,
+          "top": 69.65
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -713.16,
+          "y": -69.65,
+          "width": 134.64,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#afterEdit",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -443.87,
+          "top": -69.65,
+          "right": -152.14,
+          "bottom": -22.05,
+          "width": 291.73,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "(user, pass);",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 443.87,
+          "top": 69.65
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -443.87,
+          "y": -69.65,
+          "width": 291.73,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#afterEdit > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -578.52,
+          "top": -69.65,
+          "right": -443.87,
+          "bottom": -22.05,
+          "width": 134.65,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "verify",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 578.52,
+          "top": 69.65
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -578.52,
+          "y": -69.65,
+          "width": 134.65,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(5) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": -4.2,
+          "right": -1057.25,
+          "bottom": 43.4,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "5",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7,
+          "top": 4.2
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": -4.2,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1004.9,
+          "top": -4.2,
+          "right": -17.47,
+          "bottom": 43.4,
+          "width": 987.43,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "(!ok) ();",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1004.9,
+          "top": 4.2
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1004.9,
+          "y": -4.2,
+          "width": 987.43,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -960.01,
+          "top": -4.2,
+          "right": -915.12,
+          "bottom": 43.4,
+          "width": 44.89,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "if",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 960.01,
+          "top": 4.2
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -960.01,
+          "y": -4.2,
+          "width": 44.89,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -758.03,
+          "top": -4.2,
+          "right": -556.05,
+          "bottom": 43.4,
+          "width": 201.98,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "throw new",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 758.03,
+          "top": 4.2
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -758.03,
+          "y": -4.2,
+          "width": 201.98,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -533.6,
+          "top": -4.2,
+          "right": -421.4,
+          "bottom": 43.4,
+          "width": 112.2,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "Error",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 533.6,
+          "top": 4.2
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -533.6,
+          "y": -4.2,
+          "width": 112.2,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(4)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -398.96,
+          "top": -4.2,
+          "right": -62.36,
+          "bottom": 43.4,
+          "width": 336.6,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "\"Invalid login\"",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 398.96,
+          "top": 4.2
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -398.96,
+          "y": -4.2,
+          "width": 336.6,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(6) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": 61.25,
+          "right": -1057.25,
+          "bottom": 108.85,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "6",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": 61.25,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1004.9,
+          "top": 61.25,
+          "right": -354.09,
+          "bottom": 108.85,
+          "width": 650.81,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "(user);",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1004.9
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1004.9,
+          "y": 61.25,
+          "width": 650.81,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -960.01,
+          "top": 61.25,
+          "right": -825.36,
+          "bottom": 108.85,
+          "width": 134.65,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "return",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 960.01
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -960.01,
+          "y": 61.25,
+          "width": 134.65,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -802.92,
+          "top": 61.25,
+          "right": -511.18,
+          "bottom": 108.85,
+          "width": 291.74,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "createSession",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 802.92
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -802.92,
+          "y": 61.25,
+          "width": 291.74,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(7) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": 126.7,
+          "right": -1057.25,
+          "bottom": 174.3,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "7",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": 126.7,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(7) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1004.9,
+          "top": 126.7,
+          "right": -982.45,
+          "bottom": 174.3,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "}",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1004.9
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1004.9,
+          "y": 126.7,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(8) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": 192.15,
+          "right": -1057.25,
+          "bottom": 239.75,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "8",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": 192.15,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "div.code.mono > div:nth-of-type(9) > u:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -1079.7,
+          "top": 257.6,
+          "right": -1057.25,
+          "bottom": 305.2,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "containerSelector": "#root",
+        "text": "9",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1079.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": -1079.7,
+          "y": 257.6,
+          "width": 22.45,
+          "height": 47.6
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#agent > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 1170.2,
+          "top": -447.05,
+          "right": 1369.2,
+          "bottom": -414.75,
+          "width": 199,
+          "height": 32.3
+        },
+        "containerSelector": "#root",
+        "text": "claude — ~/shop",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 447.05
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1170.2,
+          "y": -447.05,
+          "width": 199,
+          "height": 32.3
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#agent > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 824.3,
+          "top": -342.5,
+          "right": 843.69,
+          "bottom": -300,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "›",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 342.5
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 824.3,
+          "y": -342.5,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#cmdB",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 870.89,
+          "top": -342.5,
+          "right": 1219.74,
+          "bottom": -300,
+          "width": 348.85,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "fix the login bug",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 342.5
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 870.89,
+          "y": -342.5,
+          "width": 348.85,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB1 > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 824.3,
+          "top": -263.8,
+          "right": 843.69,
+          "bottom": -221.3,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "●",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 263.8
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 824.3,
+          "y": -263.8,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB1 > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 864.09,
+          "top": -263.8,
+          "right": 1019.14,
+          "bottom": -221.3,
+          "width": 155.05,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "Reading",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 263.8
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 864.09,
+          "y": -263.8,
+          "width": 155.05,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB1 > span:nth-of-type(2) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 1019.14,
+          "top": -263.8,
+          "right": 1232.33,
+          "bottom": -221.3,
+          "width": 213.19,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "src/auth.ts",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 263.8
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1019.14,
+          "y": -263.8,
+          "width": 213.19,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB2 > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 824.3,
+          "top": -208.89,
+          "right": 843.69,
+          "bottom": -166.39,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "●",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 208.89
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 824.3,
+          "y": -208.89,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB2 > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 864.09,
+          "top": -208.89,
+          "right": 1019.14,
+          "bottom": -166.39,
+          "width": 155.05,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "Editing",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 208.89
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 864.09,
+          "y": -208.89,
+          "width": 155.05,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB2 > span:nth-of-type(2) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 1019.14,
+          "top": -208.89,
+          "right": 1251.72,
+          "bottom": -166.39,
+          "width": 232.58,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "src/login.ts",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 208.89
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1019.14,
+          "y": -208.89,
+          "width": 232.58,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB3 > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 824.3,
+          "top": -153.99,
+          "right": 843.69,
+          "bottom": -111.49,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "●",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 153.99
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 824.3,
+          "y": -153.99,
+          "width": 19.39,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB3 > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 864.09,
+          "top": -153.99,
+          "right": 999.77,
+          "bottom": -111.49,
+          "width": 135.68,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "Helper",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 153.99
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 864.09,
+          "y": -153.99,
+          "width": 135.68,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 6.722,
+        "selector": "#sB3 > span:nth-of-type(2) > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 999.77,
+          "top": -153.99,
+          "right": 1271.11,
+          "bottom": -111.49,
+          "width": 271.34,
+          "height": 42.5
+        },
+        "containerSelector": "#root",
+        "text": "checking tests",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 153.99
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 999.77,
+          "y": -153.99,
+          "width": 271.34,
+          "height": 42.5
+        },
+        "firstSeen": 6.722,
+        "lastSeen": 7.944,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          6.722,
+          7.944
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 9,
+        "selector": "#agent > div:nth-of-type(2) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1131.57,
+          "top": 65.71,
+          "right": 1145.32,
+          "bottom": 95.84,
+          "width": 13.75,
+          "height": 30.13
+        },
+        "containerSelector": "#caption",
+        "text": "›",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1131.57,
+          "y": 65.71,
+          "width": 13.75,
+          "height": 30.13
+        },
+        "firstSeen": 9,
+        "lastSeen": 9,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          9
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 9,
+        "selector": "#cmdB",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1164.6,
+          "top": 65.71,
+          "right": 1411.91,
+          "bottom": 95.84,
+          "width": 247.31,
+          "height": 30.13
+        },
+        "containerSelector": "#caption",
+        "text": "fix the login bug",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1164.6,
+          "y": 65.71,
+          "width": 247.31,
+          "height": 30.13
+        },
+        "firstSeen": 9,
+        "lastSeen": 9,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          9
+        ]
+      }
+    ],
+    "duration": 11,
+    "samples": [
+      0.611,
+      1.833,
+      3.056,
+      4.278,
+      5.5,
+      6.722,
+      7.944,
+      9.167,
+      10.389
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 57,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": false,
+    "errorCount": 10,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "1",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 274.7645263671875,
+          "width": 44.013214111328125,
+          "height": 38.51153564453125
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "2",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 313.27606201171875,
+          "width": 44.013214111328125,
+          "height": 38.511566162109375
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "3",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 351.7876281738281,
+          "width": 44.013214111328125,
+          "height": 38.51153564453125
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "4",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 390.2991638183594,
+          "width": 44.013214111328125,
+          "height": 38.511566162109375
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "5",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(5) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 428.81072998046875,
+          "width": 44.013214111328125,
+          "height": 38.51153564453125
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "6",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(6) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 467.322265625,
+          "width": 44.013214111328125,
+          "height": 38.511566162109375
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "7",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(7) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 505.8338317871094,
+          "width": 44.013214111328125,
+          "height": 38.511566162109375
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "8",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(8) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 544.3453979492188,
+          "width": 44.013214111328125,
+          "height": 38.51153564453125
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 2.04:1; WCAG AA requires 4.5:1.",
+        "text": "9",
+        "fg": "rgb(181,181,189)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 2.04,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(118,118,123)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(9) > u",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 138.4776153564453,
+          "y": 582.85693359375,
+          "width": 44.013214111328125,
+          "height": 38.51153564453125
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 3.65:1; WCAG AA requires 4.5:1.",
+        "text": "// login() used to skip the await, so every passwo",
+        "fg": "rgb(133,133,143)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 3.65,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(117,117,126)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(9) > span",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 182.49082946777344,
+          "y": 582.85693359375,
+          "width": 779.046142578125,
+          "height": 38.51153564453125
+        },
+        "time": 3.056,
+        "times": [
+          3.056,
+          5.5,
+          7.944
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.92:1; WCAG AA requires 4.5:1.",
+        "text": "●",
+        "fg": "rgb(246,169,131)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 1.92,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(156,107,83)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1259,
+          "y": 278.296875,
+          "width": 11.40625,
+          "height": 32.296875
+        },
+        "time": 5.5,
+        "times": [
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.92:1; WCAG AA requires 4.5:1.",
+        "text": "●",
+        "fg": "rgb(246,169,131)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 1.92,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(156,107,83)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1259,
+          "y": 310.59375,
+          "width": 11.40625,
+          "height": 32.296875
+        },
+        "time": 5.5,
+        "times": [
+          5.5
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.92:1; WCAG AA requires 4.5:1.",
+        "text": "●",
+        "fg": "rgb(246,169,131)",
+        "bg": "rgb(255,255,255)",
+        "ratio": 1.92,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(156,107,83)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(4) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1259,
+          "y": 342.890625,
+          "width": 11.40625,
+          "height": 32.296875
+        },
+        "time": 5.5,
+        "times": [
+          5.5
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      0.611,
+      3.056,
+      5.5,
+      7.944,
+      10.389
+    ],
+    "checked": 97,
+    "passed": 73
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 26,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "first_frame_empty",
+        "severity": "warning",
+        "message": "Frame 0 shows only the background, and the first frame is the thumbnail on social players: have the title or key image already on screen at 0 s instead of entering from nothing; see references/review.md.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Stickers show up in your next session.\" (7 words) is on screen 1.00 s (±0.01 s), under its 1.95 s floor: hold it about 0.5 s + 0.3 s a word (2.60 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Stickers show up in your next session.",
+        "selector": "#oA3",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 406.16,
+          "y": 526.03,
+          "width": 645.04,
+          "height": 37
+        },
+        "time": 1.969,
+        "words": 7,
+        "seconds": 1,
+        "floorSeconds": 1.95,
+        "measured": [
+          {
+            "time": 1.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.875,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 2,
+            "opacity": 0.86,
+            "heightPx": 37
+          },
+          {
+            "time": 2.125,
+            "opacity": 0.99,
+            "heightPx": 38
+          },
+          {
+            "time": 2.25,
+            "opacity": 1,
+            "heightPx": 40
+          },
+          {
+            "time": 2.375,
+            "opacity": 1,
+            "heightPx": 41
+          },
+          {
+            "time": 2.5,
+            "opacity": 1,
+            "heightPx": 41
+          },
+          {
+            "time": 2.625,
+            "opacity": 1,
+            "heightPx": 41
+          },
+          {
+            "time": 2.75,
+            "opacity": 1,
+            "heightPx": 41
+          },
+          {
+            "time": 2.875,
+            "opacity": 1,
+            "heightPx": 41
+          },
+          {
+            "time": 3,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 3.125,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 3.25,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 52 text elements stay under it for 0.5 s or more, the smallest \"C\" at 11 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "C",
+        "selector": "div.badge",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1638.69,
+          "y": 949.09,
+          "width": 8.21,
+          "height": 14.69
+        },
+        "time": 5.625,
+        "times": [
+          0.125,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          2.75,
+          3.25,
+          4.25,
+          4.25,
+          4.25,
+          5,
+          5,
+          5,
+          5.125,
+          5.5,
+          5.5,
+          5.625,
+          5.625,
+          6.875,
+          6.875,
+          6.875,
+          8.25,
+          9
+        ],
+        "fontPx": 11.01,
+        "floorPx": 28,
+        "seconds": 2.5,
+        "elements": [
+          {
+            "selector": "div.badge",
+            "text": "C",
+            "fontPx": 11.01,
+            "time": 5.625,
+            "seconds": 2.5
+          },
+          {
+            "selector": "div.chibi.sub > div:nth-of-type(2) > span:nth-of-type(1)",
+            "text": "reading tests",
+            "fontPx": 11.93,
+            "time": 5.625,
+            "seconds": 2.5
+          },
+          {
+            "selector": "#lRead",
+            "text": "reading auth.ts",
+            "fontPx": 13.98,
+            "time": 4.25,
+            "seconds": 0.75
+          },
+          {
+            "selector": "#term > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "Terminal",
+            "fontPx": 15,
+            "time": 0.125,
+            "seconds": 2.875
+          },
+          {
+            "selector": "#editor > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "shop — login.ts",
+            "fontPx": 15,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#agent > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "claude — ~/shop",
+            "fontPx": 15,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#lWrite",
+            "text": "writing login.ts",
+            "fontPx": 15,
+            "time": 5,
+            "seconds": 1.75
+          },
+          {
+            "selector": "#lDone",
+            "text": "done",
+            "fontPx": 15,
+            "time": 8.25,
+            "seconds": 1.375
+          },
+          {
+            "selector": "div.on",
+            "text": "login.ts",
+            "fontPx": 16,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.tabs > div:nth-of-type(2)",
+            "text": "auth.ts",
+            "fontPx": 16,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.tabs > div:nth-of-type(3)",
+            "text": "login.test.ts",
+            "fontPx": 16,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#cmdB",
+            "text": "f",
+            "fontPx": 19,
+            "time": 3.25,
+            "seconds": 3.125
+          },
+          {
+            "selector": "#sB1 > span:nth-of-type(2)",
+            "text": "Reading",
+            "fontPx": 19,
+            "time": 4.25,
+            "seconds": 2.125
+          },
+          {
+            "selector": "#sB1 > span:nth-of-type(2) > span:nth-of-type(1)",
+            "text": "src/auth.ts",
+            "fontPx": 19,
+            "time": 4.25,
+            "seconds": 2.125
+          },
+          {
+            "selector": "#sB2 > span:nth-of-type(2)",
+            "text": "Editing",
+            "fontPx": 19,
+            "time": 5,
+            "seconds": 1.375
+          },
+          {
+            "selector": "#sB2 > span:nth-of-type(2) > span:nth-of-type(1)",
+            "text": "src/login.ts",
+            "fontPx": 19,
+            "time": 5,
+            "seconds": 1.375
+          },
+          {
+            "selector": "#sB3 > span:nth-of-type(2)",
+            "text": "Helper",
+            "fontPx": 19,
+            "time": 5.5,
+            "seconds": 0.875
+          },
+          {
+            "selector": "#sB3 > span:nth-of-type(2) > span:nth-of-type(1)",
+            "text": "checking tests",
+            "fontPx": 19,
+            "time": 5.5,
+            "seconds": 0.875
+          },
+          {
+            "selector": "#sB4 > span:nth-of-type(2)",
+            "text": "Fixed: login now awaits verify()",
+            "fontPx": 19,
+            "time": 9,
+            "seconds": 0.625
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(1) > u:nth-of-type(1)",
+            "text": "1",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "{ verify, createSession } ;",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "import",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "from",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(3)",
+            "text": "\"./auth\"",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(2) > u:nth-of-type(1)",
+            "text": "2",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(3) > u:nth-of-type(1)",
+            "text": "3",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "(user, pass) {",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "export async function",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "login",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(4) > u:nth-of-type(1)",
+            "text": "4",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(4) > span:nth-of-type(1)",
+            "text": "ok =",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(4) > span:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "const",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#afterEdit",
+            "text": "(user, pass);",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#afterEdit > span:nth-of-type(1)",
+            "text": "verify",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(5) > u:nth-of-type(1)",
+            "text": "5",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1)",
+            "text": "(!ok) ();",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "if",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "throw new",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(3)",
+            "text": "Error",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(4)",
+            "text": "\"Invalid login\"",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(6) > u:nth-of-type(1)",
+            "text": "6",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1)",
+            "text": "(user);",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1) > span:nth-of-type(1)",
+            "text": "return",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1) > span:nth-of-type(2)",
+            "text": "createSession",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(7) > u:nth-of-type(1)",
+            "text": "7",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(8) > u:nth-of-type(1)",
+            "text": "8",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "div.code.mono > div:nth-of-type(9) > u:nth-of-type(1)",
+            "text": "9",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "span.c",
+            "text": "// login() used to skip the await, so every password passed",
+            "fontPx": 22,
+            "time": 2.75,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#editTxt",
+            "text": "await",
+            "fontPx": 22,
+            "time": 5.125,
+            "seconds": 1.125
+          },
+          {
+            "selector": "#info > div:nth-of-type(3)",
+            "text": "› src/login.ts",
+            "fontPx": 24.65,
+            "time": 6.875,
+            "seconds": 1.375
+          },
+          {
+            "selector": "#info > div:nth-of-type(4)",
+            "text": "› src/auth.ts",
+            "fontPx": 24.65,
+            "time": 6.875,
+            "seconds": 1.375
+          },
+          {
+            "selector": "div.what",
+            "text": "writing login.ts",
+            "fontPx": 26.35,
+            "time": 6.875,
+            "seconds": 1.375
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"1\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "1",
+        "selector": "div.code.mono > div:nth-of-type(1) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 214.48,
+          "width": 7.07,
+          "height": 30.349999999999994
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"import { verify, createSession } from \"./auth\";\" (5 words) is on screen 0.17 s (±0.01 s), under its 1.50 s floor: hold it about 0.5 s + 0.3 s a word (2.00 s here) before it leaves or changes; see references/motion.md.",
+        "text": "import { verify, createSession } from \"./auth\";",
+        "selector": "div.code.mono > div:nth-of-type(1) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 40.45,
+          "y": 214.48,
+          "width": 672.56,
+          "height": 30.349999999999994
+        },
+        "time": 6.102,
+        "words": 5,
+        "seconds": 0.172,
+        "floorSeconds": 1.5,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 37
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"2\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "2",
+        "selector": "div.code.mono > div:nth-of-type(2) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 256.21,
+          "width": 7.07,
+          "height": 30.360000000000014
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"3\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "3",
+        "selector": "div.code.mono > div:nth-of-type(3) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 297.95,
+          "width": 7.07,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"export async function login(user, pass) {\" (6 words) is on screen 0.23 s (±0.01 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "export async function login(user, pass) {",
+        "selector": "div.code.mono > div:nth-of-type(3) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 40.45,
+          "y": 297.95,
+          "width": 586.68,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 6,
+        "seconds": 0.234,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 37
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"4\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "4",
+        "selector": "div.code.mono > div:nth-of-type(4) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 339.68,
+          "width": 7.07,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"const ok = await verify(user, pass);\" (6 words) is on screen 0.27 s (±0.01 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "const ok = await verify(user, pass);",
+        "selector": "div.code.mono > div:nth-of-type(4) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 40.45,
+          "y": 339.68,
+          "width": 543.76,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 6,
+        "seconds": 0.266,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 37
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"5\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "5",
+        "selector": "div.code.mono > div:nth-of-type(5) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 381.42,
+          "width": 7.07,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"if (!ok) throw new Error(\"Invalid login\");\" (7 words) is on screen 0.44 s (±0.01 s), under its 1.95 s floor: hold it about 0.5 s + 0.3 s a word (2.60 s here) before it leaves or changes; see references/motion.md.",
+        "text": "if (!ok) throw new Error(\"Invalid login\");",
+        "selector": "div.code.mono > div:nth-of-type(5) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 40.45,
+          "y": 381.42,
+          "width": 629.64,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 7,
+        "seconds": 0.438,
+        "floorSeconds": 1.95,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 37
+          },
+          {
+            "time": 6.375,
+            "opacity": 1,
+            "heightPx": 44
+          },
+          {
+            "time": 6.5,
+            "opacity": 1,
+            "heightPx": 47
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.875,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"6\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "6",
+        "selector": "div.code.mono > div:nth-of-type(6) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 423.15,
+          "width": 7.07,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"return createSession(user);\" (3 words) is on screen 0.20 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "return createSession(user);",
+        "selector": "div.code.mono > div:nth-of-type(6) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 40.45,
+          "y": 423.15,
+          "width": 414.99,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 3,
+        "seconds": 0.203,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 37
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"7\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "7",
+        "selector": "div.code.mono > div:nth-of-type(7) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 464.88,
+          "width": 7.07,
+          "height": 30.360000000000014
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"8\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "8",
+        "selector": "div.code.mono > div:nth-of-type(8) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 506.62,
+          "width": 7.07,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"9\" (1 word) is on screen 0.04 s (±0.01 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (0.80 s here) before it leaves or changes; see references/motion.md.",
+        "text": "9",
+        "selector": "div.code.mono > div:nth-of-type(9) > u:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 548.35,
+          "width": 7.07,
+          "height": 30.350000000000023
+        },
+        "time": 6.102,
+        "words": 1,
+        "seconds": 0.039,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 5.75,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 28
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 29
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.25,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Reading src/auth.ts\" (4 words) is on screen 0.07 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Reading src/auth.ts",
+        "selector": "#sB1 > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1099.78,
+          "y": 43.33,
+          "width": 282.80999999999995,
+          "height": 32.64
+        },
+        "time": 6.203,
+        "words": 4,
+        "seconds": 0.07,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 27
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 33
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Editing src/login.ts\" (4 words) is on screen 0.10 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Editing src/login.ts",
+        "selector": "#sB2 > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1099.78,
+          "y": 85.49,
+          "width": 297.70000000000005,
+          "height": 32.64
+        },
+        "time": 6.203,
+        "words": 4,
+        "seconds": 0.102,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 27
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 33
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Helper checking tests\" (3 words) is on screen 0.13 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Helper checking tests",
+        "selector": "#sB3 > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1099.78,
+          "y": 127.66,
+          "width": 312.5899999999999,
+          "height": 32.640000000000015
+        },
+        "time": 6.203,
+        "words": 3,
+        "seconds": 0.133,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 5.875,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 6,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 27
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 33
+          },
+          {
+            "time": 6.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.625,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"writing login.ts\" (3 words) is on screen 0.33 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "writing login.ts",
+        "selector": "#lWrite",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1660.59,
+          "y": 1019.73,
+          "width": 187.1099999999999,
+          "height": 31.88000000000011
+        },
+        "time": 6.406,
+        "words": 3,
+        "seconds": 0.328,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 6.125,
+            "opacity": 1,
+            "heightPx": 21
+          },
+          {
+            "time": 6.25,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 6.375,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 6.5,
+            "opacity": 1,
+            "heightPx": 32
+          },
+          {
+            "time": 6.625,
+            "opacity": 1,
+            "heightPx": 32
+          },
+          {
+            "time": 6.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.875,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 7,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Stays in the corner. Out of your way.\" (8 words) is on screen 0.73 s (±0.01 s), under its 2.17 s floor: hold it about 0.5 s + 0.3 s a word (2.90 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Stays in the corner. Out of your way.",
+        "selector": "#caption",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 569.72,
+          "y": 55.31,
+          "width": 780.55,
+          "height": 55
+        },
+        "time": 8.805,
+        "words": 8,
+        "seconds": 0.734,
+        "floorSeconds": 2.175,
+        "measured": [
+          {
+            "time": 8.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.875,
+            "opacity": 0.87,
+            "heightPx": 55
+          },
+          {
+            "time": 9,
+            "opacity": 0.99,
+            "heightPx": 55
+          },
+          {
+            "time": 9.125,
+            "opacity": 1,
+            "heightPx": 55
+          },
+          {
+            "time": 9.25,
+            "opacity": 1,
+            "heightPx": 55
+          },
+          {
+            "time": 9.375,
+            "opacity": 1,
+            "heightPx": 55
+          },
+          {
+            "time": 9.5,
+            "opacity": 0.64,
+            "heightPx": 55
+          },
+          {
+            "time": 9.625,
+            "opacity": 0.16,
+            "heightPx": 55
+          },
+          {
+            "time": 9.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.875,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Fixed: login now awaits verify()\" (5 words) is on screen 0.17 s (±0.01 s), under its 1.50 s floor: hold it about 0.5 s + 0.3 s a word (2.00 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Fixed: login now awaits verify()",
+        "selector": "#sB4 > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 950.68,
+          "y": 0,
+          "width": 570.0199999999999,
+          "height": 33.73
+        },
+        "time": 8.867,
+        "words": 5,
+        "seconds": 0.172,
+        "floorSeconds": 1.5,
+        "measured": [
+          {
+            "time": 8.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.875,
+            "opacity": 1,
+            "heightPx": 34
+          },
+          {
+            "time": 9,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 9.125,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 9.25,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.375,
+            "opacity": 1,
+            "heightPx": 25
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"› fix the login bug\" (4 words) is on screen 0.04 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "› fix the login bug",
+        "selector": "#agent > div:nth-of-type(2) > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1131.57,
+          "y": 65.71,
+          "width": 280.3399999999999,
+          "height": 30.129999999999995
+        },
+        "time": 9,
+        "words": 4,
+        "seconds": 0.039,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 8.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 8.875,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 9.125,
+            "opacity": 1,
+            "heightPx": 26
+          },
+          {
+            "time": 9.25,
+            "opacity": 1,
+            "heightPx": 25
+          },
+          {
+            "time": 9.375,
+            "opacity": 1,
+            "heightPx": 25
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"Agent Peeps\" (2 words) is on screen 1.31 s (±0.06 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "Agent Peeps",
+        "selector": "#endName",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 656.75,
+          "y": 567.35,
+          "width": 606.5,
+          "height": 125
+        },
+        "time": 9.75,
+        "words": 2,
+        "seconds": 1.313,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 9.375,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.75,
+            "opacity": 0.79,
+            "heightPx": 125
+          },
+          {
+            "time": 9.875,
+            "opacity": 0.98,
+            "heightPx": 125
+          },
+          {
+            "time": 10,
+            "opacity": 1,
+            "heightPx": 125
+          },
+          {
+            "time": 10.125,
+            "opacity": 1,
+            "heightPx": 125
+          },
+          {
+            "time": 10.5,
+            "opacity": 1,
+            "heightPx": 125
+          },
+          {
+            "time": 10.625,
+            "opacity": 1,
+            "heightPx": 125
+          },
+          {
+            "time": 10.75,
+            "opacity": 1,
+            "heightPx": 125
+          },
+          {
+            "time": 10.875,
+            "opacity": 1,
+            "heightPx": 125
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"agentpeeps.space\" (2 words) is on screen 1.19 s (±0.06 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "agentpeeps.space",
+        "selector": "#endUrl",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 796.8,
+          "y": 703.39,
+          "width": 326.39999999999986,
+          "height": 44
+        },
+        "time": 9.875,
+        "words": 2,
+        "seconds": 1.188,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 9.5,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.625,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.75,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 9.875,
+            "opacity": 0.8,
+            "heightPx": 44
+          },
+          {
+            "time": 10,
+            "opacity": 0.98,
+            "heightPx": 44
+          },
+          {
+            "time": 10.125,
+            "opacity": 1,
+            "heightPx": 44
+          },
+          {
+            "time": 10.25,
+            "opacity": 1,
+            "heightPx": 44
+          },
+          {
+            "time": 10.5,
+            "opacity": 1,
+            "heightPx": 44
+          },
+          {
+            "time": 10.625,
+            "opacity": 1,
+            "heightPx": 44
+          },
+          {
+            "time": 10.75,
+            "opacity": 1,
+            "heightPx": 44
+          },
+          {
+            "time": 10.875,
+            "opacity": 1,
+            "heightPx": 44
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 88
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

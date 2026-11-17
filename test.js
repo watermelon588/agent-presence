@@ -95,4 +95,16 @@ assert.ok(isEphemeral('/tmp/bunx-1000-agent-presence@latest/node_modules/agent-p
 assert.ok(!isEphemeral('/usr/lib/node_modules/agent-presence'));
 assert.ok(!isEphemeral('C:\\Users\\me\\AppData\\Roaming\\npm\\node_modules\\agent-presence'));
 
+// Terminal stickers: 50+ clean ones baked, busy ones left out, agents fall back to their logo, every row is w cells, working ones hop
+const { termArt, stickerLines, stickerFor } = require('./cli');
+assert.ok(Object.keys(require('./avatars/terminal.json').art).length >= 50);
+assert.ok(termArt(path.join(__dirname, 'avatars', 'free', 'pixel-food', 'pixel-astronaut.webp')));
+assert.equal(termArt(path.join(__dirname, 'avatars', 'free', 'cats', 'cat-grumpy.webp')), null);
+for (const agent of ['claude', 'codex', 'copilot', 'antigravity']) assert.ok(stickerFor({ agent, session: 's1' }, {}, new Map()), agent + ' logo');
+const logo = stickerFor({ agent: 'claude', session: 's1' }, { avatars: { claude: 'pack:cats' } }, new Map()); // cats aren't in the set -> logo
+const a = stickerLines(logo, 0), b = stickerLines(logo, 330);
+const visible = l => l.replace(/\x1b\[[0-9;]*m/g, '').length;
+assert.equal(a.length, 11); assert.ok(a.every(l => visible(l) === 20)); assert.notDeepEqual(a, b, 'working stickers hop');
+assert.deepEqual(stickerLines(logo, 0, 'still'), stickerLines(logo, 170, 'still'));
+
 console.log('all checks passed');

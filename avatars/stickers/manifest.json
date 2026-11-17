@@ -1,0 +1,4238 @@
+{
+  "version": 1,
+  "width": 256,
+  "height": 256,
+  "stickers": [
+    {
+      "id": "chainsaw-aki",
+      "file": "general/chainsaw-chibis/chainsaw-aki.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        60,
+        196,
+        155,
+        281
+      ]
+    },
+    {
+      "id": "chainsaw-power",
+      "file": "general/chainsaw-chibis/chainsaw-power.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        174,
+        192,
+        263,
+        314
+      ]
+    },
+    {
+      "id": "chainsaw-denji",
+      "file": "general/chainsaw-chibis/chainsaw-denji.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        284,
+        203,
+        379,
+        284
+      ]
+    },
+    {
+      "id": "chainsaw-devil-chibi",
+      "file": "general/chainsaw-chibis/chainsaw-devil-chibi.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        390,
+        198,
+        539,
+        293
+      ]
+    },
+    {
+      "id": "chainsaw-angel-devil",
+      "file": "general/chainsaw-chibis/chainsaw-angel-devil.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        67,
+        298,
+        172,
+        404
+      ]
+    },
+    {
+      "id": "chainsaw-cat-nyako",
+      "file": "general/chainsaw-chibis/chainsaw-cat-nyako.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        190,
+        333,
+        267,
+        397
+      ]
+    },
+    {
+      "id": "chainsaw-dark-hair-blush",
+      "file": "general/chainsaw-chibis/chainsaw-dark-hair-blush.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        290,
+        307,
+        384,
+        394
+      ]
+    },
+    {
+      "id": "chainsaw-pochita",
+      "file": "general/chainsaw-chibis/chainsaw-pochita.webp",
+      "source": "sticks/038119615f34ca4ff8f237a2459d3262.jpg",
+      "crop": [
+        404,
+        301,
+        522,
+        398
+      ]
+    },
+    {
+      "id": "oh-i-hate-this",
+      "file": "general/oh-i-hate-this.webp",
+      "source": "sticks/072c3dbc4f59827e3c06bb253c611ffa.jpg"
+    },
+    {
+      "id": "plush-blue-alarmed",
+      "file": "general/plush-blobs/plush-blue-alarmed.webp",
+      "source": "sticks/07ee824697e9b4c013d73f6b05d44fd7.jpg",
+      "crop": [
+        37,
+        171,
+        234,
+        346
+      ]
+    },
+    {
+      "id": "plush-pink-smile",
+      "file": "general/plush-blobs/plush-pink-smile.webp",
+      "source": "sticks/07ee824697e9b4c013d73f6b05d44fd7.jpg",
+      "crop": [
+        227,
+        86,
+        427,
+        261
+      ]
+    },
+    {
+      "id": "plush-red-angry",
+      "file": "general/plush-blobs/plush-red-angry.webp",
+      "source": "sticks/07ee824697e9b4c013d73f6b05d44fd7.jpg",
+      "crop": [
+        391,
+        180,
+        590,
+        354
+      ]
+    },
+    {
+      "id": "plush-green-surprised",
+      "file": "general/plush-blobs/plush-green-surprised.webp",
+      "source": "sticks/07ee824697e9b4c013d73f6b05d44fd7.jpg",
+      "crop": [
+        119,
+        349,
+        321,
+        525
+      ]
+    },
+    {
+      "id": "plush-yellow-frustrated",
+      "file": "general/plush-blobs/plush-yellow-frustrated.webp",
+      "source": "sticks/07ee824697e9b4c013d73f6b05d44fd7.jpg",
+      "crop": [
+        331,
+        350,
+        532,
+        525
+      ]
+    },
+    {
+      "id": "red-haired-chibi",
+      "file": "general/red-haired-chibi.webp",
+      "source": "sticks/084f860e3eb1569fddd7e47d1ab9337f.jpg"
+    },
+    {
+      "id": "nom-nom",
+      "file": "general/nom-nom.webp",
+      "source": "sticks/096486ef654d50d3353bab917c1f11b6.jpg"
+    },
+    {
+      "id": "musk-pout",
+      "file": "general/musk-pout.webp",
+      "source": "sticks/0977d739eb084c2a97ee6e677ebfd067.jpg"
+    },
+    {
+      "id": "manga-girl-glasses",
+      "file": "general/manga-girl-glasses.webp",
+      "source": "sticks/1033ccb7305ce944b710b164bbe3c1e3.jpg"
+    },
+    {
+      "id": "unimpressed-manga",
+      "file": "general/unimpressed-manga.webp",
+      "source": "sticks/11b2801938797fd72941a0823db77807.jpg"
+    },
+    {
+      "id": "miku-wink",
+      "file": "general/miku-wink.webp",
+      "source": "sticks/1799ebaa48154581babb19b738f3428c-removebg-preview.png"
+    },
+    {
+      "id": "zuckerberg",
+      "file": "general/zuckerberg.webp",
+      "source": "sticks/2654c7c18a0d6d306cdc21527fccffe6.jpg"
+    },
+    {
+      "id": "miku-crying",
+      "file": "general/miku-crying.webp",
+      "source": "sticks/29666fc8eb2e36f1c590a65446debe03.jpg"
+    },
+    {
+      "id": "dark-haired-side-glance",
+      "file": "general/dark-haired-side-glance.webp",
+      "source": "sticks/2aa4e37adf102ac2bc180cb30a085da0.jpg"
+    },
+    {
+      "id": "mob",
+      "file": "general/mob.webp",
+      "source": "sticks/2f763ffd328939755c11c87a3da1bbbe.jpg"
+    },
+    {
+      "id": "altman-portrait",
+      "file": "general/altman-portrait.webp",
+      "source": "sticks/46d0af92863b317c798ef2df18fc9558.jpg"
+    },
+    {
+      "id": "tux",
+      "file": "general/tux.webp",
+      "source": "sticks/48dccbfc65928e465ef0c6a52414a77e.jpg"
+    },
+    {
+      "id": "frieren",
+      "file": "general/frieren.webp",
+      "source": "sticks/4f9accdea0d0f90f7c828e529b6bcecc.jpg"
+    },
+    {
+      "id": "teal-haired-chibi",
+      "file": "general/teal-haired-chibi.webp",
+      "source": "sticks/546f909e731b2912c35d60710b13dba0.jpg"
+    },
+    {
+      "id": "flame-joy",
+      "file": "general/flame-expressions/flame-joy.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        94,
+        48,
+        246,
+        221
+      ]
+    },
+    {
+      "id": "flame-sly",
+      "file": "general/flame-expressions/flame-sly.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        307,
+        53,
+        435,
+        221
+      ]
+    },
+    {
+      "id": "flame-gusto",
+      "file": "general/flame-expressions/flame-gusto.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        501,
+        53,
+        631,
+        220
+      ]
+    },
+    {
+      "id": "flame-confusion",
+      "file": "general/flame-expressions/flame-confusion.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        105,
+        300,
+        235,
+        467
+      ]
+    },
+    {
+      "id": "flame-watching",
+      "file": "general/flame-expressions/flame-watching.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        306,
+        305,
+        435,
+        467
+      ]
+    },
+    {
+      "id": "flame-upset",
+      "file": "general/flame-expressions/flame-upset.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        505,
+        345,
+        627,
+        467
+      ]
+    },
+    {
+      "id": "flame-walk",
+      "file": "general/flame-expressions/flame-walk.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        102,
+        550,
+        237,
+        724
+      ]
+    },
+    {
+      "id": "flame-angry",
+      "file": "general/flame-expressions/flame-angry.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        295,
+        552,
+        447,
+        724
+      ]
+    },
+    {
+      "id": "flame-friendly",
+      "file": "general/flame-expressions/flame-friendly.webp",
+      "source": "sticks/55499ec365d2d5027124d204a2d5a682.jpg",
+      "crop": [
+        495,
+        557,
+        639,
+        725
+      ]
+    },
+    {
+      "id": "blue-track-jacket",
+      "file": "general/blue-track-jacket.webp",
+      "source": "sticks/5ebc2b293bd93a26c5a67eb0d7c7c37a.jpg"
+    },
+    {
+      "id": "manga-short-hair-smile",
+      "file": "general/manga-faces/manga-short-hair-smile.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        39,
+        64,
+        166,
+        188
+      ]
+    },
+    {
+      "id": "manga-side-part-wink",
+      "file": "general/manga-faces/manga-side-part-wink.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        218,
+        56,
+        342,
+        188
+      ]
+    },
+    {
+      "id": "manga-closed-eyes-frown",
+      "file": "general/manga-faces/manga-closed-eyes-frown.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        398,
+        65,
+        524,
+        189
+      ]
+    },
+    {
+      "id": "manga-glasses-headset",
+      "file": "general/manga-faces/manga-glasses-headset.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        45,
+        221,
+        167,
+        362
+      ]
+    },
+    {
+      "id": "manga-bangs-smile",
+      "file": "general/manga-faces/manga-bangs-smile.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        218,
+        219,
+        340,
+        351
+      ]
+    },
+    {
+      "id": "manga-glasses-wink",
+      "file": "general/manga-faces/manga-glasses-wink.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        398,
+        213,
+        522,
+        349
+      ]
+    },
+    {
+      "id": "manga-bob-side-eye",
+      "file": "general/manga-faces/manga-bob-side-eye.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        44,
+        391,
+        168,
+        502
+      ]
+    },
+    {
+      "id": "manga-side-swept-smile",
+      "file": "general/manga-faces/manga-side-swept-smile.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        222,
+        385,
+        346,
+        510
+      ]
+    },
+    {
+      "id": "manga-tousled-grin",
+      "file": "general/manga-faces/manga-tousled-grin.webp",
+      "source": "sticks/6b8c40ffba0a2b853af18f58843d720d.jpg",
+      "crop": [
+        406,
+        379,
+        527,
+        513
+      ]
+    },
+    {
+      "id": "brown-hair-wink",
+      "file": "general/brown-hair-wink.webp",
+      "source": "sticks/6e7de771ef9dc5753e32626642d141be.jpg"
+    },
+    {
+      "id": "blob-gray-pebble",
+      "file": "general/color-blobs/blob-gray-pebble.webp",
+      "source": "sticks/71cddd38027cd22b0311e6caf5b98c1b.jpg",
+      "crop": [
+        189,
+        255,
+        316,
+        408
+      ]
+    },
+    {
+      "id": "blob-blue-triangle",
+      "file": "general/color-blobs/blob-blue-triangle.webp",
+      "source": "sticks/71cddd38027cd22b0311e6caf5b98c1b.jpg",
+      "crop": [
+        316,
+        269,
+        453,
+        397
+      ]
+    },
+    {
+      "id": "blob-orange-cloud",
+      "file": "general/color-blobs/blob-orange-cloud.webp",
+      "source": "sticks/71cddd38027cd22b0311e6caf5b98c1b.jpg",
+      "crop": [
+        447,
+        260,
+        598,
+        400
+      ]
+    },
+    {
+      "id": "blob-black-orb",
+      "file": "general/color-blobs/blob-black-orb.webp",
+      "source": "sticks/71cddd38027cd22b0311e6caf5b98c1b.jpg",
+      "crop": [
+        596,
+        259,
+        737,
+        401
+      ]
+    },
+    {
+      "id": "blob-green-capsule",
+      "file": "general/color-blobs/blob-green-capsule.webp",
+      "source": "sticks/71cddd38027cd22b0311e6caf5b98c1b.jpg",
+      "crop": [
+        735,
+        273,
+        894,
+        385
+      ]
+    },
+    {
+      "id": "blob-brown-clover",
+      "file": "general/color-blobs/blob-brown-clover.webp",
+      "source": "sticks/71cddd38027cd22b0311e6caf5b98c1b.jpg",
+      "crop": [
+        893,
+        250,
+        1038,
+        410
+      ]
+    },
+    {
+      "id": "gradient-eyed-shadow",
+      "file": "general/gradient-icons/gradient-eyed-shadow.webp",
+      "source": "sticks/75cb645a8c6f681f284a8af7606880ae.jpg",
+      "crop": [
+        109,
+        66,
+        360,
+        317
+      ]
+    },
+    {
+      "id": "gradient-sleepy-ghost",
+      "file": "general/gradient-icons/gradient-sleepy-ghost.webp",
+      "source": "sticks/75cb645a8c6f681f284a8af7606880ae.jpg",
+      "crop": [
+        377,
+        66,
+        628,
+        317
+      ]
+    },
+    {
+      "id": "gradient-chef",
+      "file": "general/gradient-icons/gradient-chef.webp",
+      "source": "sticks/75cb645a8c6f681f284a8af7606880ae.jpg",
+      "crop": [
+        109,
+        334,
+        360,
+        585
+      ]
+    },
+    {
+      "id": "gradient-rabbit-shadow",
+      "file": "general/gradient-icons/gradient-rabbit-shadow.webp",
+      "source": "sticks/75cb645a8c6f681f284a8af7606880ae.jpg",
+      "crop": [
+        377,
+        334,
+        628,
+        585
+      ]
+    },
+    {
+      "id": "gradient-cat-skull",
+      "file": "general/gradient-icons/gradient-cat-skull.webp",
+      "source": "sticks/75cb645a8c6f681f284a8af7606880ae.jpg",
+      "crop": [
+        109,
+        602,
+        360,
+        852
+      ]
+    },
+    {
+      "id": "gradient-flame",
+      "file": "general/gradient-icons/gradient-flame.webp",
+      "source": "sticks/75cb645a8c6f681f284a8af7606880ae.jpg",
+      "crop": [
+        377,
+        602,
+        628,
+        852
+      ]
+    },
+    {
+      "id": "miku-cheering",
+      "file": "general/miku-cheering.webp",
+      "source": "sticks/7f7a34f3db227a80b0329f008abe6fb0.jpg"
+    },
+    {
+      "id": "purple-haired-chibi",
+      "file": "general/purple-haired-chibi.webp",
+      "source": "sticks/8802a27162e4929616c573a0895051e0.jpg"
+    },
+    {
+      "id": "raspberry-pi",
+      "file": "general/raspberry-pi.webp",
+      "source": "sticks/8a4f599df903c61123387aef384df977.jpg"
+    },
+    {
+      "id": "teary-pink-blob",
+      "file": "general/teary-pink-blob.webp",
+      "source": "sticks/8c560ac0d5cc6100bf35afcc8abb028d.jpg"
+    },
+    {
+      "id": "psyduck",
+      "file": "general/psyduck.webp",
+      "source": "sticks/935b92d04b5a02e352dbc9de3ee2bdf0.jpg"
+    },
+    {
+      "id": "manga-glasses-ponytail",
+      "file": "general/monochrome-heads/manga-glasses-ponytail.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        69,
+        193,
+        176,
+        290
+      ]
+    },
+    {
+      "id": "manga-side-swept-bob",
+      "file": "general/monochrome-heads/manga-side-swept-bob.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        188,
+        195,
+        268,
+        294
+      ]
+    },
+    {
+      "id": "manga-spiky-bedhead",
+      "file": "general/monochrome-heads/manga-spiky-bedhead.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        295,
+        183,
+        410,
+        295
+      ]
+    },
+    {
+      "id": "manga-blindfold",
+      "file": "general/monochrome-heads/manga-blindfold.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        432,
+        191,
+        535,
+        298
+      ]
+    },
+    {
+      "id": "manga-panda",
+      "file": "general/monochrome-heads/manga-panda.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        64,
+        319,
+        150,
+        409
+      ]
+    },
+    {
+      "id": "manga-turtleneck",
+      "file": "general/monochrome-heads/manga-turtleneck.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        183,
+        314,
+        270,
+        410
+      ]
+    },
+    {
+      "id": "manga-cheerful-spikes",
+      "file": "general/monochrome-heads/manga-cheerful-spikes.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        298,
+        311,
+        393,
+        414
+      ]
+    },
+    {
+      "id": "manga-slicked-back-smile",
+      "file": "general/monochrome-heads/manga-slicked-back-smile.webp",
+      "source": "sticks/b2fa765cf1c0769c2c8cff74ce730f70.jpg",
+      "crop": [
+        429,
+        317,
+        522,
+        415
+      ]
+    },
+    {
+      "id": "veggie-cabbage",
+      "file": "general/veggie-doodles/veggie-cabbage.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        45,
+        73,
+        260,
+        261
+      ]
+    },
+    {
+      "id": "veggie-ginger",
+      "file": "general/veggie-doodles/veggie-ginger.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        276,
+        51,
+        477,
+        264
+      ]
+    },
+    {
+      "id": "veggie-broccoli",
+      "file": "general/veggie-doodles/veggie-broccoli.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        480,
+        51,
+        692,
+        269
+      ]
+    },
+    {
+      "id": "veggie-eggplant",
+      "file": "general/veggie-doodles/veggie-eggplant.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        52,
+        265,
+        244,
+        484
+      ]
+    },
+    {
+      "id": "veggie-purple-tomato",
+      "file": "general/veggie-doodles/veggie-purple-tomato.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        267,
+        274,
+        467,
+        475
+      ]
+    },
+    {
+      "id": "veggie-leek",
+      "file": "general/veggie-doodles/veggie-leek.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        524,
+        278,
+        659,
+        485
+      ]
+    },
+    {
+      "id": "veggie-garlic",
+      "file": "general/veggie-doodles/veggie-garlic.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        43,
+        485,
+        252,
+        708
+      ]
+    },
+    {
+      "id": "veggie-scallion",
+      "file": "general/veggie-doodles/veggie-scallion.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        276,
+        484,
+        447,
+        704
+      ]
+    },
+    {
+      "id": "veggie-tomato",
+      "file": "general/veggie-doodles/veggie-tomato.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        481,
+        503,
+        704,
+        702
+      ]
+    },
+    {
+      "id": "veggie-potato",
+      "file": "general/veggie-doodles/veggie-potato.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        41,
+        720,
+        260,
+        912
+      ]
+    },
+    {
+      "id": "veggie-bok-choy",
+      "file": "general/veggie-doodles/veggie-bok-choy.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        290,
+        705,
+        452,
+        924
+      ]
+    },
+    {
+      "id": "veggie-squash",
+      "file": "general/veggie-doodles/veggie-squash.webp",
+      "source": "sticks/b413996a9f7a96f6e074fabbfe9fc071.jpg",
+      "crop": [
+        516,
+        703,
+        677,
+        925
+      ]
+    },
+    {
+      "id": "monster-lavender-bunny",
+      "file": "general/monster-icons/monster-lavender-bunny.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        149,
+        29,
+        266,
+        173
+      ]
+    },
+    {
+      "id": "monster-navy-cyclops",
+      "file": "general/monster-icons/monster-navy-cyclops.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        281,
+        79,
+        405,
+        179
+      ]
+    },
+    {
+      "id": "monster-red-stalk-eyes",
+      "file": "general/monster-icons/monster-red-stalk-eyes.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        421,
+        70,
+        532,
+        184
+      ]
+    },
+    {
+      "id": "monster-orange-fish",
+      "file": "general/monster-icons/monster-orange-fish.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        134,
+        172,
+        269,
+        297
+      ]
+    },
+    {
+      "id": "monster-teal-crocodile",
+      "file": "general/monster-icons/monster-teal-crocodile.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        275,
+        195,
+        418,
+        303
+      ]
+    },
+    {
+      "id": "monster-coral-alien",
+      "file": "general/monster-icons/monster-coral-alien.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        442,
+        190,
+        546,
+        303
+      ]
+    },
+    {
+      "id": "monster-rose-bat",
+      "file": "general/monster-icons/monster-rose-bat.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        130,
+        303,
+        273,
+        429
+      ]
+    },
+    {
+      "id": "monster-pink-sleepy-cat",
+      "file": "general/monster-icons/monster-pink-sleepy-cat.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        277,
+        314,
+        420,
+        423
+      ]
+    },
+    {
+      "id": "monster-purple-octopus",
+      "file": "general/monster-icons/monster-purple-octopus.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        438,
+        310,
+        541,
+        421
+      ]
+    },
+    {
+      "id": "monster-amber-chick",
+      "file": "general/monster-icons/monster-amber-chick.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        150,
+        448,
+        270,
+        550
+      ]
+    },
+    {
+      "id": "monster-indigo-boar",
+      "file": "general/monster-icons/monster-indigo-boar.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        267,
+        420,
+        407,
+        546
+      ]
+    },
+    {
+      "id": "monster-aqua-frog",
+      "file": "general/monster-icons/monster-aqua-frog.webp",
+      "source": "sticks/bc33fba04294b045cd4257bc4fff11c7.jpg",
+      "crop": [
+        417,
+        445,
+        533,
+        539
+      ]
+    },
+    {
+      "id": "pixel-orange-sprout",
+      "file": "general/pixel-food/pixel-orange-sprout.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        69,
+        61,
+        164,
+        187
+      ]
+    },
+    {
+      "id": "pixel-astronaut",
+      "file": "general/pixel-food/pixel-astronaut.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        169,
+        72,
+        273,
+        186
+      ]
+    },
+    {
+      "id": "pixel-cat-glasses",
+      "file": "general/pixel-food/pixel-cat-glasses.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        274,
+        72,
+        378,
+        186
+      ]
+    },
+    {
+      "id": "pixel-watermelon",
+      "file": "general/pixel-food/pixel-watermelon.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        374,
+        81,
+        479,
+        186
+      ]
+    },
+    {
+      "id": "pixel-red-hood",
+      "file": "general/pixel-food/pixel-red-hood.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        52,
+        193,
+        175,
+        306
+      ]
+    },
+    {
+      "id": "pixel-block-sprout",
+      "file": "general/pixel-food/pixel-block-sprout.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        173,
+        184,
+        268,
+        305
+      ]
+    },
+    {
+      "id": "pixel-cone-hat",
+      "file": "general/pixel-food/pixel-cone-hat.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        279,
+        184,
+        373,
+        304
+      ]
+    },
+    {
+      "id": "pixel-blue-hair",
+      "file": "general/pixel-food/pixel-blue-hair.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        375,
+        193,
+        478,
+        305
+      ]
+    },
+    {
+      "id": "pixel-white-bunny",
+      "file": "general/pixel-food/pixel-white-bunny.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        68,
+        316,
+        164,
+        437
+      ]
+    },
+    {
+      "id": "pixel-orange-creature",
+      "file": "general/pixel-food/pixel-orange-creature.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        172,
+        322,
+        268,
+        437
+      ]
+    },
+    {
+      "id": "pixel-maroon-creature",
+      "file": "general/pixel-food/pixel-maroon-creature.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        278,
+        322,
+        374,
+        437
+      ]
+    },
+    {
+      "id": "pixel-blue-horned",
+      "file": "general/pixel-food/pixel-blue-horned.webp",
+      "source": "sticks/cb24167642f2832c97460836f6fdbe9b.jpg",
+      "crop": [
+        369,
+        307,
+        494,
+        437
+      ]
+    },
+    {
+      "id": "screaming-frog",
+      "file": "general/screaming-frog.webp",
+      "source": "sticks/cba3982b6657612e1ec311d17f202a02.jpg"
+    },
+    {
+      "id": "chrome-dino",
+      "file": "general/chrome-dino.webp",
+      "source": "sticks/ccb3a2920e1e4c3f38cc905a587d37ad.jpg"
+    },
+    {
+      "id": "claude-thinking",
+      "file": "claude/claude-thinking.webp",
+      "source": "sticks/claude/16d33c0af5fa7ef5351bc3816bc0ec17.jpg"
+    },
+    {
+      "id": "claude-cooking",
+      "file": "claude/claude-cooking.webp",
+      "source": "sticks/claude/1cfedc6fdff7dfd0d821ba16ecc017e4.jpg"
+    },
+    {
+      "id": "claude-coding",
+      "file": "claude/claude-coding.webp",
+      "source": "sticks/claude/2ec9a2ee7b725f7c5bf071abdb975c37.jpg"
+    },
+    {
+      "id": "claude-coffee",
+      "file": "claude/claude-coffee.webp",
+      "source": "sticks/claude/72fb9c01614372df9e856fda79137b3b.jpg"
+    },
+    {
+      "id": "claude-sleeping",
+      "file": "claude/claude-sleeping.webp",
+      "source": "sticks/claude/777cd504284b3af3f5978ee26e22f6cc.jpg"
+    },
+    {
+      "id": "claude-spark",
+      "file": "claude/claude-spark.webp",
+      "source": "sticks/claude/8604a3d6e51bacb1386215b656f765a5.jpg"
+    },
+    {
+      "id": "claude-detective",
+      "file": "claude/claude-detective.webp",
+      "source": "sticks/claude/d066dae8e3ea186fb84cc7c361efcc3f.jpg"
+    },
+    {
+      "id": "claude-listening",
+      "file": "claude/claude-listening.webp",
+      "source": "sticks/claude/dd151a1f0f374772c4708956db6653f2.jpg"
+    },
+    {
+      "id": "claude-book",
+      "file": "claude/claude-book.webp",
+      "source": "sticks/claude/fe0d2c2e3aa7f79ff3f8ec95c0a59784.jpg"
+    },
+    {
+      "id": "pink-haired-cheer",
+      "file": "general/pink-haired-cheer.webp",
+      "source": "sticks/d34aac0576319b811fe5094db544efc1.jpg"
+    },
+    {
+      "id": "pineapple-cat",
+      "file": "general/fruit-cats/pineapple-cat.webp",
+      "source": "sticks/download (1).jpg",
+      "crop": [
+        56,
+        18,
+        340,
+        374
+      ]
+    },
+    {
+      "id": "strawberry-cat",
+      "file": "general/fruit-cats/strawberry-cat.webp",
+      "source": "sticks/download (1).jpg",
+      "crop": [
+        394,
+        45,
+        676,
+        367
+      ]
+    },
+    {
+      "id": "cherry-cat",
+      "file": "general/fruit-cats/cherry-cat.webp",
+      "source": "sticks/download (1).jpg",
+      "crop": [
+        54,
+        464,
+        343,
+        785
+      ]
+    },
+    {
+      "id": "watermelon-cat",
+      "file": "general/fruit-cats/watermelon-cat.webp",
+      "source": "sticks/download (1).jpg",
+      "crop": [
+        376,
+        464,
+        695,
+        787
+      ]
+    },
+    {
+      "id": "kiwi-cat",
+      "file": "general/fruit-cats/kiwi-cat.webp",
+      "source": "sticks/download (1).jpg",
+      "crop": [
+        42,
+        876,
+        373,
+        1173
+      ]
+    },
+    {
+      "id": "orange-cat",
+      "file": "general/fruit-cats/orange-cat.webp",
+      "source": "sticks/download (1).jpg",
+      "crop": [
+        379,
+        867,
+        687,
+        1167
+      ]
+    },
+    {
+      "id": "retro-paint-toolbar",
+      "file": "general/retro-windows/retro-paint-toolbar.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        16,
+        42,
+        115,
+        419
+      ]
+    },
+    {
+      "id": "retro-paint-window",
+      "file": "general/retro-windows/retro-paint-window.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        134,
+        49,
+        389,
+        420
+      ]
+    },
+    {
+      "id": "retro-minesweeper",
+      "file": "general/retro-windows/retro-minesweeper.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        412,
+        50,
+        659,
+        419
+      ]
+    },
+    {
+      "id": "retro-dialog-stack",
+      "file": "general/retro-windows/retro-dialog-stack.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        9,
+        432,
+        230,
+        655
+      ]
+    },
+    {
+      "id": "retro-blue-screen",
+      "file": "general/retro-windows/retro-blue-screen.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        247,
+        460,
+        534,
+        649
+      ]
+    },
+    {
+      "id": "retro-arrow-cursor",
+      "file": "general/retro-windows/retro-arrow-cursor.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        544,
+        462,
+        594,
+        534
+      ]
+    },
+    {
+      "id": "retro-hand-cursor",
+      "file": "general/retro-windows/retro-hand-cursor.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        603,
+        465,
+        670,
+        535
+      ]
+    },
+    {
+      "id": "retro-file-archive",
+      "file": "general/retro-windows/retro-file-archive.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        23,
+        674,
+        149,
+        771
+      ]
+    },
+    {
+      "id": "retro-pixel-tree",
+      "file": "general/retro-windows/retro-pixel-tree.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        153,
+        667,
+        268,
+        782
+      ]
+    },
+    {
+      "id": "retro-blank-window",
+      "file": "general/retro-windows/retro-blank-window.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        290,
+        679,
+        395,
+        772
+      ]
+    },
+    {
+      "id": "retro-eye-warning",
+      "file": "general/retro-windows/retro-eye-warning.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        409,
+        680,
+        669,
+        938
+      ]
+    },
+    {
+      "id": "retro-gear-document",
+      "file": "general/retro-windows/retro-gear-document.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        28,
+        791,
+        131,
+        912
+      ]
+    },
+    {
+      "id": "retro-yellow-folder",
+      "file": "general/retro-windows/retro-yellow-folder.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        149,
+        806,
+        265,
+        906
+      ]
+    },
+    {
+      "id": "retro-cyan-notepad",
+      "file": "general/retro-windows/retro-cyan-notepad.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        281,
+        798,
+        389,
+        907
+      ]
+    },
+    {
+      "id": "retro-recycle-bin",
+      "file": "general/retro-windows/retro-recycle-bin.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        23,
+        928,
+        149,
+        1065
+      ]
+    },
+    {
+      "id": "retro-desktop-computer",
+      "file": "general/retro-windows/retro-desktop-computer.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        153,
+        936,
+        272,
+        1055
+      ]
+    },
+    {
+      "id": "retro-pen-notepad",
+      "file": "general/retro-windows/retro-pen-notepad.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        295,
+        940,
+        404,
+        1055
+      ]
+    },
+    {
+      "id": "retro-warning-triangle",
+      "file": "general/retro-windows/retro-warning-triangle.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        421,
+        947,
+        528,
+        1050
+      ]
+    },
+    {
+      "id": "retro-paint-palette",
+      "file": "general/retro-windows/retro-paint-palette.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        553,
+        941,
+        667,
+        1052
+      ]
+    },
+    {
+      "id": "retro-start-button",
+      "file": "general/retro-windows/retro-start-button.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        505,
+        1055,
+        660,
+        1121
+      ]
+    },
+    {
+      "id": "retro-heart-pet",
+      "file": "general/retro-windows/retro-heart-pet.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        40,
+        1074,
+        149,
+        1196
+      ]
+    },
+    {
+      "id": "retro-music-cd",
+      "file": "general/retro-windows/retro-music-cd.webp",
+      "source": "sticks/download (2).jpg",
+      "crop": [
+        286,
+        1057,
+        410,
+        1198
+      ]
+    },
+    {
+      "id": "frog-hood-cat",
+      "file": "general/costume-cats/frog-hood-cat.webp",
+      "source": "sticks/download.jpg",
+      "crop": [
+        50,
+        8,
+        335,
+        313
+      ]
+    },
+    {
+      "id": "blueberry-cat",
+      "file": "general/costume-cats/blueberry-cat.webp",
+      "source": "sticks/download.jpg",
+      "crop": [
+        12,
+        314,
+        340,
+        610
+      ]
+    },
+    {
+      "id": "fish-snack-cat",
+      "file": "general/costume-cats/fish-snack-cat.webp",
+      "source": "sticks/download.jpg",
+      "crop": [
+        394,
+        397,
+        730,
+        665
+      ]
+    },
+    {
+      "id": "shark-hood-cat",
+      "file": "general/costume-cats/shark-hood-cat.webp",
+      "source": "sticks/download.jpg",
+      "crop": [
+        19,
+        613,
+        349,
+        940
+      ]
+    },
+    {
+      "id": "blanket-cat",
+      "file": "general/costume-cats/blanket-cat.webp",
+      "source": "sticks/download.jpg",
+      "crop": [
+        390,
+        676,
+        705,
+        935
+      ]
+    },
+    {
+      "id": "headphone-cat",
+      "file": "general/costume-cats/headphone-cat.webp",
+      "source": "sticks/download.jpg",
+      "crop": [
+        16,
+        975,
+        377,
+        1286
+      ]
+    },
+    {
+      "id": "banana-cat",
+      "file": "general/costume-cats/banana-cat.webp",
+      "source": "sticks/download.jpg",
+      "crop": [
+        420,
+        933,
+        681,
+        1306
+      ]
+    },
+    {
+      "id": "miku-laughing",
+      "file": "general/miku-laughing.webp",
+      "source": "sticks/ed31ea17c30c97a56d0d7b84b35ea020-removebg-preview.png"
+    },
+    {
+      "id": "pixel-bmo",
+      "file": "general/adventure-time/pixel-bmo.webp",
+      "source": "sticks/ed5f6bc59163c48455a82e20d1dcfbfc.jpg",
+      "crop": [
+        58,
+        223,
+        209,
+        405
+      ]
+    },
+    {
+      "id": "pixel-jake",
+      "file": "general/adventure-time/pixel-jake.webp",
+      "source": "sticks/ed5f6bc59163c48455a82e20d1dcfbfc.jpg",
+      "crop": [
+        216,
+        222,
+        396,
+        407
+      ]
+    },
+    {
+      "id": "pixel-finn",
+      "file": "general/adventure-time/pixel-finn.webp",
+      "source": "sticks/ed5f6bc59163c48455a82e20d1dcfbfc.jpg",
+      "crop": [
+        399,
+        222,
+        572,
+        407
+      ]
+    },
+    {
+      "id": "makima-smile",
+      "file": "general/makima-smile.webp",
+      "source": "sticks/f6acbd3ea789240a081bc312c6dc69d5.jpg"
+    },
+    {
+      "id": "pink-haired-bocchi",
+      "file": "general/pink-haired-bocchi.webp",
+      "source": "sticks/fe325776d3bdd1174fa04644870657cb.jpg"
+    },
+    {
+      "id": "lime-beanie-side-eye",
+      "file": "general/portraits/lime-beanie-side-eye.webp",
+      "source": "sticks/078fca9eb7506619245fb1fa94d3df95.jpg"
+    },
+    {
+      "id": "lime-beanie-side-eye-animated",
+      "file": "general/portraits/lime-beanie-side-eye-animated.gif",
+      "source": "sticks/078fca9eb7506619245fb1fa94d3df95.jpg",
+      "animated": true
+    },
+    {
+      "id": "silver-blue-hair",
+      "file": "general/portraits/silver-blue-hair.webp",
+      "source": "sticks/1fa18c19d62bb5ac572a6ad02761a2a3.jpg"
+    },
+    {
+      "id": "silver-blue-hair-animated",
+      "file": "general/portraits/silver-blue-hair-animated.gif",
+      "source": "sticks/1fa18c19d62bb5ac572a6ad02761a2a3.jpg",
+      "animated": true
+    },
+    {
+      "id": "t-rex-guitar",
+      "file": "general/dinosaurs/t-rex-guitar.webp",
+      "source": "sticks/2cda73165f3a3d72a35602aa92d6e3ff.jpg"
+    },
+    {
+      "id": "t-rex-guitar-animated",
+      "file": "general/dinosaurs/t-rex-guitar-animated.gif",
+      "source": "sticks/2cda73165f3a3d72a35602aa92d6e3ff.jpg",
+      "animated": true
+    },
+    {
+      "id": "jalapeno",
+      "file": "general/plants-vs-zombies/jalapeno.webp",
+      "source": "sticks/542a6e4ecb7854681482d863145bd124.jpg"
+    },
+    {
+      "id": "jalapeno-animated",
+      "file": "general/plants-vs-zombies/jalapeno-animated.gif",
+      "source": "sticks/542a6e4ecb7854681482d863145bd124.jpg",
+      "animated": true
+    },
+    {
+      "id": "balloon-zombie",
+      "file": "general/plants-vs-zombies/balloon-zombie.webp",
+      "source": "sticks/5762110c0a959bad0f836b4d1412e2d7.jpg"
+    },
+    {
+      "id": "balloon-zombie-animated",
+      "file": "general/plants-vs-zombies/balloon-zombie-animated.gif",
+      "source": "sticks/5762110c0a959bad0f836b4d1412e2d7.jpg",
+      "animated": true
+    },
+    {
+      "id": "zombie-in-a-tie",
+      "file": "general/plants-vs-zombies/zombie-in-a-tie.webp",
+      "source": "sticks/6b3b19f8f697463d3feda80c4db9ac27.jpg"
+    },
+    {
+      "id": "zombie-in-a-tie-animated",
+      "file": "general/plants-vs-zombies/zombie-in-a-tie-animated.gif",
+      "source": "sticks/6b3b19f8f697463d3feda80c4db9ac27.jpg",
+      "animated": true
+    },
+    {
+      "id": "dark-hair-head-tilt",
+      "file": "general/portraits/dark-hair-head-tilt.webp",
+      "source": "sticks/7e34c3ec30f6482533ed78ca9f0538bd.jpg"
+    },
+    {
+      "id": "dark-hair-head-tilt-animated",
+      "file": "general/portraits/dark-hair-head-tilt-animated.gif",
+      "source": "sticks/7e34c3ec30f6482533ed78ca9f0538bd.jpg",
+      "animated": true
+    },
+    {
+      "id": "sunflower",
+      "file": "general/plants-vs-zombies/sunflower.webp",
+      "source": "sticks/7e8ddc3eb67ad761d4efd1881e78c462.jpg"
+    },
+    {
+      "id": "sunflower-animated",
+      "file": "general/plants-vs-zombies/sunflower-animated.gif",
+      "source": "sticks/7e8ddc3eb67ad761d4efd1881e78c462.jpg",
+      "animated": true
+    },
+    {
+      "id": "squash",
+      "file": "general/plants-vs-zombies/squash.webp",
+      "source": "sticks/87986e5a55adce571c531ca8c99dd104.jpg"
+    },
+    {
+      "id": "squash-animated",
+      "file": "general/plants-vs-zombies/squash-animated.gif",
+      "source": "sticks/87986e5a55adce571c531ca8c99dd104.jpg",
+      "animated": true
+    },
+    {
+      "id": "zomboni-driver",
+      "file": "general/plants-vs-zombies/zomboni-driver.webp",
+      "source": "sticks/a140202e8ca0dc6d1696c67a4330ea03.jpg"
+    },
+    {
+      "id": "zomboni-driver-animated",
+      "file": "general/plants-vs-zombies/zomboni-driver-animated.gif",
+      "source": "sticks/a140202e8ca0dc6d1696c67a4330ea03.jpg",
+      "animated": true
+    },
+    {
+      "id": "goth-portrait",
+      "file": "general/portraits/goth-portrait.webp",
+      "source": "sticks/a1518a177194695904cba4532db7b081.jpg"
+    },
+    {
+      "id": "goth-portrait-animated",
+      "file": "general/portraits/goth-portrait-animated.gif",
+      "source": "sticks/a1518a177194695904cba4532db7b081.jpg",
+      "animated": true
+    },
+    {
+      "id": "black-bangs",
+      "file": "general/portraits/black-bangs.webp",
+      "source": "sticks/c4a001c384657fc0a0bcbb31adb6e79f.jpg"
+    },
+    {
+      "id": "black-bangs-animated",
+      "file": "general/portraits/black-bangs-animated.gif",
+      "source": "sticks/c4a001c384657fc0a0bcbb31adb6e79f.jpg",
+      "animated": true
+    },
+    {
+      "id": "ladder-zombie",
+      "file": "general/plants-vs-zombies/ladder-zombie.webp",
+      "source": "sticks/d9f053a1d5faaccbc0b96e36b389003d.jpg"
+    },
+    {
+      "id": "ladder-zombie-animated",
+      "file": "general/plants-vs-zombies/ladder-zombie-animated.gif",
+      "source": "sticks/d9f053a1d5faaccbc0b96e36b389003d.jpg",
+      "animated": true
+    },
+    {
+      "id": "gargantuar-armor",
+      "file": "general/plants-vs-zombies/gargantuar-armor.webp",
+      "source": "sticks/e9b56998cd46da9dca145f016b9b6ad0.jpg"
+    },
+    {
+      "id": "gargantuar-armor-animated",
+      "file": "general/plants-vs-zombies/gargantuar-armor-animated.gif",
+      "source": "sticks/e9b56998cd46da9dca145f016b9b6ad0.jpg",
+      "animated": true
+    },
+    {
+      "id": "gargantuar-and-imp",
+      "file": "general/plants-vs-zombies/gargantuar-and-imp.webp",
+      "source": "sticks/f3e2591c83f8081a43ed8015d10dd836.jpg"
+    },
+    {
+      "id": "gargantuar-and-imp-animated",
+      "file": "general/plants-vs-zombies/gargantuar-and-imp-animated.gif",
+      "source": "sticks/f3e2591c83f8081a43ed8015d10dd836.jpg",
+      "animated": true
+    },
+    {
+      "id": "capybara-bee",
+      "file": "general/capybaras/capybara-bee.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        28,
+        17,
+        251,
+        409
+      ]
+    },
+    {
+      "id": "capybara-bee-animated",
+      "file": "general/capybaras/capybara-bee-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        28,
+        17,
+        251,
+        409
+      ],
+      "animated": true
+    },
+    {
+      "id": "capybara-rose",
+      "file": "general/capybaras/capybara-rose.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        500,
+        32,
+        710,
+        381
+      ]
+    },
+    {
+      "id": "capybara-rose-animated",
+      "file": "general/capybaras/capybara-rose-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        500,
+        32,
+        710,
+        381
+      ],
+      "animated": true
+    },
+    {
+      "id": "capybara-glasses",
+      "file": "general/capybaras/capybara-glasses.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        255,
+        97,
+        483,
+        433
+      ]
+    },
+    {
+      "id": "capybara-glasses-animated",
+      "file": "general/capybaras/capybara-glasses-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        255,
+        97,
+        483,
+        433
+      ],
+      "animated": true
+    },
+    {
+      "id": "capybara-duck",
+      "file": "general/capybaras/capybara-duck.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        11,
+        416,
+        266,
+        814
+      ]
+    },
+    {
+      "id": "capybara-duck-animated",
+      "file": "general/capybaras/capybara-duck-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        11,
+        416,
+        266,
+        814
+      ],
+      "animated": true
+    },
+    {
+      "id": "capybara-harness",
+      "file": "general/capybaras/capybara-harness.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        227,
+        366,
+        639,
+        695
+      ]
+    },
+    {
+      "id": "capybara-harness-animated",
+      "file": "general/capybaras/capybara-harness-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        227,
+        366,
+        639,
+        695
+      ],
+      "animated": true
+    },
+    {
+      "id": "capybara-in-a-dress",
+      "file": "general/capybaras/capybara-in-a-dress.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        429,
+        513,
+        734,
+        936
+      ]
+    },
+    {
+      "id": "capybara-in-a-dress-animated",
+      "file": "general/capybaras/capybara-in-a-dress-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        429,
+        513,
+        734,
+        936
+      ],
+      "animated": true
+    },
+    {
+      "id": "capybara-friends",
+      "file": "general/capybaras/capybara-friends.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        0,
+        686,
+        448,
+        1263
+      ]
+    },
+    {
+      "id": "capybara-friends-animated",
+      "file": "general/capybaras/capybara-friends-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        0,
+        686,
+        448,
+        1263
+      ],
+      "animated": true
+    },
+    {
+      "id": "capybara-hair-rollers",
+      "file": "general/capybaras/capybara-hair-rollers.webp",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        422,
+        903,
+        695,
+        1308
+      ]
+    },
+    {
+      "id": "capybara-hair-rollers-animated",
+      "file": "general/capybaras/capybara-hair-rollers-animated.gif",
+      "source": "sticks/capybara.jpg",
+      "crop": [
+        422,
+        903,
+        695,
+        1308
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-grumpy",
+      "file": "general/cats/cat-grumpy.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        0,
+        171,
+        134
+      ]
+    },
+    {
+      "id": "cat-grumpy-animated",
+      "file": "general/cats/cat-grumpy-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        0,
+        171,
+        134
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-tabby",
+      "file": "general/cats/cat-tabby.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        156,
+        0,
+        298,
+        179
+      ]
+    },
+    {
+      "id": "cat-tabby-animated",
+      "file": "general/cats/cat-tabby-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        156,
+        0,
+        298,
+        179
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-open-mouth",
+      "file": "general/cats/cat-open-mouth.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        296,
+        0,
+        430,
+        181
+      ]
+    },
+    {
+      "id": "cat-open-mouth-animated",
+      "file": "general/cats/cat-open-mouth-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        296,
+        0,
+        430,
+        181
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-orange-kitten",
+      "file": "general/cats/cat-orange-kitten.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        434,
+        0,
+        542,
+        190
+      ]
+    },
+    {
+      "id": "cat-orange-kitten-animated",
+      "file": "general/cats/cat-orange-kitten-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        434,
+        0,
+        542,
+        190
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-in-a-banana",
+      "file": "general/cats/cat-in-a-banana.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        508,
+        35,
+        631,
+        285
+      ]
+    },
+    {
+      "id": "cat-in-a-banana-animated",
+      "file": "general/cats/cat-in-a-banana-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        508,
+        35,
+        631,
+        285
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-smirk",
+      "file": "general/cats/cat-smirk.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        123,
+        162,
+        277
+      ]
+    },
+    {
+      "id": "cat-smirk-animated",
+      "file": "general/cats/cat-smirk-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        123,
+        162,
+        277
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-big-yawn",
+      "file": "general/cats/cat-big-yawn.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        160,
+        175,
+        330,
+        333
+      ]
+    },
+    {
+      "id": "cat-big-yawn-animated",
+      "file": "general/cats/cat-big-yawn-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        160,
+        175,
+        330,
+        333
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-sunglasses",
+      "file": "general/cats/cat-sunglasses.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        330,
+        184,
+        497,
+        354
+      ]
+    },
+    {
+      "id": "cat-sunglasses-animated",
+      "file": "general/cats/cat-sunglasses-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        330,
+        184,
+        497,
+        354
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-white-side-eye",
+      "file": "general/cats/cat-white-side-eye.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        277,
+        169,
+        408
+      ]
+    },
+    {
+      "id": "cat-white-side-eye-animated",
+      "file": "general/cats/cat-white-side-eye-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        277,
+        169,
+        408
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-tabby-stare",
+      "file": "general/cats/cat-tabby-stare.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        166,
+        318,
+        326,
+        463
+      ]
+    },
+    {
+      "id": "cat-tabby-stare-animated",
+      "file": "general/cats/cat-tabby-stare-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        166,
+        318,
+        326,
+        463
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-round-face",
+      "file": "general/cats/cat-round-face.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        341,
+        354,
+        495,
+        493
+      ]
+    },
+    {
+      "id": "cat-round-face-animated",
+      "file": "general/cats/cat-round-face-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        341,
+        354,
+        495,
+        493
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-standing-kitten",
+      "file": "general/cats/cat-standing-kitten.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        512,
+        281,
+        633,
+        517
+      ]
+    },
+    {
+      "id": "cat-standing-kitten-animated",
+      "file": "general/cats/cat-standing-kitten-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        512,
+        281,
+        633,
+        517
+      ],
+      "animated": true
+    },
+    {
+      "id": "hamster-paws",
+      "file": "general/small-animals/hamster-paws.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        4,
+        409,
+        166,
+        597
+      ]
+    },
+    {
+      "id": "hamster-paws-animated",
+      "file": "general/small-animals/hamster-paws-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        4,
+        409,
+        166,
+        597
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-orange-costume",
+      "file": "general/cats/cat-orange-costume.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        171,
+        471,
+        298,
+        655
+      ]
+    },
+    {
+      "id": "cat-orange-costume-animated",
+      "file": "general/cats/cat-orange-costume-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        171,
+        471,
+        298,
+        655
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-tabby-pile",
+      "file": "general/cats/cat-tabby-pile.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        290,
+        462,
+        452,
+        620
+      ]
+    },
+    {
+      "id": "cat-tabby-pile-animated",
+      "file": "general/cats/cat-tabby-pile-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        290,
+        462,
+        452,
+        620
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-big-eyes",
+      "file": "general/cats/cat-big-eyes.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        449,
+        499,
+        607,
+        664
+      ]
+    },
+    {
+      "id": "cat-big-eyes-animated",
+      "file": "general/cats/cat-big-eyes-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        449,
+        499,
+        607,
+        664
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-curious-kitten",
+      "file": "general/cats/cat-curious-kitten.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        594,
+        147,
+        759
+      ]
+    },
+    {
+      "id": "cat-curious-kitten-animated",
+      "file": "general/cats/cat-curious-kitten-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        594,
+        147,
+        759
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-long-neck",
+      "file": "general/cats/cat-long-neck.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        117,
+        662,
+        266,
+        808
+      ]
+    },
+    {
+      "id": "cat-long-neck-animated",
+      "file": "general/cats/cat-long-neck-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        117,
+        662,
+        266,
+        808
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-fluffy-round",
+      "file": "general/cats/cat-fluffy-round.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        261,
+        623,
+        426,
+        815
+      ]
+    },
+    {
+      "id": "cat-fluffy-round-animated",
+      "file": "general/cats/cat-fluffy-round-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        261,
+        623,
+        426,
+        815
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-squinting",
+      "file": "general/cats/cat-squinting.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        432,
+        668,
+        631,
+        903
+      ]
+    },
+    {
+      "id": "cat-squinting-animated",
+      "file": "general/cats/cat-squinting-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        432,
+        668,
+        631,
+        903
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-pizza",
+      "file": "general/cats/cat-pizza.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        748,
+        140,
+        962
+      ]
+    },
+    {
+      "id": "cat-pizza-animated",
+      "file": "general/cats/cat-pizza-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        748,
+        140,
+        962
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-french-fries",
+      "file": "general/cats/cat-french-fries.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        151,
+        793,
+        266,
+        916
+      ]
+    },
+    {
+      "id": "cat-french-fries-animated",
+      "file": "general/cats/cat-french-fries-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        151,
+        793,
+        266,
+        916
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-pointy-ears",
+      "file": "general/cats/cat-pointy-ears.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        249,
+        796,
+        430,
+        947
+      ]
+    },
+    {
+      "id": "cat-pointy-ears-animated",
+      "file": "general/cats/cat-pointy-ears-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        249,
+        796,
+        430,
+        947
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-lying-down",
+      "file": "general/cats/cat-lying-down.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        962,
+        188,
+        1124
+      ]
+    },
+    {
+      "id": "cat-lying-down-animated",
+      "file": "general/cats/cat-lying-down-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        2,
+        962,
+        188,
+        1124
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-standing-up",
+      "file": "general/cats/cat-standing-up.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        181,
+        936,
+        330,
+        1124
+      ]
+    },
+    {
+      "id": "cat-standing-up-animated",
+      "file": "general/cats/cat-standing-up-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        181,
+        936,
+        330,
+        1124
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-on-its-back",
+      "file": "general/cats/cat-on-its-back.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        330,
+        910,
+        473,
+        1122
+      ]
+    },
+    {
+      "id": "cat-on-its-back-animated",
+      "file": "general/cats/cat-on-its-back-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        330,
+        910,
+        473,
+        1122
+      ],
+      "animated": true
+    },
+    {
+      "id": "cat-round-profile",
+      "file": "general/cats/cat-round-profile.webp",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        471,
+        910,
+        631,
+        1105
+      ]
+    },
+    {
+      "id": "cat-round-profile-animated",
+      "file": "general/cats/cat-round-profile-animated.gif",
+      "source": "sticks/cat sticker sheet.jpg",
+      "crop": [
+        471,
+        910,
+        631,
+        1105
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-cardboard-robot",
+      "file": "general/roblox/roblox-cardboard-robot.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        4,
+        24,
+        197,
+        357
+      ]
+    },
+    {
+      "id": "roblox-cardboard-robot-animated",
+      "file": "general/roblox/roblox-cardboard-robot-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        4,
+        24,
+        197,
+        357
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-builder",
+      "file": "general/roblox/roblox-builder.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        281,
+        26,
+        452,
+        370
+      ]
+    },
+    {
+      "id": "roblox-builder-animated",
+      "file": "general/roblox/roblox-builder-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        281,
+        26,
+        452,
+        370
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-pirate",
+      "file": "general/roblox/roblox-pirate.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        485,
+        37,
+        730,
+        375
+      ]
+    },
+    {
+      "id": "roblox-pirate-animated",
+      "file": "general/roblox/roblox-pirate-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        485,
+        37,
+        730,
+        375
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-noob",
+      "file": "general/roblox/roblox-noob.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        0,
+        435,
+        238,
+        715
+      ]
+    },
+    {
+      "id": "roblox-noob-animated",
+      "file": "general/roblox/roblox-noob-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        0,
+        435,
+        238,
+        715
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-construction-worker",
+      "file": "general/roblox/roblox-construction-worker.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        294,
+        435,
+        465,
+        758
+      ]
+    },
+    {
+      "id": "roblox-construction-worker-animated",
+      "file": "general/roblox/roblox-construction-worker-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        294,
+        435,
+        465,
+        758
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-bacon-hair",
+      "file": "general/roblox/roblox-bacon-hair.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        507,
+        431,
+        736,
+        745
+      ]
+    },
+    {
+      "id": "roblox-bacon-hair-animated",
+      "file": "general/roblox/roblox-bacon-hair-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        507,
+        431,
+        736,
+        745
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-red-suit",
+      "file": "general/roblox/roblox-red-suit.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        0,
+        851,
+        249,
+        1219
+      ]
+    },
+    {
+      "id": "roblox-red-suit-animated",
+      "file": "general/roblox/roblox-red-suit-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        0,
+        851,
+        249,
+        1219
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-top-hat",
+      "file": "general/roblox/roblox-top-hat.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        242,
+        851,
+        470,
+        1208
+      ]
+    },
+    {
+      "id": "roblox-top-hat-animated",
+      "file": "general/roblox/roblox-top-hat-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        242,
+        851,
+        470,
+        1208
+      ],
+      "animated": true
+    },
+    {
+      "id": "roblox-green-ninja",
+      "file": "general/roblox/roblox-green-ninja.webp",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        504,
+        853,
+        732,
+        1226
+      ]
+    },
+    {
+      "id": "roblox-green-ninja-animated",
+      "file": "general/roblox/roblox-green-ninja-animated.gif",
+      "source": "sticks/download (3).jpg",
+      "crop": [
+        504,
+        853,
+        732,
+        1226
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-green-hood",
+      "file": "general/seals-and-sea-lions/sea-lion-green-hood.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        17,
+        4,
+        288,
+        325
+      ]
+    },
+    {
+      "id": "sea-lion-green-hood-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-green-hood-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        17,
+        4,
+        288,
+        325
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-upside-down",
+      "file": "general/seals-and-sea-lions/seal-upside-down.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        234,
+        2,
+        524,
+        288
+      ]
+    },
+    {
+      "id": "seal-upside-down-animated",
+      "file": "general/seals-and-sea-lions/seal-upside-down-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        234,
+        2,
+        524,
+        288
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-nose-boop",
+      "file": "general/seals-and-sea-lions/sea-lion-nose-boop.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        498,
+        35,
+        734,
+        427
+      ]
+    },
+    {
+      "id": "sea-lion-nose-boop-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-nose-boop-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        498,
+        35,
+        734,
+        427
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-gliding",
+      "file": "general/seals-and-sea-lions/sea-lion-gliding.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        242,
+        260,
+        563,
+        613
+      ]
+    },
+    {
+      "id": "sea-lion-gliding-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-gliding-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        242,
+        260,
+        563,
+        613
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-curious-face",
+      "file": "general/seals-and-sea-lions/sea-lion-curious-face.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        4,
+        312,
+        255,
+        591
+      ]
+    },
+    {
+      "id": "sea-lion-curious-face-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-curious-face-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        4,
+        312,
+        255,
+        591
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-raised-flipper",
+      "file": "general/seals-and-sea-lions/sea-lion-raised-flipper.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        446,
+        420,
+        734,
+        814
+      ]
+    },
+    {
+      "id": "sea-lion-raised-flipper-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-raised-flipper-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        446,
+        420,
+        734,
+        814
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-heart-sunglasses",
+      "file": "general/seals-and-sea-lions/seal-heart-sunglasses.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        186,
+        585,
+        520,
+        938
+      ]
+    },
+    {
+      "id": "seal-heart-sunglasses-animated",
+      "file": "general/seals-and-sea-lions/seal-heart-sunglasses-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        186,
+        585,
+        520,
+        938
+      ],
+      "animated": true
+    },
+    {
+      "id": "otter-tongue-out",
+      "file": "general/seals-and-sea-lions/otter-tongue-out.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        11,
+        585,
+        199,
+        877
+      ]
+    },
+    {
+      "id": "otter-tongue-out-animated",
+      "file": "general/seals-and-sea-lions/otter-tongue-out-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        11,
+        585,
+        199,
+        877
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-side-eye",
+      "file": "general/seals-and-sea-lions/seal-side-eye.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        483,
+        734,
+        734,
+        1026
+      ]
+    },
+    {
+      "id": "seal-side-eye-animated",
+      "file": "general/seals-and-sea-lions/seal-side-eye-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        483,
+        734,
+        734,
+        1026
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-on-a-rock",
+      "file": "general/seals-and-sea-lions/sea-lion-on-a-rock.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        19,
+        923,
+        370,
+        1308
+      ]
+    },
+    {
+      "id": "sea-lion-on-a-rock-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-on-a-rock-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        19,
+        923,
+        370,
+        1308
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-blue-flipper",
+      "file": "general/seals-and-sea-lions/seal-blue-flipper.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        188,
+        920,
+        496,
+        1159
+      ]
+    },
+    {
+      "id": "seal-blue-flipper-animated",
+      "file": "general/seals-and-sea-lions/seal-blue-flipper-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        188,
+        920,
+        496,
+        1159
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-smiling-pup",
+      "file": "general/seals-and-sea-lions/seal-smiling-pup.webp",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        489,
+        1020,
+        725,
+        1306
+      ]
+    },
+    {
+      "id": "seal-smiling-pup-animated",
+      "file": "general/seals-and-sea-lions/seal-smiling-pup-animated.gif",
+      "source": "sticks/download (4).jpg",
+      "crop": [
+        489,
+        1020,
+        725,
+        1306
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-bunny-ears",
+      "file": "general/seals-and-sea-lions/seal-bunny-ears.webp",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        24,
+        2,
+        262,
+        505
+      ]
+    },
+    {
+      "id": "seal-bunny-ears-animated",
+      "file": "general/seals-and-sea-lions/seal-bunny-ears-animated.gif",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        24,
+        2,
+        262,
+        505
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-mid-flip",
+      "file": "general/seals-and-sea-lions/sea-lion-mid-flip.webp",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        305,
+        19,
+        712,
+        459
+      ]
+    },
+    {
+      "id": "sea-lion-mid-flip-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-mid-flip-animated.gif",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        305,
+        19,
+        712,
+        459
+      ],
+      "animated": true
+    },
+    {
+      "id": "sea-lion-sitting-profile",
+      "file": "general/seals-and-sea-lions/sea-lion-sitting-profile.webp",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        346,
+        411,
+        734,
+        786
+      ]
+    },
+    {
+      "id": "sea-lion-sitting-profile-animated",
+      "file": "general/seals-and-sea-lions/sea-lion-sitting-profile-animated.gif",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        346,
+        411,
+        734,
+        786
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-blinking-pup",
+      "file": "general/seals-and-sea-lions/seal-blinking-pup.webp",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        9,
+        505,
+        260,
+        890
+      ]
+    },
+    {
+      "id": "seal-blinking-pup-animated",
+      "file": "general/seals-and-sea-lions/seal-blinking-pup-animated.gif",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        9,
+        505,
+        260,
+        890
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-big-whiskers",
+      "file": "general/seals-and-sea-lions/seal-big-whiskers.webp",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        24,
+        897,
+        273,
+        1308
+      ]
+    },
+    {
+      "id": "seal-big-whiskers-animated",
+      "file": "general/seals-and-sea-lions/seal-big-whiskers-animated.gif",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        24,
+        897,
+        273,
+        1308
+      ],
+      "animated": true
+    },
+    {
+      "id": "seal-looking-back",
+      "file": "general/seals-and-sea-lions/seal-looking-back.webp",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        273,
+        784,
+        699,
+        1271
+      ]
+    },
+    {
+      "id": "seal-looking-back-animated",
+      "file": "general/seals-and-sea-lions/seal-looking-back-animated.gif",
+      "source": "sticks/download (5).jpg",
+      "crop": [
+        273,
+        784,
+        699,
+        1271
+      ],
+      "animated": true
+    },
+    {
+      "id": "rainbow-cat-typing",
+      "file": "general/cats/rainbow-cat-typing.gif",
+      "source": "sticks/From Klickpin.com- Beginner-friendly vision board ideas for your next inspiration board using ideas that balance beauty and everyday function-pin-.gif",
+      "animated": true
+    },
+    {
+      "id": "totoro",
+      "file": "general/studio-ghibli/totoro.gif",
+      "source": "sticks/From Klickpin.com- Bridal shower decor ideas that are worth saving if you love elegant details and creative inspiration for anyone planning a beau.gif",
+      "animated": true
+    },
+    {
+      "id": "peashooter",
+      "file": "general/plants-vs-zombies/peashooter.gif",
+      "source": "sticks/From Klickpin.com- Creative minimalist bedroom decor that are trending right now across Pinterest boards for ideas worth saving right now-pin-id-1.gif",
+      "animated": true
+    },
+    {
+      "id": "bocchi-surprised",
+      "file": "general/anime-reactions/bocchi-surprised.gif",
+      "source": "sticks/From Klickpin.com- Minimal Pinterest marketing ideas that look expensive while staying practical realistic and beginner friendly for women who lov.gif",
+      "animated": true
+    },
+    {
+      "id": "we-bare-bears-stack",
+      "file": "general/cartoons/we-bare-bears-stack.gif",
+      "source": "sticks/From Klickpin.com- Modern packing list ideas for a polished look people will notice with simple details that elevate the final look-pin-id-6352890.gif",
+      "animated": true
+    },
+    {
+      "id": "psyduck-loop",
+      "file": "general/pokemon/psyduck-loop.gif",
+      "source": "sticks/From Klickpin.com- Need fresh inspiration Pin these simple glowy skin ideas that feel luxe without spending a fortune with practical inspiration y.gif",
+      "animated": true
+    },
+    {
+      "id": "shin-chan-dance",
+      "file": "general/anime-reactions/shin-chan-dance.gif",
+      "source": "sticks/From Klickpin.com- Peaceful healing words this season for inspiration you can revisit anytime that feel calm and clear-pin-id-538883911642119301.gif",
+      "animated": true
+    },
+    {
+      "id": "patrick-star",
+      "file": "general/cartoons/patrick-star.gif",
+      "source": "sticks/From Klickpin.com- Save these elegant neutral layers tips everyone will ask you about with beginner-friendly tips and easy details and create a lo.gif",
+      "animated": true
+    },
+    {
+      "id": "finn-loop",
+      "file": "general/adventure-time/finn-loop.gif",
+      "source": "sticks/From Klickpin.com- Smart small routine upgrades with soft aesthetic charm with charm and practical value without making-pin-id-83457399321960744.gif",
+      "animated": true
+    },
+    {
+      "id": "bungee-zombie",
+      "file": "general/plants-vs-zombies/bungee-zombie.gif",
+      "source": "sticks/From Klickpin.com- Summer Salad Recipes That Make Everyday Better 49271-pin-id-62980094778170142.gif",
+      "animated": true
+    },
+    {
+      "id": "disco-zombie",
+      "file": "general/plants-vs-zombies/disco-zombie.gif",
+      "source": "sticks/From Klickpin.com- Upgrade these easy beach trip ideas that bring style function and personality together using simple ideas you can actually pull.gif",
+      "animated": true
+    },
+    {
+      "id": "blue-cat-scream",
+      "file": "general/cats/blue-cat-scream.gif",
+      "source": "sticks/From Klickpin.com- Use these 31 Cozy small bedroom decor ideas that are perfect when you want something stylish modern and easy to copy for anyone.gif",
+      "animated": true
+    },
+    {
+      "id": "pig-mechanic",
+      "file": "general/angry-birds/pig-mechanic.webp",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        1,
+        0,
+        87,
+        74
+      ]
+    },
+    {
+      "id": "pig-mechanic-animated",
+      "file": "general/angry-birds/pig-mechanic-animated.gif",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        1,
+        0,
+        87,
+        74
+      ],
+      "animated": true
+    },
+    {
+      "id": "pig-construction-helmet",
+      "file": "general/angry-birds/pig-construction-helmet.webp",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        2,
+        157,
+        81,
+        241
+      ]
+    },
+    {
+      "id": "pig-construction-helmet-animated",
+      "file": "general/angry-birds/pig-construction-helmet-animated.gif",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        2,
+        157,
+        81,
+        241
+      ],
+      "animated": true
+    },
+    {
+      "id": "pig-king",
+      "file": "general/angry-birds/pig-king.webp",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        150,
+        81,
+        235,
+        174
+      ]
+    },
+    {
+      "id": "pig-king-animated",
+      "file": "general/angry-birds/pig-king-animated.gif",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        150,
+        81,
+        235,
+        174
+      ],
+      "animated": true
+    },
+    {
+      "id": "pig-classic",
+      "file": "general/angry-birds/pig-classic.webp",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        87,
+        0,
+        163,
+        73
+      ]
+    },
+    {
+      "id": "pig-classic-animated",
+      "file": "general/angry-birds/pig-classic-animated.gif",
+      "source": "sticks/Angry Bird Printables.jpg",
+      "crop": [
+        87,
+        0,
+        163,
+        73
+      ],
+      "animated": true
+    },
+    {
+      "id": "darwin-side-eye",
+      "file": "general/gumball/darwin-side-eye.webp",
+      "source": "sticks/b4c55ef8ca57f57fd5dcfcb443196f90.jpg",
+      "crop": [
+        76,
+        45,
+        426,
+        282
+      ]
+    },
+    {
+      "id": "darwin-side-eye-animated",
+      "file": "general/gumball/darwin-side-eye-animated.gif",
+      "source": "sticks/b4c55ef8ca57f57fd5dcfcb443196f90.jpg",
+      "crop": [
+        76,
+        45,
+        426,
+        282
+      ],
+      "animated": true
+    },
+    {
+      "id": "gumball-smirk",
+      "file": "general/gumball/gumball-smirk.webp",
+      "source": "sticks/b4c55ef8ca57f57fd5dcfcb443196f90.jpg",
+      "crop": [
+        188,
+        263,
+        520,
+        552
+      ]
+    },
+    {
+      "id": "gumball-smirk-animated",
+      "file": "general/gumball/gumball-smirk-animated.gif",
+      "source": "sticks/b4c55ef8ca57f57fd5dcfcb443196f90.jpg",
+      "crop": [
+        188,
+        263,
+        520,
+        552
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-celebrating",
+      "file": "general/minions/minion-celebrating.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        16,
+        14,
+        225,
+        200
+      ]
+    },
+    {
+      "id": "minion-celebrating-animated",
+      "file": "general/minions/minion-celebrating-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        16,
+        14,
+        225,
+        200
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-heart-box",
+      "file": "general/minions/minion-heart-box.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        205,
+        16,
+        399,
+        200
+      ]
+    },
+    {
+      "id": "minion-heart-box-animated",
+      "file": "general/minions/minion-heart-box-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        205,
+        16,
+        399,
+        200
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-teddy-bear",
+      "file": "general/minions/minion-teddy-bear.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        411,
+        14,
+        560,
+        211
+      ]
+    },
+    {
+      "id": "minion-teddy-bear-animated",
+      "file": "general/minions/minion-teddy-bear-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        411,
+        14,
+        560,
+        211
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-unimpressed",
+      "file": "general/minions/minion-unimpressed.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        565,
+        17,
+        711,
+        218
+      ]
+    },
+    {
+      "id": "minion-unimpressed-animated",
+      "file": "general/minions/minion-unimpressed-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        565,
+        17,
+        711,
+        218
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-shy",
+      "file": "general/minions/minion-shy.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        25,
+        211,
+        155,
+        430
+      ]
+    },
+    {
+      "id": "minion-shy-animated",
+      "file": "general/minions/minion-shy-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        25,
+        211,
+        155,
+        430
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-unicorn",
+      "file": "general/minions/minion-unicorn.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        160,
+        211,
+        350,
+        415
+      ]
+    },
+    {
+      "id": "minion-unicorn-animated",
+      "file": "general/minions/minion-unicorn-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        160,
+        211,
+        350,
+        415
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-hands-up",
+      "file": "general/minions/minion-hands-up.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        342,
+        208,
+        526,
+        421
+      ]
+    },
+    {
+      "id": "minion-hands-up-animated",
+      "file": "general/minions/minion-hands-up-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        342,
+        208,
+        526,
+        421
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-guitar",
+      "file": "general/minions/minion-guitar.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        522,
+        224,
+        707,
+        433
+      ]
+    },
+    {
+      "id": "minion-guitar-animated",
+      "file": "general/minions/minion-guitar-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        522,
+        224,
+        707,
+        433
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-hands-on-hips",
+      "file": "general/minions/minion-hands-on-hips.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        27,
+        444,
+        196,
+        643
+      ]
+    },
+    {
+      "id": "minion-hands-on-hips-animated",
+      "file": "general/minions/minion-hands-on-hips-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        27,
+        444,
+        196,
+        643
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-panic",
+      "file": "general/minions/minion-panic.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        216,
+        423,
+        360,
+        637
+      ]
+    },
+    {
+      "id": "minion-panic-animated",
+      "file": "general/minions/minion-panic-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        216,
+        423,
+        360,
+        637
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-headphones",
+      "file": "general/minions/minion-headphones.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        386,
+        441,
+        556,
+        637
+      ]
+    },
+    {
+      "id": "minion-headphones-animated",
+      "file": "general/minions/minion-headphones-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        386,
+        441,
+        556,
+        637
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-sitting",
+      "file": "general/minions/minion-sitting.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        558,
+        459,
+        701,
+        637
+      ]
+    },
+    {
+      "id": "minion-sitting-animated",
+      "file": "general/minions/minion-sitting-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        558,
+        459,
+        701,
+        637
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-sneaking",
+      "file": "general/minions/minion-sneaking.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        49,
+        647,
+        235,
+        833
+      ]
+    },
+    {
+      "id": "minion-sneaking-animated",
+      "file": "general/minions/minion-sneaking-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        49,
+        647,
+        235,
+        833
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-duck-float",
+      "file": "general/minions/minion-duck-float.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        243,
+        645,
+        458,
+        829
+      ]
+    },
+    {
+      "id": "minion-duck-float-animated",
+      "file": "general/minions/minion-duck-float-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        243,
+        645,
+        458,
+        829
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-running",
+      "file": "general/minions/minion-running.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        469,
+        651,
+        669,
+        835
+      ]
+    },
+    {
+      "id": "minion-running-animated",
+      "file": "general/minions/minion-running-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        469,
+        651,
+        669,
+        835
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-looking-away",
+      "file": "general/minions/minion-looking-away.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        35,
+        836,
+        161,
+        1041
+      ]
+    },
+    {
+      "id": "minion-looking-away-animated",
+      "file": "general/minions/minion-looking-away-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        35,
+        836,
+        161,
+        1041
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-phone",
+      "file": "general/minions/minion-phone.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        169,
+        833,
+        323,
+        1033
+      ]
+    },
+    {
+      "id": "minion-phone-animated",
+      "file": "general/minions/minion-phone-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        169,
+        833,
+        323,
+        1033
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-reading",
+      "file": "general/minions/minion-reading.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        336,
+        835,
+        504,
+        1042
+      ]
+    },
+    {
+      "id": "minion-reading-animated",
+      "file": "general/minions/minion-reading-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        336,
+        835,
+        504,
+        1042
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-lost",
+      "file": "general/minions/minion-lost.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        526,
+        837,
+        707,
+        1041
+      ]
+    },
+    {
+      "id": "minion-lost-animated",
+      "file": "general/minions/minion-lost-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        526,
+        837,
+        707,
+        1041
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-thumb-up",
+      "file": "general/minions/minion-thumb-up.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        20,
+        1041,
+        195,
+        1277
+      ]
+    },
+    {
+      "id": "minion-thumb-up-animated",
+      "file": "general/minions/minion-thumb-up-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        20,
+        1041,
+        195,
+        1277
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-reaching",
+      "file": "general/minions/minion-reaching.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        197,
+        1043,
+        347,
+        1298
+      ]
+    },
+    {
+      "id": "minion-reaching-animated",
+      "file": "general/minions/minion-reaching-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        197,
+        1043,
+        347,
+        1298
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-bow",
+      "file": "general/minions/minion-bow.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        356,
+        1054,
+        512,
+        1276
+      ]
+    },
+    {
+      "id": "minion-bow-animated",
+      "file": "general/minions/minion-bow-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        356,
+        1054,
+        512,
+        1276
+      ],
+      "animated": true
+    },
+    {
+      "id": "minion-laughing",
+      "file": "general/minions/minion-laughing.webp",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        511,
+        1072,
+        720,
+        1283
+      ]
+    },
+    {
+      "id": "minion-laughing-animated",
+      "file": "general/minions/minion-laughing-animated.gif",
+      "source": "sticks/download (6).jpg",
+      "crop": [
+        511,
+        1072,
+        720,
+        1283
+      ],
+      "animated": true
+    },
+    {
+      "id": "bird-blue",
+      "file": "general/angry-birds/bird-blue.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        20,
+        4,
+        126,
+        112
+      ]
+    },
+    {
+      "id": "bird-blue-animated",
+      "file": "general/angry-birds/bird-blue-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        20,
+        4,
+        126,
+        112
+      ],
+      "animated": true
+    },
+    {
+      "id": "bird-chuck",
+      "file": "general/angry-birds/bird-chuck.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        128,
+        3,
+        249,
+        119
+      ]
+    },
+    {
+      "id": "bird-chuck-animated",
+      "file": "general/angry-birds/bird-chuck-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        128,
+        3,
+        249,
+        119
+      ],
+      "animated": true
+    },
+    {
+      "id": "pig-smiling",
+      "file": "general/angry-birds/pig-smiling.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        247,
+        3,
+        367,
+        128
+      ]
+    },
+    {
+      "id": "pig-smiling-animated",
+      "file": "general/angry-birds/pig-smiling-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        247,
+        3,
+        367,
+        128
+      ],
+      "animated": true
+    },
+    {
+      "id": "pig-laughing",
+      "file": "general/angry-birds/pig-laughing.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        366,
+        3,
+        489,
+        130
+      ]
+    },
+    {
+      "id": "pig-laughing-animated",
+      "file": "general/angry-birds/pig-laughing-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        366,
+        3,
+        489,
+        130
+      ],
+      "animated": true
+    },
+    {
+      "id": "pig-sleepy",
+      "file": "general/angry-birds/pig-sleepy.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        4,
+        114,
+        121,
+        241
+      ]
+    },
+    {
+      "id": "pig-sleepy-animated",
+      "file": "general/angry-birds/pig-sleepy-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        4,
+        114,
+        121,
+        241
+      ],
+      "animated": true
+    },
+    {
+      "id": "pig-surprised",
+      "file": "general/angry-birds/pig-surprised.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        123,
+        115,
+        246,
+        242
+      ]
+    },
+    {
+      "id": "pig-surprised-animated",
+      "file": "general/angry-birds/pig-surprised-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        123,
+        115,
+        246,
+        242
+      ],
+      "animated": true
+    },
+    {
+      "id": "bird-matilda",
+      "file": "general/angry-birds/bird-matilda.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        247,
+        119,
+        365,
+        249
+      ]
+    },
+    {
+      "id": "bird-matilda-animated",
+      "file": "general/angry-birds/bird-matilda-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        247,
+        119,
+        365,
+        249
+      ],
+      "animated": true
+    },
+    {
+      "id": "bird-red",
+      "file": "general/angry-birds/bird-red.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        362,
+        131,
+        491,
+        246
+      ]
+    },
+    {
+      "id": "bird-red-animated",
+      "file": "general/angry-birds/bird-red-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        362,
+        131,
+        491,
+        246
+      ],
+      "animated": true
+    },
+    {
+      "id": "bird-bomb",
+      "file": "general/angry-birds/bird-bomb.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        364,
+        246,
+        488,
+        373
+      ]
+    },
+    {
+      "id": "bird-bomb-animated",
+      "file": "general/angry-birds/bird-bomb-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        364,
+        246,
+        488,
+        373
+      ],
+      "animated": true
+    },
+    {
+      "id": "bird-hal",
+      "file": "general/angry-birds/bird-hal.webp",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        362,
+        373,
+        491,
+        493
+      ]
+    },
+    {
+      "id": "bird-hal-animated",
+      "file": "general/angry-birds/bird-hal-animated.gif",
+      "source": "sticks/Free Printable Angry Birds Stickers, Toppers or Labels_.jpg",
+      "crop": [
+        362,
+        373,
+        491,
+        493
+      ],
+      "animated": true
+    },
+    {
+      "id": "blue-pigeon-hop",
+      "file": "general/birds/blue-pigeon-hop.gif",
+      "source": "sticks/From Klickpin.com- Meditation Space Ideas That Are All Over Pinterest 26351-pin-id-525302744043179321.gif",
+      "animated": true
+    },
+    {
+      "id": "claude-logo",
+      "file": "model-logos/claude-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/claude-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "codex-logo",
+      "file": "model-logos/codex-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/codex-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "gemini-logo",
+      "file": "model-logos/gemini-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/gemini-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "antigravity-logo",
+      "file": "model-logos/antigravity-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/antigravity-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "deepseek-logo",
+      "file": "model-logos/deepseek-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/deepseek-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "copilot-logo",
+      "file": "model-logos/copilot-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/githubcopilot.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "kimi-logo",
+      "file": "model-logos/kimi-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/kimi-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "glm-logo",
+      "file": "model-logos/glm-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/zai.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "grok-logo",
+      "file": "model-logos/grok-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/grok.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "meta-logo",
+      "file": "model-logos/meta-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/meta-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "openai-logo",
+      "file": "model-logos/openai-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/openai.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "mistral-logo",
+      "file": "model-logos/mistral-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/mistral-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "qwen-logo",
+      "file": "model-logos/qwen-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/qwen-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "minimax-logo",
+      "file": "model-logos/minimax-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/minimax-color.svg",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "id": "perplexity-logo",
+      "file": "model-logos/perplexity-logo.webp",
+      "source": "npm:@lobehub/icons-static-svg@1.102.0/icons/perplexity-color.svg",
+      "width": 512,
+      "height": 512
+    }
+  ]
+}

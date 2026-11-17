@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent Peeps · Sticker shop</title>
+<meta name="description" content="Every Agent Peeps sticker pack. Pick one for Claude, Codex and your helpers, watch them work, and copy the agentpeeps set commands." />
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<link rel="apple-touch-icon" href="/brand/logo.png" />
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/stickers-page.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<main class="wrap pb-24 pt-28 md:pt-32">
+  <div class="max-w-[960px]" data-hero>
+    <h1 data-split class="text-[clamp(42px,6.4vw,84px)]">Pick a pack for every agent.</h1>
+    <p data-split class="mt-5 max-w-[600px] text-lg leading-relaxed text-muted">Click any sticker to give its pack to Claude, Codex or your helpers. Watch them work, then paste the commands.</p>
+  </div>
+
+  <div class="mt-12 grid grid-cols-[minmax(0,1fr)] items-start gap-8 lg:grid-cols-[440px_minmax(0,1fr)]">
+    <!-- your dock, on a little desktop -->
+    <aside class="rounded-[28px] border border-line bg-card p-4 [scrollbar-width:thin] sm:p-5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto" data-lenis-prevent data-reveal>
+      <div class="flex items-center justify-between gap-3">
+        <h2 class="text-[22px]">Your dock</h2>
+        <div class="room !block !border-0 !bg-transparent !p-0" data-desk-controls>
+          <span class="seg2" data-set="wall" role="group" aria-label="Wallpaper"><button aria-pressed="true" data-v="light" aria-label="Light wallpaper"><i class="ph-bold ph-sun"></i></button><button aria-pressed="false" data-v="dark" aria-label="Dark wallpaper"><i class="ph-bold ph-moon"></i></button></span>
+          <span class="seg2 ml-1.5" data-set="size" role="group" aria-label="Sticker size"><button aria-pressed="false" data-v="52">S</button><button aria-pressed="true" data-v="68">M</button><button aria-pressed="false" data-v="88">L</button></span>
+        </div>
+      </div>
+      <div class="desk mt-3" id="desk" data-wall="light">
+        <div class="win" aria-hidden="true">
+          <div class="win-bar"><i></i><i></i><i></i>auth.ts · my-app</div>
+          <div class="win-code"><div><span class="k">import</span> { verify } <span class="k">from</span> <span class="s">"./session"</span>;</div><div> </div><div><span class="k">export async function</span> <span class="f">login</span>(user, pass) {</div><div>  <span class="k">const</span> token = <span class="k">await</span> <span class="f">verify</span>(user, pass);</div><div>  <span class="k">if</span> (!token) <span class="k">throw new</span> <span class="f">Error</span>(<span class="s">"nope"</span>);</div><div>  <span class="m">// remember for 7 days</span></div><div>  <span class="k">return</span> { token, ttl: <span class="f">7</span> * <span class="f">864e5</span> };</div><div>}</div></div>
+        </div>
+        <div class="taskbar" aria-hidden="true"><b></b><b></b><b></b><b></b><span>9:41</span></div>
+        <div data-dock id="preview" data-speed="1200" data-project="my-app" data-only="claude,codex" style="--ap-s:68px;--sub:40px"></div>
+      </div>
+      <p class="mt-2.5 flex items-center gap-1.5 text-[12.5px] text-muted"><i class="ph-bold ph-cursor"></i>Real overlay size (shrunk to fit on phones). Hover or tap a sticker for who, what and files.</p>
+
+      <p class="mb-2 mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-muted">Pick a slot, then a sticker</p>
+      <div class="grid gap-2" id="slots"></div>
+
+      <div class="mt-5 overflow-hidden rounded-[16px] border border-[#2b2b34] bg-[#141418]">
+        <div class="flex items-center justify-between gap-2 border-b border-white/10 py-1.5 pl-4 pr-1.5">
+          <span class="font-mono text-[12px] text-[#9b9ba6]">Paste in your terminal</span>
+          <button class="install sm !h-9 !border-0 !bg-transparent !p-0 !shadow-none" id="copyCfg" data-copy="" aria-label="Copy the commands"><span class="i-key !m-0"><span class="i-idle"><i class="ph-bold ph-copy"></i>Copy</span><span class="i-done"><i class="ph-bold ph-check"></i>Copied</span></span></button>
+        </div>
+        <pre class="term overflow-x-auto px-4 py-3 !whitespace-pre !text-[12.5px]" id="cfg"></pre>
+      </div>
+      <div class="mt-3 flex items-center justify-between gap-3">
+        <p class="text-[13px] text-muted">First time? <code class="font-mono text-ink">npx agentpeeps init</code></p>
+        <button class="text-sm font-medium text-muted transition-colors hover:text-ink" id="reset">Reset</button>
+      </div>
+    </aside>
+
+    <!-- make your own + the library -->
+    <div>
+      <div class="sticky top-16 z-20 -mx-2 bg-bg/85 px-2 pb-3 pt-2 backdrop-blur-md">
+        <label class="relative block">
+          <span class="sr-only">Search stickers</span>
+          <i class="ph ph-magnifying-glass pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-muted"></i>
+          <input class="field !h-12 !rounded-full !pl-11" id="q" type="search" placeholder="Search stickers" autocomplete="off">
+        </label>
+        <div class="mt-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]" id="chips" role="group" aria-label="Filter by pack"></div>
+      </div>
+      <div id="grid" class="mt-4 scroll-mt-40"></div>
+      <div id="empty" class="hidden rounded-[24px] border border-dashed border-line px-6 py-16 text-center">
+        <img class="lift mx-auto w-20" src="/src/stickers/seals-and-sea-lions/seal-looking-back.webp" alt="">
+        <p class="mt-4 font-display text-xl font-semibold">No stickers match that.</p>
+        <p class="mt-1 text-muted">Try another word, or bring your own: any PNG, GIF, SVG or WebP works.</p>
+      </div>
+
+      <section class="mt-14 rounded-[28px] border border-line bg-card p-5 sm:p-6" id="make" data-reveal>
+        <h2 class="text-[24px]">Make your own sticker</h2>
+        <p class="mt-1.5 max-w-[560px] text-[14.5px] text-muted">Drop, paste or pick a PNG, WebP or JPG. It gets a white die-cut border right here in your browser. Nothing is uploaded.</p>
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <label class="drop" id="drop">
+            <input class="sr-only" type="file" id="file" accept="image/png,image/webp,image/jpeg">
+            <i class="ph ph-image-square"></i><b class="mt-1 text-[15px]">Drop an image</b><small class="text-[12.5px] text-muted">or paste it, or click to choose</small>
+          </label>
+          <div class="made" id="made">
+            <div class="made-stage">
+              <div class="made-ph" aria-hidden="true"><img src="/src/stickers/fruit-cats/strawberry-cat.webp" alt=""></div>
+              <canvas id="cut" width="256" height="256" role="img" aria-label="Your sticker preview"></canvas>
+            </div>
+            <p class="text-[14px] font-semibold" id="madeMsg">Your sticker shows up here, and in the dock.</p>
+            <div class="flex flex-wrap justify-center gap-2">
+              <a class="btn btn-ink !h-9 !px-3.5 !text-[13px] aria-disabled:pointer-events-none aria-disabled:opacity-40" id="madeUse" download="my-sticker.png" aria-disabled="true"><i class="ph-bold ph-download-simple"></i>Download PNG</a>
+              <button class="btn btn-line !h-9 !px-3.5 !text-[13px] disabled:opacity-40" id="madeClear" disabled>Remove</button>
+            </div>
+          </div>
+        </div>
+        <p class="mt-2 text-[13px] font-medium text-[#c2410c] empty:hidden" id="makeErr" role="alert"></p>
+      </section>
+    </div>
+  </div>
+
+  <p class="mt-16 text-center text-[15px] text-muted" data-reveal>Every sticker here is free. Like it? <a class="font-semibold text-accent-text underline-offset-4 hover:underline" href="./#sponsor">Sponsor Agent Peeps</a> or <a class="font-semibold text-accent-text underline-offset-4 hover:underline" href="#" data-support="coffee">buy me a coffee</a>.</p>
+</main>
+
+<div class="toast" id="toast" hidden aria-live="polite"></div>
+
+<!-- include:footer -->
+
+</body>
+</html>

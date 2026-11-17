@@ -5,68 +5,125 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src file: data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
 <title>Agent Peeps</title>
 <style>
-  :root { --ink: #33262a; --main: 52px; --sub: 32px; }
-  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; user-select: none;
-    font: 700 12px/1.3 ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif; color: var(--ink); }
+  :root { --main: 52px; --sub: 32px; --op: 1; --bfs: 12px;
+    --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace; }
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; user-select: none; font: 500 12px/1.35 var(--sans); }
   body.size-medium { --main: 68px; --sub: 40px; }
   body.size-large { --main: 88px; --sub: 52px; }
+  body.bs-small { --bfs: 11px; }
+  body.bs-large { --bfs: 13.5px; }
+
+  /* bubble colors: light theme = dark text, dark theme = white text; "th-*" forces one; a custom text color overrides --bt */
+  body { --bb: rgba(255,255,255,.97); --bt: #0b0b0c; --bl: rgba(0,0,0,.14); --bsh: 0 0 2px #fff, 0 0 7px rgba(255,255,255,.95); }
+  @media (prefers-color-scheme: dark) {
+    body:not(.th-light) { --bb: rgba(17,18,22,.95); --bt: #f5f5f6; --bl: rgba(255,255,255,.16); --bsh: 0 1px 2px rgba(0,0,0,.9), 0 0 7px rgba(0,0,0,.65); }
+  }
+  body.th-dark { --bb: rgba(17,18,22,.95); --bt: #f5f5f6; --bl: rgba(255,255,255,.16); --bsh: 0 1px 2px rgba(0,0,0,.9), 0 0 7px rgba(0,0,0,.65); }
+  body { --bm: color-mix(in srgb, var(--bt) 62%, transparent); }
 
   /* groups that were never dragged line up here, bottom-right; dragged ones sit where they were dropped */
   #dock { position: fixed; right: 20px; bottom: 14px; display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 14px; }
-  .group { display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 4px; }
+  .group { display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 4px; opacity: var(--op); transition: opacity .2s; }
+  .group:hover { opacity: 1; }
   .group.placed { position: fixed; }
   .group.resting, .group.off { display: none; }
 
-  /* a main agent's helpers sit in a pod tinted with the parent's color, each with the parent's initial */
-  .subs { display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 4px; padding: 3px 5px; margin-bottom: 4px;
-    border-radius: 999px; background: color-mix(in srgb, var(--agent) 28%, transparent); border: 1.5px dashed var(--agent); }
+  /* helpers: joined to their agent by a line (default), in a dashed pod, or just beside it */
+  .subs { position: relative; display: flex; flex-direction: row-reverse; align-items: flex-end; gap: 4px; }
   .subs:empty, body.no-subs .subs { display: none; }
+  .hl-pod .subs { padding: 3px 5px; margin-bottom: 4px; border-radius: 999px; background: color-mix(in srgb, var(--agent) 28%, transparent); border: 1.5px dashed var(--agent); }
+  .hl-line .subs, .hl-none .subs { margin-bottom: calc((var(--main) - var(--sub)) / 2); gap: 8px; padding-right: 6px; }
+  .hl-line .subs::before { content: ""; position: absolute; z-index: -1; left: calc(var(--sub) / 2); right: -6px; top: calc(50% - 1px); height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--agent) 35%, transparent), var(--agent)); }
+  .hl-line .subs::after { content: ""; position: absolute; right: -8px; top: calc(50% - 3px); width: 6px; height: 6px; border-radius: 50%; background: var(--agent); }
 
   .chibi { position: relative; cursor: grab; }
-  .sticker { display: block; width: var(--main); height: var(--main); object-fit: contain; -webkit-user-drag: none;
+  .sticker { display: block; width: var(--main); height: var(--main); object-fit: contain; -webkit-user-drag: none; box-sizing: border-box;
     filter: drop-shadow(0 3px 4px rgba(40,20,10,.28)); transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); }
+  .sticker.logo { background: #fff; border-radius: 50%; padding: 20%; }
   .sub .sticker { width: var(--sub); height: var(--sub); }
+  .sub .sticker.logo { box-shadow: 0 0 0 2px var(--agent); }
   .chibi:hover .sticker { transform: translateY(-3px) scale(1.06); }
-  .sub::after { content: attr(data-parent); position: absolute; left: -3px; top: -3px; width: 14px; height: 14px; border-radius: 50%;
-    background: var(--agent); color: #2b2020; font-size: 9px; line-height: 14px; text-align: center; box-shadow: 0 0 0 1.5px #fff; }
+  .hl-pod .sub::after { content: attr(data-parent); position: absolute; left: -3px; top: -3px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--agent); color: #2b2020; font: 800 9px/14px var(--sans); text-align: center; box-shadow: 0 0 0 1.5px #fff; }
 
   /* status: a line icon with a white die-cut outline, like the stickers */
   .icon { position: absolute; top: -5px; right: -6px; width: 18px; height: 18px; pointer-events: none; }
   .sub .icon { width: 14px; height: 14px; top: -4px; right: -5px; }
+  .no-icon .icon { display: none; }
   .icon svg { width: 100%; height: 100%; overflow: visible; }
   .icon .halo { fill: none; stroke: #fff; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
-  .icon .ink { fill: none; stroke: var(--ic, var(--ink)); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  .icon .ink { fill: none; stroke: var(--ic, #33262a); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
   .icon .dots .ink { stroke-width: 4; }
   .s-waiting .icon { --ic: #e5483b; animation: nudge 1.4s ease-in-out infinite; }
   .s-done .icon { --ic: #2f9e5b; }
 
-  /* text without boxes: dark letters with a white outline, readable on any wallpaper or app */
-  .say { color: var(--ink); -webkit-text-stroke: 3.5px #fff; paint-order: stroke fill; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.25)); white-space: nowrap; }
-  .info { display: none; position: absolute; bottom: 100%; right: 0; z-index: 5; padding-bottom: 6px; text-align: right; }
-  .info.left { right: auto; left: 0; text-align: left; }
-  .chibi:hover .info, .chibi.force-hover .info { display: block; }
-  .info .who { font-size: 12.5px; font-weight: 850; }
-  .info .what { font-size: 11.5px; max-width: 300px; overflow: hidden; text-overflow: ellipsis; }
-  .info .files button { display: block; margin-left: auto; border: 0; background: none; padding: 1px 0; font: inherit; font-size: 11px; font-weight: 650; cursor: pointer; max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
-  .info.left .files button { margin-left: 0; }
-  .info .files button:hover { text-decoration: underline; }
-  .info .files button::before { content: "› "; opacity: .55; }
+  /* speech bubble: hover, click a sticker to pin it, opens by itself when an agent needs you (b-auto), Peek opens all */
+  .info { display: none; position: absolute; bottom: 100%; right: 0; z-index: 5; padding-bottom: 9px; }
+  .info.left { right: auto; left: 0; }
+  .chibi:hover .info, .chibi.pinned .info, .b-auto .chibi.s-waiting .info, .peek .info, .chibi.force-hover .info { display: block; }
+  .chibi:hover .info { z-index: 6; } /* the one you point at wins over an auto-opened neighbor */
+  .b-off .info, .b-off .line { display: none !important; }
+  .card { position: relative; min-width: 140px; max-width: 300px; padding: 7px 10px 8px; border-radius: 11px; color: var(--bt); background: var(--bb);
+    border: 1px solid var(--bl); box-shadow: 0 6px 20px rgba(0,0,0,.18); font-size: var(--bfs); white-space: nowrap; animation: rise .16s ease-out; }
+  .card::after { content: ""; position: absolute; bottom: -5px; right: calc(var(--main) / 2 - 5px); width: 8px; height: 8px; background: var(--bb);
+    border-right: 1px solid var(--bl); border-bottom: 1px solid var(--bl); transform: rotate(45deg); }
+  .sub .card::after { right: calc(var(--sub) / 2 - 5px); }
+  .left .card::after { right: auto; left: calc(var(--main) / 2 - 5px); }
+  .sub .left .card::after { left: calc(var(--sub) / 2 - 5px); }
+  .b-noborder .card, .b-noborder .card::after { border-color: transparent; }
+  .b-text .card { background: none; border-color: transparent; box-shadow: none; padding: 0; text-shadow: var(--bsh); }
+  .b-text .card::after { display: none; }
+  .pinned .card { box-shadow: 0 6px 20px rgba(0,0,0,.18), 0 0 0 2px var(--agent); }
+  .b-text .pinned .card { box-shadow: none; }
 
-  /* Details: Always -> one short outlined line under each sticker */
+  .hd { display: flex; align-items: baseline; gap: 6px; }
+  .who { font-weight: 700; }
+  .meta { color: var(--bm); font-size: .9em; overflow: hidden; text-overflow: ellipsis; }
+  .what { display: flex; align-items: center; gap: 6px; margin-top: 3px; overflow: hidden; }
+  .dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--dot, #9ca3af); }
+  .verb { font-weight: 600; }
+  .obj { font: 500 .92em var(--mono); color: var(--bm); overflow: hidden; text-overflow: ellipsis; }
+  .files { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+  .files:empty { display: none; }
+  .files button { border: 1px solid var(--bl); background: none; color: var(--bm); border-radius: 6px; padding: 1px 6px; font: 500 .85em var(--mono);
+    cursor: pointer; max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+  .files button:hover { color: var(--bt); border-color: var(--bt); }
+  .b-text .files button { border-color: transparent; padding: 0; text-shadow: var(--bsh); }
+  .stats { margin-top: 5px; color: var(--bm); font: 500 .82em var(--mono); }
+  .b-nostats .stats { display: none; }
+  .s-thinking { --dot: #a78bfa; } .s-reading { --dot: #60a5fa; } .s-writing { --dot: #f59e0b; } .s-running { --dot: #34d399; }
+  .s-delegating { --dot: #f472b6; } .s-browsing { --dot: #38bdf8; } .s-working { --dot: #fbbf24; } .s-waiting { --dot: #ef4444; } .s-done { --dot: #22c55e; }
+
+  /* Details: Always -> one short line under each sticker */
   .line { display: none; }
-  body.details-always .line { display: block; margin-top: 1px; text-align: center; font-size: 10.5px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
-  body.details-always .sub .line { font-size: 9.5px; max-width: 80px; }
+  body.details-always .line { display: block; width: max-content; max-width: 130px; margin: 3px auto 0; padding: 1px 7px; border-radius: 999px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 10.5px; color: var(--bt); background: var(--bb); border: 1px solid var(--bl); }
+  body.details-always .sub .line { font-size: 9.5px; max-width: 84px; }
+  body.details-always.b-noborder .line { border-color: transparent; }
+  body.details-always.b-text .line { background: none; border-color: transparent; text-shadow: var(--bsh); }
   body.details-always .chibi:hover .line { visibility: hidden; }
 
-  /* calm motion: small, slow, only while working */
+  /* motion: calm = slow loops while working; lively adds a pulse ring when it needs you, a hop on each step and a bounce when done */
   .s-thinking .sticker { animation: sway 3s ease-in-out infinite; }
   .s-reading .sticker { animation: tilt 2.4s ease-in-out infinite; }
   .s-writing .sticker { animation: wiggle .6s ease-in-out infinite; }
   .s-running .sticker, .s-waiting .sticker { animation: hop 1.2s ease-in-out infinite; }
   .s-delegating .sticker, .s-browsing .sticker, .s-working .sticker { animation: pulse 1.8s ease-in-out infinite; }
   .s-idle .sticker, .s-done .sticker { opacity: .85; }
+  .mo-lively .s-waiting .sticker { border-radius: 50%; animation: hop 1.2s ease-in-out infinite, ring 1.6s ease-out infinite; }
+  .mo-lively .bump .sticker { animation: bump .35s cubic-bezier(.3, 1.6, .5, 1); }
+  .mo-lively .yay .sticker { animation: yay .9s cubic-bezier(.3, 1.6, .5, 1); opacity: 1; }
+  .mo-lively .s-reading .dot, .mo-lively .s-writing .dot, .mo-lively .s-running .dot, .mo-lively .s-working .dot,
+  .mo-lively .s-delegating .dot, .mo-lively .s-browsing .dot, .mo-lively .s-waiting .dot { animation: blink 1.2s ease-in-out infinite; }
+  .mo-off *, .mo-off *::before, .mo-off *::after { animation: none !important; transition: none !important; }
   .enter { animation: pop .4s cubic-bezier(.3, 1.5, .5, 1); }
   .leave { animation: leave .25s ease-in forwards; }
+
+  #toast { position: fixed; left: 50%; bottom: 22px; translate: -50% 0; padding: 7px 13px; border-radius: 10px; background: rgba(17,18,22,.94); color: #f5f5f6;
+    border: 1px solid rgba(255,255,255,.14); font: 600 12px var(--mono); box-shadow: 0 8px 24px rgba(0,0,0,.3); opacity: 0; transition: opacity .2s, translate .2s; pointer-events: none; }
+  #toast.on { opacity: 1; translate: -50% -6px; }
 
   @keyframes sway { 50% { transform: rotate(3deg); } }
   @keyframes tilt { 50% { transform: rotate(-4deg); } }
@@ -74,18 +131,25 @@
   @keyframes hop { 40% { transform: translateY(-4px); } }
   @keyframes pulse { 50% { transform: scale(1.04); } }
   @keyframes nudge { 50% { transform: scale(1.2); } }
+  @keyframes ring { from { box-shadow: 0 0 0 0 rgba(239,68,68,.55); } to { box-shadow: 0 0 0 14px rgba(239,68,68,0); } }
+  @keyframes bump { 40% { transform: translateY(-5px) scale(1.08); } }
+  @keyframes yay { 25% { transform: translateY(-12px) rotate(-10deg) scale(1.12); } 55% { transform: translateY(0) rotate(8deg); } 75% { transform: rotate(-4deg); } }
+  @keyframes blink { 50% { opacity: .35; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(4px); } }
   @keyframes pop { 0% { transform: scale(.6); } 70% { transform: scale(1.08); } 100% { transform: scale(1); } }
   @keyframes leave { to { transform: scale(.4); opacity: 0; } }
 
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 </head>
-<body class="size-small">
+<body class="size-small hl-line mo-lively b-auto">
 <div id="dock"></div>
+<div id="toast"></div>
 <script>
   const dock = document.getElementById('dock');
-  const agents = new Map(); // key -> { el, e, files, group?, subs?, main }
-  let cfg = { avatars: {}, names: {}, size: 'small', details: 'hover', show: 'working', agents: {} };
+  const agents = new Map(); // key -> { el, e, files, group?, subs?, main, since, tools, touched }
+  let cfg = { avatars: {}, names: {}, size: 'small', details: 'hover', show: 'working', agents: {}, helpers: 'line', motion: 'lively', bubble: {} };
+  let peek = false;
 
   // 24px line icons (drawn twice: white outline, then ink)
   const ICON = {
@@ -101,16 +165,20 @@
   };
   const VERB = { thinking: 'thinking', reading: 'reading', writing: 'writing', running: 'running', delegating: 'handing off', browsing: 'browsing',
                  working: 'working', waiting: 'needs you', done: 'done', idle: 'waiting for a prompt' };
+  const TOOL = new Set(['reading', 'writing', 'running', 'delegating', 'browsing', 'working']);
   const COLOR = { claude: '#f6a983', codex: '#8fdcc6', copilot: '#8cc8f5', antigravity: '#f7a8c8' };
+  const LOGO = { claude: 1, codex: 1, copilot: 1, antigravity: 1 };
   const STALE = 15 * 60e3, REST_MS = { done: 15e3, idle: 6e3 };
   const base = p => String(p).split(/[\\/]/).filter(Boolean).pop() || String(p);
   const cap = s => (s ? s[0].toUpperCase() + s.slice(1) : '');
   const nameOf = e => (cfg.names || {})[e.agent] || cap(e.agent);
   const hash = s => [...String(s)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
-  const LETTER = { claude: 'C', codex: 'X', copilot: 'P', antigravity: 'A' }; // same as the VS Code badges
   const colorOf = agent => COLOR[agent] || '#e8dccf';
+  const LETTER = { claude: 'C', codex: 'X', copilot: 'P', antigravity: 'A' };
   const letterOf = agent => LETTER[agent] || cap(agent)[0];
-  // default sticker: colored disc + initial (helpers: white disc ringed in the parent's color)
+  const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+  const dur = ms => { const s = Math.max(0, Math.round(ms / 1000)); return s < 60 ? s + 's' : s < 3600 ? Math.floor(s / 60) + 'm ' + (s % 60) + 's' : Math.floor(s / 3600) + 'h ' + Math.floor(s / 60) % 60 + 'm'; };
+  // unknown agents: colored disc + initial
   const disc = (letter, fill, ring = '#fff') => 'data:image/svg+xml,' + encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="${fill}" stroke="${ring}" stroke-width="5"/>`
     + `<text x="32" y="42.5" font-family="Segoe UI,system-ui,sans-serif" font-size="29" font-weight="800" text-anchor="middle" fill="#2b2020">${letter}</text></svg>`);
@@ -119,12 +187,14 @@
     const el = document.createElement('div');
     el.className = 'chibi' + (e.sub ? ' sub' : '');
     if (e.sub) el.dataset.parent = letterOf(e.agent);
-    el.innerHTML = '<div class="enter"><div class="info say"><div class="who"></div><div class="what"></div><div class="files"></div></div>'
-      + '<img class="sticker" alt=""><div class="icon"></div><div class="line say"></div></div>';
+    el.innerHTML = '<div class="enter"><div class="info"><div class="card"><div class="hd"><span class="who"></span><span class="meta"></span></div>'
+      + '<div class="what"><i class="dot"></i><span class="verb"></span><span class="obj"></span></div><div class="files"></div><div class="stats"></div></div></div>'
+      + '<img class="sticker" alt=""><div class="icon"></div><div class="line"></div></div>';
     el.addEventListener('contextmenu', ev => { ev.preventDefault(); ap.menu({ agent: e.agent, subType: e.sub ? (e.subType || '') : null }); });
-    el.addEventListener('mouseenter', () => el.querySelector('.info').classList.toggle('left', el.getBoundingClientRect().left < 320));
+    el.addEventListener('mouseenter', () => side(el));
     return el;
   }
+  const side = el => el.querySelector('.info').classList.toggle('left', el.getBoundingClientRect().left < 320);
 
   // "model:opus" rules: the longest one contained in the session's model wins.
   const byModel = (av, model) => {
@@ -132,11 +202,13 @@
     const k = m && Object.keys(av).filter(k => k.startsWith('model:') && m.includes(k.slice(6).toLowerCase())).sort((x, y) => y.length - x.length)[0];
     return k ? av[k] : null;
   };
-  // A list of stickers per key: each session (or helper) keeps one, picked from its id.
+  // A list of stickers per key: each session (or helper) keeps one, picked from its id. Default: the agent's own logo.
   function avatar(a) {
     const img = a.el.querySelector('.sticker'), av = cfg.avatars || {}, e = a.e;
     const set = e.sub ? av[e.subType] || av[e.agent + '-subagent'] || av.subagent : byModel(av, a.model) || av[e.agent];
+    img.classList.toggle('logo', !set && !!LOGO[e.agent]);
     img.src = set ? set[hash(e.session + (e.sub || '')) % set.length]
+      : LOGO[e.agent] ? 'agents/' + e.agent + '.svg'
       : e.sub ? disc((e.subType || 'S')[0].toUpperCase(), '#fff', colorOf(e.agent)) : disc(letterOf(e.agent), colorOf(e.agent));
   }
 
@@ -147,18 +219,24 @@
       + (state === 'waiting' ? '<circle class="halo" cx="12" cy="12" r="9.5"/><circle class="ink" cx="12" cy="12" r="9.5"/><path class="ink" d="M12 7v6M12 17.5h.01"/>' : '') + '</svg>';
   }
 
+  const stats = a => a.el.querySelector('.stats').textContent = plural(a.tools, 'tool') + ' · ' + plural(a.touched.size, 'file') + ' · ' + dur(Date.now() - a.since);
+
   function paint(a) {
     const e = a.e, state = e.state, q = s => a.el.querySelector(s);
     a.el.className = a.el.className.replace(/\s*s-\w+/g, '') + ' s-' + state;
     const what = state === 'running' || state === 'browsing' || state === 'delegating' ? e.detail || (e.file && base(e.file)) : e.file ? base(e.file) : e.detail;
     q('.icon').innerHTML = icon(state);
-    q('.who').textContent = e.sub ? (e.subType || 'helper') + ' · helping ' + nameOf(e) : nameOf(e) + (a.model ? ' (' + a.model + ')' : '') + (e.cwd ? ' · ' + base(e.cwd) : '');
-    q('.what').textContent = state === 'waiting' ? (e.detail || 'needs you') : (VERB[state] || state) + (what && state !== 'done' && state !== 'idle' ? ' ' + what : '');
+    q('.who').textContent = e.sub ? (e.subType || 'helper') : nameOf(e);
+    q('.meta').textContent = e.sub ? 'helping ' + nameOf(e) : [a.model, e.cwd && base(e.cwd)].filter(Boolean).join(' · ');
+    q('.verb').textContent = VERB[state] || state;
+    q('.obj').textContent = state === 'waiting' ? (e.detail && e.detail !== 'needs you' ? e.detail : '') : what && state !== 'done' && state !== 'idle' ? what : '';
     q('.line').textContent = state === 'waiting' ? 'needs you' : state === 'done' || state === 'idle' ? nameOf(e) : what || VERB[state] || '';
+    stats(a);
+    if (state === 'waiting') side(a.el);
   }
 
   function renderFiles(a) {
-    a.el.querySelector('.files').replaceChildren(...a.files.map(f => {
+    a.el.querySelector('.files').replaceChildren(...a.files.slice(0, 4).map(f => {
       const btn = document.createElement('button');
       btn.textContent = base(f); btn.title = 'Show in folder: ' + f;
       btn.addEventListener('click', () => ap.reveal(f, a.e.cwd));
@@ -171,7 +249,7 @@
     const members = [m, ...[...agents.values()].filter(s => s.main === m)];
     const now = Date.now();
     const busy = members.some(s => !REST_MS[s.e.state] || now - s.e.t < REST_MS[s.e.state]);
-    const show = cfg.show === 'always' || (cfg.show === 'alerts' ? members.some(s => s.e.state === 'waiting') : busy);
+    const show = peek || cfg.show === 'always' || (cfg.show === 'alerts' ? members.some(s => s.e.state === 'waiting') : busy);
     m.group.classList.toggle('resting', !show);
     m.group.classList.toggle('off', (cfg.agents || {})[m.e.agent] === false);
   }
@@ -186,6 +264,9 @@
     setTimeout(() => { node.remove(); if (a.main) refresh(a.main); }, 260);
   }
 
+  // one-shot animation class (lively motion only, live events only)
+  const flash = (a, cls, ms) => { a.el.classList.remove('bump', 'yay'); void a.el.offsetWidth; a.el.classList.add(cls); setTimeout(() => a.el.classList.remove(cls), ms); };
+
   function upsert(e) {
     const mainKey = e.agent + ':' + e.session;
     const key = e.sub ? mainKey + ':' + e.sub : mainKey;
@@ -195,7 +276,7 @@
 
     let a = agents.get(key);
     if (!a) {
-      a = { el: make(e), files: [], e };
+      a = { el: make(e), files: [], e, since: e.t, tools: 0, touched: new Set() };
       if (e.sub) { a.main = agents.get(mainKey); a.main.subs.prepend(a.el); }
       else {
         a.group = document.createElement('div'); a.group.className = 'group';
@@ -208,16 +289,20 @@
       agents.set(key, a);
       avatar(a);
     }
+    const prev = a.e.state, live = Date.now() - e.t < 5000;
     a.e = e;
+    if (TOOL.has(e.state)) a.tools += 1;
+    if (e.file) a.touched.add(e.file);
     if (e.model && e.model !== a.model) { a.model = e.model; avatar(a); } // models arrive on SessionStart only
     if (e.file && a.files[0] !== e.file) { a.files = [e.file, ...a.files.filter(f => f !== e.file)].slice(0, 5); renderFiles(a); }
     paint(a);
+    if (live && prev !== e.state && cfg.motion === 'lively') e.state === 'done' ? flash(a, 'yay', 900) : TOOL.has(e.state) && flash(a, 'bump', 350);
     refresh(a.main || a);
   }
 
   setInterval(() => {
     for (const [k, a] of agents) if (Date.now() - a.e.t > STALE) remove(k);
-    for (const a of agents.values()) if (a.group) refresh(a);
+    for (const a of agents.values()) { if (a.group) refresh(a); stats(a); }
   }, 1000);
 
   // ---- positions: each agent remembers where you dropped it (per agent name), anchored bottom-right ----
@@ -229,14 +314,18 @@
     const taken = [...document.querySelectorAll('.group.placed')].some(o => o.dataset.agent === g.dataset.agent);
     if (p && !taken) put(g, p.r, p.b); else dock.append(g); // a 2nd session of the same agent joins the dock
   }
+  // drag a sticker to move its agent; a click without moving pins (or unpins) its bubble
   document.addEventListener('mousedown', ev => {
     const g = ev.button === 0 && ev.target.classList.contains('sticker') && ev.target.closest('.group');
     if (!g) return;
     ev.preventDefault();
+    const chibi = ev.target.closest('.chibi'), x0 = ev.clientX, y0 = ev.clientY;
     const r = g.getBoundingClientRect(), dx = ev.clientX - r.right, dy = ev.clientY - r.bottom;
-    const move = m => put(g, innerWidth - (m.clientX - dx), innerHeight - (m.clientY - dy));
+    let moved = false;
+    const move = m => { if (!moved && Math.hypot(m.clientX - x0, m.clientY - y0) < 4) return; moved = true; put(g, innerWidth - (m.clientX - dx), innerHeight - (m.clientY - dy)); };
     const up = () => {
       removeEventListener('mousemove', move); removeEventListener('mouseup', up);
+      if (!moved) { chibi.classList.toggle('pinned'); side(chibi); return; }
       if (g.classList.contains('placed')) try { localStorage.setItem(posKey(g), JSON.stringify({ r: parseFloat(g.style.right), b: parseFloat(g.style.bottom) })); } catch {}
     };
     addEventListener('mousemove', move); addEventListener('mouseup', up);
@@ -250,9 +339,23 @@
   let over = false;
   document.addEventListener('mousemove', ev => { const now = !!ev.target.closest('.chibi, .subs'); if (now !== over) ap.mouse(over = now); });
 
+  function classes() {
+    const c = cfg, b = c.bubble || {};
+    document.body.className = ['size-' + (c.size || 'small'), c.details === 'always' && 'details-always', (c.agents || {}).subagent === false && 'no-subs',
+      'hl-' + (c.helpers || 'line'), 'mo-' + (c.motion || 'lively'), c.icon === false && 'no-icon', 'th-' + (b.theme || 'auto'), 'bs-' + (b.size || 'medium'),
+      b.on === false && 'b-off', b.style === 'text' && 'b-text', b.border === false && 'b-noborder', b.auto !== false && 'b-auto', b.stats === false && 'b-nostats',
+      peek && 'peek'].filter(Boolean).join(' ');
+    document.body.style.setProperty('--op', (c.opacity || 100) / 100);
+    if (b.text && b.text !== 'auto') document.body.style.setProperty('--bt', b.text); else document.body.style.removeProperty('--bt');
+  }
+
+  let toastTimer;
+  ap.onCmd(m => {
+    if ('peek' in m) { peek = m.peek; classes(); for (const a of agents.values()) { side(a.el); if (a.group) refresh(a); } }
+    if (m.toast) { const t = document.getElementById('toast'); t.textContent = m.toast; t.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('on'), 1400); }
+  });
   ap.onConfig(c => {
-    cfg = c;
-    document.body.className = 'size-' + (c.size || 'small') + (c.details === 'always' ? ' details-always' : '') + ((c.agents || {}).subagent === false ? ' no-subs' : '');
+    cfg = c; classes();
     for (const a of agents.values()) { avatar(a); paint(a); if (a.group) refresh(a); }
   });
   ap.onEvent(upsert);

@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Presence · Your AI agents, now visible</title>
+<meta name="description" content="Sticker chibis that show what every Claude Code and Codex session is doing, live, on top of everything. Free, local, MIT.">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{
+  --bg:#0a0a0c; --bg2:#121216; --line:rgba(255,255,255,.08); --ink:#f1efe9; --muted:#8d8b95; --lime:#c8ff3e;
+  --ease:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0}
+html{overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 "General Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:80;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+img{display:block;max-width:100%;user-select:none;-webkit-user-drag:none}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:"Clash Display",sans-serif;font-weight:600;letter-spacing:-.025em;line-height:.95}
+.glow{filter:drop-shadow(0 20px 30px rgba(0,0,0,.6))}
+
+/* floating nav */
+nav{position:fixed;top:18px;left:50%;translate:-50% 0;z-index:60;display:flex;align-items:center;gap:6px;padding:6px 6px 6px 18px;border-radius:999px;
+  background:rgba(22,22,26,.6);backdrop-filter:blur(18px) saturate(160%);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+nav .logo{font:700 20px "Clash Display";margin-right:22px;display:flex;align-items:center;gap:8px}
+nav .logo i{width:10px;height:10px;border-radius:50%;background:var(--lime)}
+nav a.l{padding:8px 14px;font-size:14px;color:var(--muted);border-radius:999px;transition:color .2s,background .2s}
+nav a.l:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;font:600 15px "General Sans",system-ui,sans-serif;transition:transform .25s var(--ease),background .2s;cursor:pointer;border:0}
+.btn:active{transform:scale(.97)}
+.btn.lime{background:var(--lime);color:#0a0a0c}
+.btn.lime:hover{background:#d8ff74}
+.btn.line{border:1px solid rgba(255,255,255,.18);color:var(--ink);background:transparent}
+.btn.line:hover{background:rgba(255,255,255,.06)}
+nav .btn{height:38px;padding:0 16px;font-size:14px;margin-left:12px}
+
+/* hero */
+.hero{min-height:min(100dvh,920px);display:grid;grid-template-columns:1.35fr .85fr;gap:40px;align-items:center;padding:120px 0 60px;position:relative}
+.hero::before{content:"";position:absolute;width:700px;height:700px;right:-100px;top:60px;border-radius:50%;background:radial-gradient(circle,rgba(200,255,62,.12),transparent 65%);pointer-events:none}
+.hero h1{font-size:clamp(52px,6.8vw,100px)}
+.hero h1 .dim{color:#4a4950}
+.hero h1 .inl{display:inline-block;width:.8em;vertical-align:-.08em;animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(6deg)}}
+.hero p{font-size:19px;color:var(--muted);max-width:460px;margin:30px 0 36px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.reveal-up{animation:up 1s var(--ease) both;animation-delay:var(--d,0s)}
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+
+/* holo card */
+.stage{perspective:1200px;display:grid;place-items:center;position:relative}
+.holo{width:min(380px,80vw);aspect-ratio:3/4;border-radius:28px;position:relative;transform-style:preserve-3d;transition:transform .5s var(--ease);
+  background:#17171c;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 80px -20px rgba(0,0,0,.8);display:grid;place-items:center;overflow:hidden}
+.holo::before{content:"";position:absolute;inset:0;opacity:.4;mix-blend-mode:color-dodge;
+  background:conic-gradient(from var(--a,0deg) at var(--mx,50%) var(--my,50%),#ff6fd8,#6ff7ff,#c8ff3e,#ffd36f,#9f7bff,#ff6fd8);filter:blur(30px)}
+.holo::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 10px,rgba(255,255,255,.05) 10px 12px)}
+.holo>img{position:relative;z-index:2;width:66%;transform:translateZ(60px)}
+.holo .meta{position:absolute;z-index:2;left:22px;right:22px;bottom:20px;display:flex;justify-content:space-between;font:500 12px "JetBrains Mono";color:rgba(255,255,255,.75);transform:translateZ(30px)}
+.orbit-stk{position:absolute;width:var(--w);rotate:var(--r);z-index:3}
+
+/* gallery */
+section{padding:130px 0}
+.sec-h{font-size:clamp(42px,5.4vw,80px);max-width:900px}
+.sec-p{color:var(--muted);max-width:520px;margin-top:20px;font-size:18px}
+.gallery{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:300px;gap:14px;margin-top:64px}
+.tile{position:relative;border-radius:26px;background:var(--bg2);border:1px solid var(--line);overflow:hidden;padding:26px;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}
+.tile::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s;background:radial-gradient(420px circle at var(--x,50%) var(--y,50%),rgba(200,255,62,.13),transparent 60%)}
+.tile:hover::before{opacity:1}
+.tile .lbl{display:flex;justify-content:space-between;align-items:center}
+.tile h3{font-size:28px}
+.tile small{font:500 13px "JetBrains Mono";color:var(--muted)}
+.tile .art{position:absolute;inset:0;z-index:-1;display:grid;place-items:center}
+.tile .art img{position:absolute;width:var(--w);left:var(--l);top:var(--t);rotate:var(--r);transition:transform .6s var(--spring)}
+.tile:hover .art img{transform:translateY(-10px) rotate(-6deg) scale(1.06)}
+.tile:hover .art img:nth-child(2n){transform:translateY(-14px) rotate(8deg) scale(1.08)}
+.t1{grid-column:span 7;grid-row:span 2}
+.t2{grid-column:span 5}
+.t3{grid-column:span 5}
+.t4{grid-column:span 4}
+.t5{grid-column:span 8}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.nums div{padding:44px 28px}
+.nums div+div{border-left:1px solid var(--line)}
+.nums b{display:block;font:600 clamp(44px,5vw,72px)/1 "Clash Display";letter-spacing:-.03em}
+.nums b em{font-style:normal;color:var(--lime)}
+.nums span{color:var(--muted);font-size:15px}
+
+/* code */
+.code-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.code{border-radius:24px;background:#0f0f13;border:1px solid var(--line);overflow:hidden;position:relative}
+.code .tabs{display:flex;gap:2px;padding:12px 12px 0}
+.code .tabs span{font:500 13px "JetBrains Mono";padding:10px 16px;border-radius:12px 12px 0 0;color:var(--muted)}
+.code .tabs span.on{background:#17171d;color:var(--ink)}
+.code pre{background:#17171d;margin:0 12px 12px;border-radius:0 14px 14px 14px;padding:26px;font:400 15px/1.8 "JetBrains Mono";color:#cfcdd6;overflow:auto}
+.k{color:#ff79c6}.s{color:var(--lime)}.c{color:#5c5b66}.t{color:#7cc7ff}
+.code .peel-stk{position:absolute;right:-6px;top:-10px;width:130px;rotate:14deg}
+.checks{display:grid;gap:18px;margin-top:34px}
+.checks div{display:flex;gap:14px;align-items:flex-start;color:#c9c7cf}
+.checks i{color:var(--lime);font-size:22px;margin-top:2px}
+
+/* orbit final */
+.final{position:relative;text-align:center;padding:180px 0;overflow:hidden}
+.final h2{font-size:clamp(52px,8vw,124px);max-width:1000px;margin:0 auto;position:relative;z-index:2}
+.final .cta{display:flex;gap:12px;justify-content:center;margin-top:42px;position:relative;z-index:2}
+.ring{position:absolute;left:50%;top:50%;width:1100px;height:1100px;margin:-550px 0 0 -550px;border-radius:50%;border:1px dashed rgba(255,255,255,.08);animation:spin 80s linear infinite}
+.ring img{position:absolute;width:110px;left:50%;top:50%;margin:-55px;transform:rotate(var(--a)) translateY(-550px) rotate(calc(-1 * var(--a)))}
+.ring.inner{width:760px;height:760px;margin:-380px 0 0 -380px;animation-direction:reverse;animation-duration:60s}
+.ring.inner img{width:84px;margin:-42px;transform:rotate(var(--a)) translateY(-380px) rotate(calc(-1 * var(--a)))}
+@keyframes spin{to{rotate:360deg}}
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer .row{display:flex;gap:26px}
+
+[data-reveal]{opacity:0;translate:0 40px;transition:opacity 1s var(--ease),translate 1s var(--ease)}
+[data-reveal].is-in{opacity:1;translate:0 0}
+@media (max-width:960px){
+  nav a.l{display:none}
+  .hero,.code-wrap{grid-template-columns:minmax(0,1fr)}
+  .hero::before{width:360px;height:360px;right:-60px}
+  .gallery{grid-template-columns:1fr;grid-auto-rows:280px}
+  .t1,.t2,.t3,.t4,.t5{grid-column:auto;grid-row:auto}
+  .nums{grid-template-columns:1fr 1fr}
+  .nums div:nth-child(3){border-left:0}
+  section{padding:90px 0}
+  .ring{scale:.6}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}[data-reveal]{opacity:1;translate:0 0}}
+
+/* extra */
+.holo .ap-dock{position:relative;z-index:2;--ap-s:130px;--ap-paper:#fffdf8;transform:translateZ(60px);padding-top:70px}
+.holo .live{display:inline-flex;align-items:center;gap:6px}
+.holo .live i{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:.3}}
+.tile .chips{position:absolute;display:grid;gap:8px;right:8%;top:16%}
+.tile .chips span{background:#fffdf8;color:#3b2a2a;border:2px solid var(--a);border-radius:14px;padding:5px 12px;font:650 14px ui-rounded,"Segoe UI",system-ui,sans-serif;rotate:var(--r);width:max-content}
+.badges{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:18px;font-size:58px;padding-bottom:40px}
+.badges span{width:92px;height:92px;border-radius:24px;background:rgba(10,10,12,.08);display:grid;place-items:center}
+.btn.lime[data-copy]{font-family:"JetBrains Mono",monospace;font-weight:500}
+.btn.is-copied{background:#fff}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#"><i></i>presence</a>
+  <a class="l" href="#agents">Agents</a><a class="l" href="#code">Customize</a><a class="l" href="#">Docs</a><a class="l" href="#">GitHub</a>
+  <a class="btn lime" href="#start">Install</a>
+</nav>
+
+<header class="wrap hero">
+  <div>
+    <h1 class="reveal-up">Your AI agents.<br><span style="color:var(--lime)">Now visible.</span></h1>
+    <p class="reveal-up" style="--d:.15s">Floating sticker chibis show what every Claude Code and Codex session is doing, live, on top of everything.</p>
+    <div class="cta reveal-up" style="--d:.3s">
+      <a class="btn lime" href="#start">Install <i class="ph-bold ph-arrow-up-right"></i></a>
+      <a class="btn line" href="#agents">Meet the agents</a>
+    </div>
+  </div>
+  <div class="stage reveal-up" style="--d:.2s">
+    <div class="holo" id="holo">
+      <div data-dock data-only="claude" data-speed="1400" aria-label="Live demo of Claude's sticker and its subagents"></div>
+      <div class="meta"><span>CLAUDE · MY-APP</span><span class="live"><i></i>LIVE</span></div>
+    </div>
+    <img class="orbit-stk glow" data-drag src="assets/avatars/codex.svg" alt="" style="--w:120px;--r:-12deg;left:-4%;top:4%">
+    <img class="orbit-stk glow" data-drag src="assets/fluent/sparkles.png" alt="" style="--w:76px;--r:10deg;right:2%;top:-2%">
+    <img class="orbit-stk glow" data-drag src="assets/avatars/subagent.svg" alt="" style="--w:84px;--r:14deg;right:-2%;bottom:8%;filter:hue-rotate(-100deg) drop-shadow(0 20px 30px rgba(0,0,0,.6))">
+    <img class="orbit-stk glow" data-drag src="assets/stickers/cutesy/chrome-star-large.png" alt="" style="--w:96px;--r:-16deg;left:0;bottom:8%">
+  </div>
+</header>
+
+<div class="wrap" data-reveal>
+  <div class="nums">
+    <div><b>9</b><span>live states, each with its own motion</span></div>
+    <div><b>2</b><span>agents today: Claude Code and Codex</span></div>
+    <div><b>3</b><span>commands to set it up</span></div>
+    <div><b>0</b><span>servers, accounts or network calls</span></div>
+  </div>
+</div>
+
+<section id="agents">
+  <div class="wrap">
+    <h2 class="sec-h" data-reveal>Every agent gets a face.</h2>
+    <p class="sec-p" data-reveal>Claude is Mochi. Codex is Bit. Every subagent gets a Pip in its own colour. Or bring your own.</p>
+    <div class="gallery">
+      <div class="tile t1" data-reveal>
+        <div class="art">
+          <img class="glow" src="assets/avatars/claude.svg" alt="Mochi, the Claude Code sticker" style="--w:300px;--l:10%;--t:16%;--r:-6deg">
+          <div class="chips">
+            <span style="--a:#f7c3a1;--r:-3deg">✏️ auth.ts</span>
+            <span style="--a:#f1cdec;--r:2deg">🧩 map the auth code</span>
+            <span style="--a:#ff8a80;--r:-2deg;font-weight:750">❗ needs you</span>
+            <span style="--a:#bde8c8;--r:3deg">✓ done</span>
+          </div>
+        </div>
+        <div></div>
+        <div class="lbl"><h3>Claude Code</h3><small>MOCHI · CLI, DESKTOP, IDE</small></div>
+      </div>
+      <div class="tile t2" data-reveal>
+        <div class="art">
+          <img class="glow" src="assets/avatars/codex.svg" alt="Bit, the Codex sticker" style="--w:170px;--l:34%;--t:6%;--r:6deg">
+        </div>
+        <div></div>
+        <div class="lbl"><h3>Codex</h3><small>BIT · CLI AND APP</small></div>
+      </div>
+      <div class="tile t3" data-reveal>
+        <div class="art">
+          <img class="glow" src="assets/avatars/subagent.svg" alt="" style="--w:110px;--l:12%;--t:14%;--r:-8deg">
+          <img class="glow" src="assets/avatars/subagent.svg" alt="" style="--w:110px;--l:42%;--t:8%;--r:6deg;filter:hue-rotate(50deg)">
+          <img class="glow" src="assets/avatars/subagent.svg" alt="" style="--w:110px;--l:70%;--t:16%;--r:-4deg;filter:hue-rotate(-100deg)">
+        </div>
+        <div></div>
+        <div class="lbl"><h3>Subagents</h3><small>PIP · A COLOUR PER TYPE</small></div>
+      </div>
+      <div class="tile t4" data-reveal style="background:#c8ff3e;color:#0a0a0c">
+        <div class="badges"><span>🍑</span><span>🤖</span><span>🌱</span></div>
+        <div></div>
+        <div class="lbl"><h3>Explorer badges</h3><small style="color:#2e3a10">VS CODE · CURSOR · WINDSURF</small></div>
+      </div>
+      <div class="tile t5" data-reveal>
+        <div class="art">
+          <img src="assets/stickers/anime/jiji-ok.png" alt="" style="--w:130px;--l:6%;--t:14%;--r:-8deg">
+          <img class="glow" src="assets/fluent/robot.png" alt="" style="--w:120px;--l:26%;--t:22%;--r:6deg">
+          <img src="assets/stickers/expressions/purple-dizzy-face.png" alt="" style="--w:120px;--l:46%;--t:8%;--r:-4deg">
+          <img class="glow" src="assets/fluent/frog.png" alt="" style="--w:110px;--l:64%;--t:24%;--r:8deg">
+          <img src="assets/stickers/retro-tech/hello-kitty-disc.png" alt="" style="--w:120px;--l:80%;--t:6%;--r:10deg">
+        </div>
+        <div></div>
+        <div class="lbl"><h3>Your own stickers</h3><small>PNG · GIF · SVG · WEBP</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="code" style="padding-top:40px">
+  <div class="wrap code-wrap">
+    <div data-reveal>
+      <h2 class="sec-h" style="font-size:clamp(40px,4.6vw,66px)">Make it yours.</h2>
+      <div class="checks">
+        <div><i class="ph-fill ph-check-circle"></i>Any PNG, GIF, SVG or WebP. Animated GIFs play.</div>
+        <div><i class="ph-fill ph-check-circle"></i>Rename them. Claude can be Mochi, or anyone.</div>
+        <div><i class="ph-fill ph-check-circle"></i>A different sticker per subagent type.</div>
+        <div><i class="ph-fill ph-check-circle"></i>Drag the dock anywhere. Hover for recent files.</div>
+      </div>
+    </div>
+    <div class="code" data-reveal>
+      <div class="tabs"><span class="on">config.json</span><span>terminal</span></div>
+<pre><span class="c">// ~/.agent-presence/config.json</span>
+{
+  <span class="t">"avatars"</span>: {
+    <span class="t">"claude"</span>: <span class="s">"~/stickers/fox.gif"</span>,
+    <span class="t">"codex"</span>: <span class="s">"~/stickers/robot.png"</span>,
+    <span class="t">"Explore"</span>: <span class="s">"~/stickers/detective.png"</span>
+  },
+  <span class="t">"names"</span>: { <span class="t">"claude"</span>: <span class="s">"Mochi"</span>, <span class="t">"codex"</span>: <span class="s">"Bit"</span> },
+  <span class="t">"autostart"</span>: <span class="k">true</span>
+}</pre>
+      <img class="peel-stk glow" src="assets/fluent/robot.png" alt="">
+    </div>
+  </div>
+</section>
+
+<section class="final" id="start">
+  <div class="ring" id="ring1"></div>
+  <div class="ring inner" id="ring2"></div>
+  <div class="wrap" data-reveal>
+    <h2>Stop wondering what your agents are doing.</h2>
+    <div class="cta">
+      <button class="btn lime" data-copy="npm i -g agent-presence"><span data-copy-label>npm i -g agent-presence</span><i class="ph-bold ph-copy"></i></button>
+      <a class="btn line" href="#">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <span>Free and open source, MIT</span>
+  <div class="row"><a href="#">Docs</a><a href="#">GitHub</a><a href="#">npm</a><a href="#">VS Code extension</a></div>
+</div></footer>
+
+<script src="shared.js"></script>
+<script>
+const holo = document.getElementById('holo');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduce) {
+  holo.parentElement.addEventListener('pointermove', e => {
+    const r = holo.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+    holo.style.transform = `rotateY(${(px - .5) * 20}deg) rotateX(${(.5 - py) * 20}deg)`;
+    holo.style.setProperty('--mx', px * 100 + '%'); holo.style.setProperty('--my', py * 100 + '%');
+    holo.style.setProperty('--a', px * 360 + 'deg');
+  });
+  holo.parentElement.addEventListener('pointerleave', () => holo.style.transform = '');
+}
+document.querySelectorAll('.tile').forEach(t => t.addEventListener('pointermove', e => {
+  const r = t.getBoundingClientRect();
+  t.style.setProperty('--x', e.clientX - r.left + 'px'); t.style.setProperty('--y', e.clientY - r.top + 'px');
+}));
+const ring = (id, list) => document.getElementById(id).innerHTML = list.map((s,i) => `<img class="glow" src="assets/${s}" alt="" style="--a:${i * 360 / list.length}deg">`).join('');
+ring('ring1', ['avatars/claude.svg','stickers/anime/jiji-ok.png','fluent/ghost.png','avatars/codex.svg','fluent/gem-stone.png','stickers/expressions/yellow-star-eyes.png','avatars/subagent.svg','stickers/retro-tech/hello-kitty-disc.png','fluent/robot.png','stickers/japanese/black-lucky-cat.png']);
+ring('ring2', ['fluent/high-voltage.png','avatars/claude.svg','fluent/alien.png','avatars/codex.svg','fluent/crystal-ball.png','fluent/frog.png','avatars/subagent.svg']);
+</script>
+</body>
+</html>
