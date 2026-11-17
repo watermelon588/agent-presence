@@ -113,4 +113,9 @@ const rows = ['a', 'a', '', 'b', 'b', ''];
 assert.deepEqual(fit(rows, 6), rows);
 assert.deepEqual(fit(rows, 5).slice(0, 2), ['a', 'a']); assert.equal(fit(rows, 5).length, 3);
 
+// Asking for a website-only fan pack explains why it's missing and where to get it
+const { fanHint } = require('./cli');
+assert.ok(fanHint('minion').includes('stickers.html#minions'));
+assert.equal(fanHint('model-logos'), undefined);
+
 console.log('all checks passed');

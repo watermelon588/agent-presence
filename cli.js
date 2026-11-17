@@ -395,6 +395,8 @@ function showStickers(args) {
     const k = Object.keys(a).find(k => name(k) === slug(x) || name(k) === slug(x) + '-logo');
     return k ? [k] : [];
   });
+  const fan = names.map(x => fanHint(x)).find(Boolean);
+  if (!keys.length && fan) return console.log(fan.replace(/\n.*$/, '') + '\n  The terminal view only draws the built-in pixel stickers; saved fan packs show up in the overlay.');
   if (!keys.length) return console.log(`No terminal sticker called "${names.join(' ')}". Try: ${['all', ...termPacks.keys()].join(', ')}, or an agent (claude, codex...)`);
   const cards = keys.map(k => ({ st: a[k], motion: 'move', caption: [name(k).replace(/-logo$/, '')] }));
   const frame = (t, cols = process.stdout.columns || 100) => cardRows(cards, t, cols);
@@ -434,6 +436,19 @@ function packs() {
 
 // "dinosaur" finds the dinosaurs pack and the other way round
 const findPack = (all, name) => { const s = slug(name); return [s, s + 's', s.replace(/s$/, '')].find(k => all.has(k)); };
+
+// Fan packs on the website (other people's characters) that can't ship in the package. Asked for one we don't have? Say why and where.
+const FAN_PACKS = new Map(['adventure-time', 'angry-birds', 'anime-reactions', 'brand-cutouts', 'cartoons', 'chainsaw-chibis', 'characters', 'goth',
+  'gumball', 'internet-cats', 'minions', 'monochrome-heads', 'plants-vs-zombies', 'pokemon', 'retro-classics', 'roblox', 'studio-ghibli', 'tech-faces'].map(p => [p, p]));
+function fanHint(name, who = "<agent>") {
+  const p = findPack(FAN_PACKS, name);
+  return p && [
+    `"${p}" is a fan pack: other people's characters, so it lives on the website only and isn't bundled with agentpeeps.`,
+    `  1. Download the stickers: https://agentpeeps.space/stickers.html#${p}`,
+    `  2. Save them into: ${path.join(HOME, 'stickers', p)}`,
+    `  3. Then run: agentpeeps set ${who} ${p}`,
+  ].join('\n');
+}
 
 // A config value ("pack:dinosaur", an image path, or a list of both) -> existing image files.
 function stickerFiles(value, all = packs()) {
@@ -478,7 +493,7 @@ function setStickers(target, values) {
     for (const v of values) {
       if (findPack(all, v)) picked.push('pack:' + findPack(all, v));
       else if (fs.existsSync(expandPath(v))) picked.push(expandPath(v));
-      else return console.log(`No pack or image called "${v}". See your packs with: agentpeeps packs`);
+      else return console.log(fanHint(v, target) || `No pack or image called "${v}". See your packs with: agentpeeps packs`);
     }
     avatars[key] = picked.length === 1 ? picked[0] : picked;
   }
@@ -532,4 +547,4 @@ if (require.main === module) {
   else console.log(HELP);
 }
 
-module.exports = { normalize, patchFiles, termArt, stickerLines, fit, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };
+module.exports = { normalize, patchFiles, termArt, stickerLines, fit, fanHint, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };
