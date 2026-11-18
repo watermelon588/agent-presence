@@ -529,6 +529,7 @@ const HELP = `Agent Peeps — stickers for your AI coding agents
   agentpeeps set <target> <pack>       e.g. set claude dinosaur, set model:opus cats, set helpers robots
   agentpeeps watch                     live view in the terminal, with a sticker per agent
   agentpeeps show [pack|agent|all]     preview terminal stickers (show, show claude, show pixel-food, show all)
+  agentpeeps --version                 print the version
   agentpeeps emit <agent> [event]      (used by hooks; reads hook JSON on stdin)
 
 Packs are folders of images in ~/.agent-presence/stickers/<pack>. Settings live in ~/.agent-presence/config.json.`;
