@@ -21,7 +21,7 @@ export function support(kind) {
       <h2 id="modal-h" class="mt-3 text-[30px]"></h2>
       <p class="mt-2 text-muted" data-p></p>
       <div class="mt-6 flex flex-wrap gap-2.5">
-        <a class="btn btn-accent !h-11" href="https://github.com/watermelon588/agent-presence" target="_blank" rel="noopener">Star it on GitHub instead <i class="ph-bold ph-arrow-up-right"></i></a>
+        <a class="btn btn-accent !h-11" href="https://github.com/watermelon588/agentpeeps" target="_blank" rel="noopener">Star it on GitHub instead <i class="ph-bold ph-arrow-up-right"></i></a>
         <form method="dialog"><button class="btn btn-line !h-11">Close</button></form>
       </div>`;
     dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }); // click the backdrop to close

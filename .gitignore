@@ -3,5 +3,8 @@ node_modules/
 *.vsix
 
 # Third-party source art: kept local (sheets and cutouts the stickers were made from)
-sticks/
-brand/
+/sticks/
+/brand/
+
+# the website serves its own images
+!website/web/public/**/*.png
