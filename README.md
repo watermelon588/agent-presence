@@ -1,4 +1,4 @@
-<p align="center"><img src="logo.png" width="112" alt="Agent Peeps logo"></p>
+<p align="center"><img src="logo.png" width="140" alt="Agent Peeps logo: a pink pig"></p>
 
 <h1 align="center">Agent Peeps</h1>
 
