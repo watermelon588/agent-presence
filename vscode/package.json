@@ -129,8 +129,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/watermelon588/agent-presence.git",
+    "url": "https://github.com/watermelon588/agentpeeps.git",
     "directory": "vscode"
   },
-  "homepage": "https://github.com/watermelon588/agent-presence"
+  "homepage": "https://github.com/watermelon588/agentpeeps"
 }

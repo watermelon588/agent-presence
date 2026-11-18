@@ -83,14 +83,14 @@ Copilot and Antigravity load hooks at startup, so restart them after `init`. The
 **Claude Code**
 
 ```
-/plugin marketplace add watermelon588/agent-presence
+/plugin marketplace add watermelon588/agentpeeps
 /plugin install agent-presence@agent-presence
 ```
 
 **Codex** (CLI or desktop app)
 
 ```bash
-codex plugin marketplace add watermelon588/agent-presence
+codex plugin marketplace add watermelon588/agentpeeps
 ```
 
 Then open `/plugins` in Codex, install **Agent Peeps**, and approve its hooks when Codex asks (Codex never trusts plugin hooks automatically). Plugins with hooks can't be listed in OpenAI's public plugin directory, so this GitHub marketplace is the install path.
