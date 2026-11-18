@@ -118,4 +118,21 @@ const { fanHint } = require('./cli');
 assert.ok(fanHint('minion').includes('stickers.html#minions'));
 assert.equal(fanHint('model-logos'), undefined);
 
+// An unknown command says so before the help and exits 1; no arguments, -h and --help still print the help and exit 0; emit stays silent and exits 0
+const { spawnSync } = require('child_process');
+const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'agentpeeps-cli-'));
+const runCli = (args, input = '') => spawnSync(process.execPath, [path.join(__dirname, 'cli.js'), ...args], { encoding: 'utf8', input, env: { ...process.env, AGENT_PRESENCE_HOME: scratch } });
+const unknown = runCli(['stikers']);
+assert.equal(unknown.status, 1);
+assert.ok(unknown.stderr.startsWith('Unknown command "stikers".\n\nAgent Peeps'));
+assert.equal(unknown.stdout, '');
+for (const args of [[], ['-h'], ['--help'], ['help']]) {
+  const help = runCli(args);
+  assert.equal(help.status, 0, args.join(' ') + ' exits 0');
+  assert.ok(help.stdout.includes('agentpeeps init') && !help.stdout.includes('Unknown command'));
+}
+const emitted = runCli(['emit', 'claude'], '{}');
+assert.equal(emitted.status, 0); assert.equal(emitted.stdout, ''); assert.equal(emitted.stderr, '');
+fs.rmSync(scratch, { recursive: true, force: true });
+
 console.log('all checks passed');
