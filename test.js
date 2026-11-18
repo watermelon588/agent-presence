@@ -118,4 +118,17 @@ const { fanHint } = require('./cli');
 assert.ok(fanHint('minion').includes('stickers.html#minions'));
 assert.equal(fanHint('model-logos'), undefined);
 
+// doctor: a temp HOME with hooks installed passes the hook check, one without fails it
+const { doctor } = require('./cli');
+const dh = fs.mkdtempSync(path.join(os.tmpdir(), 'ap-doctor-'));
+fs.mkdirSync(path.join(dh, '.claude'));
+fs.mkdirSync(path.join(dh, '.codex'));
+editHooksFile(path.join(dh, '.claude', 'settings.json'), ['PreToolUse'], () => ({ type: 'command', command: 'node', args: ['/x/agentpeeps/cli.js', 'emit', 'claude'] }));
+const dr = doctor(dh);
+assert.equal(dr.find(r => r.name === 'Claude Code hooks').ok, true);
+assert.equal(dr.find(r => r.name === 'Codex hooks').ok, false);
+assert.ok(dr.find(r => r.name === 'Codex hooks').msg.includes('agentpeeps init codex'));
+assert.ok(dr.find(r => r.skip && r.name === 'Copilot hooks'));
+assert.equal(doctor(fs.mkdtempSync(path.join(os.tmpdir(), 'ap-doctor-'))).some(r => r.ok === false), true);
+
 console.log('all checks passed');
