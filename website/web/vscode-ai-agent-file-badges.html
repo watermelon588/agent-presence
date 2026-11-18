@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>See which AI agent is editing which file in VS Code</title>
+<meta name="description" content="A VS Code extension that badges each file Claude Code, Codex, Copilot or Antigravity is working on, in its color. Works in Cursor, Windsurf and Antigravity too." />
+<link rel="canonical" href="https://www.agentpeeps.space/vscode-ai-agent-file-badges.html" />
+<meta name="theme-color" content="#0b0b0e" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Agent Peeps" />
+<meta property="og:url" content="https://www.agentpeeps.space/vscode-ai-agent-file-badges.html" />
+<meta property="og:title" content="See which AI agent is editing which file in VS Code" />
+<meta property="og:description" content="A VS Code extension that badges each file Claude Code, Codex, Copilot or Antigravity is working on, in its color. Works in Cursor, Windsurf and Antigravity too." />
+<meta property="og:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="See which AI agent is editing which file in VS Code" />
+<meta name="twitter:description" content="A VS Code extension that badges each file Claude Code, Codex, Copilot or Antigravity is working on, in its color. Works in Cursor, Windsurf and Antigravity too." />
+<meta name="twitter:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="stylesheet" href="/src/docs.css" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "See which AI agent is editing which file in VS Code", "description": "A VS Code extension that badges each file Claude Code, Codex, Copilot or Antigravity is working on, in its color. Works in Cursor, Windsurf and Antigravity too.", "url": "https://www.agentpeeps.space/vscode-ai-agent-file-badges.html", "datePublished": "2026-11-18", "dateModified": "2026-11-18", "image": "https://www.agentpeeps.space/brand/social-card.png", "author": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "publisher": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "about": {"@type": "SoftwareApplication", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}}</script>
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/guide.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<div class="wrap pt-24 pb-24 md:pt-28">
+  <article class="docs-body guide">
+    <header class="docs-head">
+      <p class="docs-kicker">Guide</p>
+      <h1>See which AI agent is editing which file, in VS Code.</h1>
+      <p class="docs-lede">When agents work in your repo, the Explorer gives no hint of where. The Agent Peeps extension adds a colored badge to every file an agent is reading or writing, and a panel listing what each agent touched.</p>
+    </header>
+
+    <section>
+      <h2>What it shows</h2>
+      <ul>
+        <li><b>Explorer badges:</b> each file an agent works on gets the agent's initial in its color: 🅒 Claude Code, 🅧 Codex, 🅟 Copilot, 🅐 Antigravity. Subagents show their type's initial, for example 🅔 for an Explore helper.</li>
+        <li><b>Folders light up</b> around active files, so you spot where agents are working in a large tree.</li>
+        <li><b>An Agents view</b> in the Explorer sidebar: every running agent with its sticker, its subagents and the files it touched. Click a file to open it.</li>
+        <li>A badge fades a while after the agent moves on (90 seconds by default, <code>agentPresence.recentSeconds</code>).</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Set it up</h2>
+      <p>The extension reads the event log the Agent Peeps hooks write, so add the hooks first:</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init</pre></div>
+      <p>Then install the extension. Until the Marketplace listing is live, install the <code>.vsix</code> from the <a href="https://github.com/watermelon588/agentpeeps/tree/main/vscode">repo's vscode folder</a>:</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="code --install-extension agent-presence-vscode-0.1.0.vsix"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> code --install-extension agent-presence-vscode-0.1.0.vsix</pre></div>
+      <p>Use <code>cursor</code>, <code>windsurf</code> or <code>antigravity</code> in place of <code>code</code> for those editors: they are built on VS Code and run the same extension.</p>
+    </section>
+    <section>
+      <h2>Which agents it sees</h2>
+      <p>It shows whatever the hooks report: Claude Code, Codex, GitHub Copilot (agent mode and CLI) and Antigravity, wherever they run, including in a terminal inside Cursor. The built-in agents of Cursor and Windsurf don't report through these hooks yet.</p>
+    </section>
+    <section>
+      <h2>Customize the badges</h2>
+      <div class="dcode" data-lang="json"><pre>// settings.json
+&quot;agentPresence.badges&quot;: {
+  &quot;claude&quot;: &quot;C&quot;,
+  &quot;codex&quot;: &quot;X&quot;,
+  &quot;Explore&quot;: &quot;🔍&quot;
+}</pre></div>
+      <p>Keys are agent names, <code>subagent</code> for every helper, or a subagent type. Colors are theme colors (<code>agentPresence.claude</code>, <code>agentPresence.codex</code>...) you can override in <code>workbench.colorCustomizations</code>.</p>
+    </section>
+
+    <section class="guide-cta">
+      <h2>Try it in one command</h2>
+      <p>Agent Peeps is free and open source (MIT). It only reads hook events on your machine: no account, no server, no network.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init
+npx agentpeeps overlay"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init
+<span class="p">$</span> npx agentpeeps overlay</pre></div>
+      <p><a href="https://www.agentpeeps.space/">See the stickers in your browser</a> · <a href="docs.html">Read the docs</a> · <a href="https://github.com/watermelon588/agentpeeps">Star it on GitHub</a></p>
+    </section>
+
+    <nav class="guide-more" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul><li><a href="claude-code-permission-notifications.html">Know when Claude Code needs your permission</a></li><li><a href="run-multiple-coding-agents.html">Run several AI coding agents without losing track</a></li><li><a href="claude-code-hooks.html">Claude Code hooks explained, with a real example</a></li><li><a href="coding-agent-hooks-compared.html">Claude Code, Codex, Copilot and Antigravity hooks</a></li></ul>
+    </nav>
+  </article>
+</div>
+
+<!-- include:footer -->
+
+</body>
+</html>

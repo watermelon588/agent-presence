@@ -129,3 +129,9 @@ kbd { display: inline-block; min-width: 24px; padding: 1px 7px; border: 1px soli
 .api dt:first-child, .faq dt:first-child { border-top: 0; }
 .api dd, .faq dd { padding: 0 16px 14px; margin: 0; font-size: 14.5px; }
 .faq dt { font-weight: 600; color: var(--ink); }
+
+/* Guide pages: the docs column without the sidebar */
+.guide { max-width: 760px; margin-inline: auto; }
+.guide-cta, .guide-more { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--line); }
+.guide ul { list-style: disc; padding-left: 1.2em; }
+.guide li { margin-bottom: 6px; }

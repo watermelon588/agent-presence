@@ -9,3 +9,11 @@ Install: `npx agentpeeps init` (adds hooks for every supported agent it finds), 
 - [Sticker shop](https://www.agentpeeps.space/stickers.html): 400+ stickers, download packs as zip
 - [GitHub](https://github.com/watermelon588/agentpeeps): source, issues, contributing
 - [npm](https://www.npmjs.com/package/agentpeeps)
+
+## Guides
+
+- [Know when Claude Code needs your permission](https://www.agentpeeps.space/claude-code-permission-notifications.html)
+- [Run several AI coding agents without losing track](https://www.agentpeeps.space/run-multiple-coding-agents.html)
+- [Claude Code hooks explained, with a real example](https://www.agentpeeps.space/claude-code-hooks.html)
+- [Claude Code, Codex, Copilot and Antigravity hooks compared](https://www.agentpeeps.space/coding-agent-hooks-compared.html)
+- [See which AI agent is editing which file in VS Code](https://www.agentpeeps.space/vscode-ai-agent-file-badges.html)

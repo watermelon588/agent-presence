@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Code, Codex, Copilot and Antigravity hooks</title>
+<meta name="description" content="Where each AI coding agent keeps its hooks, which events it fires, whether hooks run in the background, and what that means for tools built on them." />
+<link rel="canonical" href="https://www.agentpeeps.space/coding-agent-hooks-compared.html" />
+<meta name="theme-color" content="#0b0b0e" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Agent Peeps" />
+<meta property="og:url" content="https://www.agentpeeps.space/coding-agent-hooks-compared.html" />
+<meta property="og:title" content="Claude Code, Codex, Copilot and Antigravity hooks" />
+<meta property="og:description" content="Where each AI coding agent keeps its hooks, which events it fires, whether hooks run in the background, and what that means for tools built on them." />
+<meta property="og:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Claude Code, Codex, Copilot and Antigravity hooks" />
+<meta name="twitter:description" content="Where each AI coding agent keeps its hooks, which events it fires, whether hooks run in the background, and what that means for tools built on them." />
+<meta name="twitter:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="stylesheet" href="/src/docs.css" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Claude Code, Codex, Copilot and Antigravity hooks", "description": "Where each AI coding agent keeps its hooks, which events it fires, whether hooks run in the background, and what that means for tools built on them.", "url": "https://www.agentpeeps.space/coding-agent-hooks-compared.html", "datePublished": "2026-11-18", "dateModified": "2026-11-18", "image": "https://www.agentpeeps.space/brand/social-card.png", "author": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "publisher": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "about": {"@type": "SoftwareApplication", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}}</script>
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/guide.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<div class="wrap pt-24 pb-24 md:pt-28">
+  <article class="docs-body guide">
+    <header class="docs-head">
+      <p class="docs-kicker">Guide</p>
+      <h1>Claude Code, Codex, Copilot and Antigravity hooks, compared.</h1>
+      <p class="docs-lede">All four major coding agents now have hooks, but they differ in where the config lives, which events fire, and whether a slow hook holds the agent up. Notes from building one tool on all four.</p>
+    </header>
+
+    <section>
+      <h2>At a glance</h2>
+      <div class="tbl"><table>
+        <thead><tr><th></th><th>Config file</th><th>Runs in background</th><th>Asks before trusting</th></tr></thead>
+        <tbody>
+          <tr><td><b>Claude Code</b></td><td><code>~/.claude/settings.json</code></td><td>yes, with <code>"async": true</code></td><td>no</td></tr>
+          <tr><td><b>Codex</b></td><td><code>~/.codex/hooks.json</code></td><td>yes, with <code>"async": true</code></td><td>yes, approve in <code>/hooks</code></td></tr>
+          <tr><td><b>GitHub Copilot</b></td><td><code>~/.copilot/hooks/*.json</code></td><td>no, runs in line</td><td>no</td></tr>
+          <tr><td><b>Antigravity</b></td><td><code>~/.gemini/config/hooks.json</code></td><td>no, runs in line</td><td>no</td></tr>
+        </tbody>
+      </table></div>
+      <p>These are the files and behaviours <a href="https://www.agentpeeps.space/">Agent Peeps</a> relies on today. Agents change quickly, so check each one's docs before building on a detail.</p>
+    </section>
+    <section>
+      <h2>Claude Code</h2>
+      <p>The richest set of events: <code>SessionStart</code>, <code>UserPromptSubmit</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, <code>Notification</code>, <code>SubagentStart</code>, <code>SubagentStop</code>, <code>Stop</code> and <code>SessionEnd</code>. Payloads are snake_case (<code>session_id</code>, <code>tool_name</code>, <code>tool_input</code>) and <code>SessionStart</code> includes the model. Hooks can be async, so an observer never slows a session. Details in <a href="claude-code-hooks.html">Claude Code hooks explained</a>.</p>
+    </section>
+    <section>
+      <h2>Codex</h2>
+      <p>Close to Claude Code in shape: the same snake_case fields and most of the same events, plus <code>PermissionRequest</code> for the moment it needs approval. Two differences: file edits go through <code>apply_patch</code>, so the file names are inside the patch text (<code>*** Update File: src/a.ts</code>), and Codex won't run a new hook until you approve it in <code>/hooks</code>.</p>
+    </section>
+    <section>
+      <h2>GitHub Copilot (VS Code agent mode and Copilot CLI)</h2>
+      <p>Both read hook files from <code>~/.copilot/hooks/</code> (or <code>$COPILOT_HOME</code>). Events are camelCase (<code>sessionStart</code>, <code>userPromptSubmitted</code>, <code>postToolUse</code>, <code>notification</code>, <code>agentStop</code>...) and tool arguments arrive as a JSON string in <code>toolArgs</code>. Hooks run synchronously and stdout is read as a decision, so a hook should print <code>{}</code> ("no opinion") and exit quickly. A failing pre-tool hook can deny the call, which is why Agent Peeps listens only after tools finish.</p>
+    </section>
+    <section>
+      <h2>Antigravity</h2>
+      <p>Hooks live in <code>~/.gemini/config/hooks.json</code> as named groups, so several tools can share the file without stepping on each other. Payloads carry <code>conversationId</code>, a <code>toolCall</code> with <code>name</code> and <code>args</code>, and <code>modelName</code>. Like Copilot, hooks run in line and stdout is a decision.</p>
+    </section>
+    <section>
+      <h2>What this means if you build on hooks</h2>
+      <ul>
+        <li><b>Normalize early.</b> Map every agent's payload to one shape (agent, session, event, tool, file) at the edge.</li>
+        <li><b>Never block.</b> Where hooks are synchronous, only listen to events that can't hold the agent up, and keep the hook to a file append.</li>
+        <li><b>Guess tool states from names.</b> Tool names differ per agent (<code>Edit</code>, <code>apply_patch</code>, <code>str_replace_editor</code>, <code>run_command</code>); a keyword match covers new ones.</li>
+        <li><b>Back up before you edit</b> someone's settings file, and remove only your own entries on uninstall.</li>
+      </ul>
+      <p>All of this is in <a href="https://github.com/watermelon588/agentpeeps/blob/main/cli.js">Agent Peeps' cli.js</a>, MIT licensed.</p>
+    </section>
+
+    <section class="guide-cta">
+      <h2>Try it in one command</h2>
+      <p>Agent Peeps is free and open source (MIT). It only reads hook events on your machine: no account, no server, no network.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init
+npx agentpeeps overlay"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init
+<span class="p">$</span> npx agentpeeps overlay</pre></div>
+      <p><a href="https://www.agentpeeps.space/">See the stickers in your browser</a> · <a href="docs.html">Read the docs</a> · <a href="https://github.com/watermelon588/agentpeeps">Star it on GitHub</a></p>
+    </section>
+
+    <nav class="guide-more" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul><li><a href="claude-code-permission-notifications.html">Know when Claude Code needs your permission</a></li><li><a href="run-multiple-coding-agents.html">Run several AI coding agents without losing track</a></li><li><a href="claude-code-hooks.html">Claude Code hooks explained, with a real example</a></li><li><a href="vscode-ai-agent-file-badges.html">See which AI agent is editing which file in VS Code</a></li></ul>
+    </nav>
+  </article>
+</div>
+
+<!-- include:footer -->
+
+</body>
+</html>

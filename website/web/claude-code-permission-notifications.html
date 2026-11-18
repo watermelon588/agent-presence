@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Know when Claude Code needs your permission</title>
+<meta name="description" content="Claude Code stops and waits when it needs approval. Use its Notification hook to get a visible signal, or let Agent Peeps flag it with a sticker." />
+<link rel="canonical" href="https://www.agentpeeps.space/claude-code-permission-notifications.html" />
+<meta name="theme-color" content="#0b0b0e" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Agent Peeps" />
+<meta property="og:url" content="https://www.agentpeeps.space/claude-code-permission-notifications.html" />
+<meta property="og:title" content="Know when Claude Code needs your permission" />
+<meta property="og:description" content="Claude Code stops and waits when it needs approval. Use its Notification hook to get a visible signal, or let Agent Peeps flag it with a sticker." />
+<meta property="og:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Know when Claude Code needs your permission" />
+<meta name="twitter:description" content="Claude Code stops and waits when it needs approval. Use its Notification hook to get a visible signal, or let Agent Peeps flag it with a sticker." />
+<meta name="twitter:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="stylesheet" href="/src/docs.css" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Know when Claude Code needs your permission", "description": "Claude Code stops and waits when it needs approval. Use its Notification hook to get a visible signal, or let Agent Peeps flag it with a sticker.", "url": "https://www.agentpeeps.space/claude-code-permission-notifications.html", "datePublished": "2026-11-18", "dateModified": "2026-11-18", "image": "https://www.agentpeeps.space/brand/social-card.png", "author": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "publisher": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "about": {"@type": "SoftwareApplication", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}}</script>
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/guide.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<div class="wrap pt-24 pb-24 md:pt-28">
+  <article class="docs-body guide">
+    <header class="docs-head">
+      <p class="docs-kicker">Guide</p>
+      <h1>Know the moment Claude Code needs your permission.</h1>
+      <p class="docs-lede">Claude Code pauses whenever a tool call needs your approval. If the terminal is behind another window, it just waits. Here is how to see that moment the second it happens.</p>
+    </header>
+
+    <section>
+      <h2>Why Claude Code sits waiting</h2>
+      <p>Claude Code asks before it runs a command, edits a file outside the allowed list or uses a tool you haven't approved. Until you answer, the session is paused. That's the right default, but it costs time when you are in another window: you come back ten minutes later to find it stopped on the first prompt.</p>
+      <p>Claude Code tells the outside world about this moment through a <b>hook</b>. Hooks are commands that Claude Code runs on events in a session, configured in <code>~/.claude/settings.json</code>. The one you want is <code>Notification</code>: it fires when Claude Code needs your permission to use a tool, and when a prompt has been waiting for input for a while.</p>
+    </section>
+    <section>
+      <h2>Option 1: a Notification hook of your own</h2>
+      <p>Add a <code>Notification</code> entry under <code>hooks</code> in <code>~/.claude/settings.json</code>. The command receives a JSON object on stdin with the session id, the folder and a <code>message</code> such as "Claude needs your permission to use Bash".</p>
+      <div class="dcode" data-lang="json"><pre>{
+  &quot;hooks&quot;: {
+    &quot;Notification&quot;: [
+      {
+        &quot;matcher&quot;: &quot;&quot;,
+        &quot;hooks&quot;: [
+          { &quot;type&quot;: &quot;command&quot;, &quot;command&quot;: &quot;node ~/notify.js&quot; }
+        ]
+      }
+    ]
+  }
+}</pre></div>
+      <p>Your <code>notify.js</code> can do anything: play a sound, show a system notification, send a message to your phone. A minimal version that logs the message:</p>
+      <div class="dcode" data-lang="js"><pre>let raw = &#x27;&#x27;;
+process.stdin.on(&#x27;data&#x27;, c =&gt; (raw += c));
+process.stdin.on(&#x27;end&#x27;, () =&gt; {
+  const event = JSON.parse(raw || &#x27;{}&#x27;);
+  console.error(`[${event.session_id}] ${event.message}`);
+  process.exit(0); // never fail: a hook should not get in Claude&#x27;s way
+});</pre></div>
+      <p>This works well for one session. With three or four sessions open it gets noisy: every alert looks the same, and you still have to find the right terminal.</p>
+    </section>
+    <section>
+      <h2>Option 2: a sticker that says "needs you"</h2>
+      <p><a href="https://www.agentpeeps.space/">Agent Peeps</a> uses the same hook. <code>npx agentpeeps init</code> adds a <code>Notification</code> hook (plus the session, tool and stop events) to your Claude Code settings, keeping a backup of the file. Every Claude Code session then gets a small sticker in the corner of your screen, and when one needs your permission:</p>
+      <ul>
+        <li>its sticker switches to the <b>needs you</b> state and shakes,</li>
+        <li>a speech bubble opens by itself with the message and the folder,</li>
+        <li>the other sessions keep showing what they are doing, so you know which one to answer.</li>
+      </ul>
+      <p>The hook appends one line to <code>~/.agent-presence/events.jsonl</code> and exits. It runs asynchronously and always exits 0, so it can never block or fail a session.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init
+npx agentpeeps overlay"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init
+<span class="p">$</span> npx agentpeeps overlay</pre></div>
+      <p>Prefer the terminal? <code>npx agentpeeps watch</code> draws a small pixel sticker per session that shakes when it needs you.</p>
+    </section>
+    <section>
+      <h2>Codex, Copilot and Antigravity</h2>
+      <p>The same problem exists with every agent. Codex has a <code>PermissionRequest</code> event and Copilot a <code>notification</code> event; Agent Peeps hooks both, so one overlay covers all of your agents. See <a href="coding-agent-hooks-compared.html">how the hooks compare</a>.</p>
+    </section>
+
+    <section class="guide-cta">
+      <h2>Try it in one command</h2>
+      <p>Agent Peeps is free and open source (MIT). It only reads hook events on your machine: no account, no server, no network.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init
+npx agentpeeps overlay"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init
+<span class="p">$</span> npx agentpeeps overlay</pre></div>
+      <p><a href="https://www.agentpeeps.space/">See the stickers in your browser</a> · <a href="docs.html">Read the docs</a> · <a href="https://github.com/watermelon588/agentpeeps">Star it on GitHub</a></p>
+    </section>
+
+    <nav class="guide-more" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul><li><a href="run-multiple-coding-agents.html">Run several AI coding agents without losing track</a></li><li><a href="claude-code-hooks.html">Claude Code hooks explained, with a real example</a></li><li><a href="coding-agent-hooks-compared.html">Claude Code, Codex, Copilot and Antigravity hooks</a></li><li><a href="vscode-ai-agent-file-badges.html">See which AI agent is editing which file in VS Code</a></li></ul>
+    </nav>
+  </article>
+</div>
+
+<!-- include:footer -->
+
+</body>
+</html>

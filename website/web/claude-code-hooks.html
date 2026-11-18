@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Code hooks explained, with a real example</title>
+<meta name="description" content="What Claude Code hooks are, every event they fire on, the JSON they receive, and a real hook that logs every tool call from a production tool." />
+<link rel="canonical" href="https://www.agentpeeps.space/claude-code-hooks.html" />
+<meta name="theme-color" content="#0b0b0e" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Agent Peeps" />
+<meta property="og:url" content="https://www.agentpeeps.space/claude-code-hooks.html" />
+<meta property="og:title" content="Claude Code hooks explained, with a real example" />
+<meta property="og:description" content="What Claude Code hooks are, every event they fire on, the JSON they receive, and a real hook that logs every tool call from a production tool." />
+<meta property="og:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Claude Code hooks explained, with a real example" />
+<meta name="twitter:description" content="What Claude Code hooks are, every event they fire on, the JSON they receive, and a real hook that logs every tool call from a production tool." />
+<meta name="twitter:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="stylesheet" href="/src/docs.css" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Claude Code hooks explained, with a real example", "description": "What Claude Code hooks are, every event they fire on, the JSON they receive, and a real hook that logs every tool call from a production tool.", "url": "https://www.agentpeeps.space/claude-code-hooks.html", "datePublished": "2026-11-18", "dateModified": "2026-11-18", "image": "https://www.agentpeeps.space/brand/social-card.png", "author": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "publisher": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "about": {"@type": "SoftwareApplication", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}}</script>
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/guide.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<div class="wrap pt-24 pb-24 md:pt-28">
+  <article class="docs-body guide">
+    <header class="docs-head">
+      <p class="docs-kicker">Guide</p>
+      <h1>Claude Code hooks, explained with a real example.</h1>
+      <p class="docs-lede">Hooks let you run your own code on events inside a Claude Code session. This guide covers the events, the input, the rules for writing a safe hook, and the hook Agent Peeps ships.</p>
+    </header>
+
+    <section>
+      <h2>What a hook is</h2>
+      <p>A hook is a command Claude Code runs when something happens in a session: a prompt is submitted, a tool is about to run, a tool finished, the session needs your attention, the turn ends. Hooks live under the <code>hooks</code> key of a settings file: <code>~/.claude/settings.json</code> for all projects, or <code>.claude/settings.json</code> inside one project.</p>
+      <div class="dcode" data-lang="json"><pre>{
+  &quot;hooks&quot;: {
+    &quot;PostToolUse&quot;: [
+      {
+        &quot;matcher&quot;: &quot;Edit|Write&quot;,
+        &quot;hooks&quot;: [{ &quot;type&quot;: &quot;command&quot;, &quot;command&quot;: &quot;npx prettier --write \&quot;$CLAUDE_PROJECT_DIR\&quot;&quot; }]
+      }
+    ]
+  }
+}</pre></div>
+      <p><code>matcher</code> filters by tool name for the tool events (a regular expression, or <code>*</code> / empty for every tool).</p>
+    </section>
+    <section>
+      <h2>The events</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Event</th><th>Fires when</th></tr></thead>
+        <tbody>
+          <tr><td><code>SessionStart</code></td><td>a session starts or resumes</td></tr>
+          <tr><td><code>UserPromptSubmit</code></td><td>you send a prompt, before Claude sees it</td></tr>
+          <tr><td><code>PreToolUse</code></td><td>before a tool call; can block it</td></tr>
+          <tr><td><code>PostToolUse</code></td><td>after a tool call succeeds</td></tr>
+          <tr><td><code>Notification</code></td><td>Claude needs your permission, or has waited for input</td></tr>
+          <tr><td><code>SubagentStart</code> / <code>SubagentStop</code></td><td>a subagent starts or finishes</td></tr>
+          <tr><td><code>Stop</code></td><td>Claude finishes its response</td></tr>
+          <tr><td><code>SessionEnd</code></td><td>the session ends</td></tr>
+        </tbody>
+      </table></div>
+      <p>Check the official Claude Code hooks reference for the full, current list: new events are added over time.</p>
+    </section>
+    <section>
+      <h2>What a hook receives</h2>
+      <p>Each hook gets one JSON object on stdin. The common fields are <code>session_id</code>, <code>cwd</code> and <code>hook_event_name</code>; tool events add <code>tool_name</code> and <code>tool_input</code>:</p>
+      <div class="dcode" data-lang="json"><pre>{
+  &quot;session_id&quot;: &quot;4b1c...&quot;,
+  &quot;cwd&quot;: &quot;/home/me/app&quot;,
+  &quot;hook_event_name&quot;: &quot;PreToolUse&quot;,
+  &quot;tool_name&quot;: &quot;Edit&quot;,
+  &quot;tool_input&quot;: { &quot;file_path&quot;: &quot;/home/me/app/src/auth.ts&quot;, &quot;old_string&quot;: &quot;...&quot;, &quot;new_string&quot;: &quot;...&quot; }
+}</pre></div>
+      <p>The exit code matters. <code>0</code> means carry on. For <code>PreToolUse</code>, exit code <code>2</code> blocks the tool call and the text on stderr is shown to Claude, which is how you write guard rails such as "never touch .env".</p>
+    </section>
+    <section>
+      <h2>Rules for a hook that never gets in the way</h2>
+      <ul>
+        <li><b>Always exit 0</b> unless blocking is the point. Catch every error.</li>
+        <li><b>Be fast.</b> Hooks run on every matching event; a slow hook slows every tool call. Mark observers <code>"async": true</code> so Claude doesn't wait for them.</li>
+        <li><b>Use the exec form</b> (<code>"command": "node", "args": [...]</code>) to avoid shell quoting problems with spaces in paths.</li>
+        <li><b>Never print to stdout</b> unless the event expects a decision from you.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>A real example: the Agent Peeps hook</h2>
+      <p><a href="https://www.agentpeeps.space/">Agent Peeps</a> shows a live sticker per Claude Code session. Its whole integration is one hook, added to nine events by <code>npx agentpeeps init</code>:</p>
+      <div class="dcode" data-lang="json"><pre>{
+  &quot;matcher&quot;: &quot;*&quot;,
+  &quot;hooks&quot;: [{
+    &quot;type&quot;: &quot;command&quot;,
+    &quot;command&quot;: &quot;node&quot;,
+    &quot;args&quot;: [&quot;/home/you/.agent-presence/app/node_modules/agentpeeps/cli.js&quot;, &quot;emit&quot;, &quot;claude&quot;],
+    &quot;async&quot;: true
+  }]
+}</pre></div>
+      <p><code>emit</code> reads the event from stdin, turns it into one line (<code>{"agent":"claude","state":"writing","file":"src/auth.ts",...}</code>) and appends it to <code>~/.agent-presence/events.jsonl</code>. It wraps everything in <code>try</code>, rotates the log at 5 MB and always exits 0. The overlay tails that file, so the hook itself never touches a window or the network.</p>
+      <p>It maps tools to states: <code>Edit</code> and <code>Write</code> are writing, <code>Read</code>, <code>Grep</code> and <code>Glob</code> are reading, <code>Bash</code> is running, <code>Agent</code> is delegating, and a <code>Notification</code> becomes <b>needs you</b>. The source is <a href="https://github.com/watermelon588/agentpeeps/blob/main/cli.js">one file on GitHub</a>.</p>
+    </section>
+
+    <section class="guide-cta">
+      <h2>Try it in one command</h2>
+      <p>Agent Peeps is free and open source (MIT). It only reads hook events on your machine: no account, no server, no network.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init
+npx agentpeeps overlay"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init
+<span class="p">$</span> npx agentpeeps overlay</pre></div>
+      <p><a href="https://www.agentpeeps.space/">See the stickers in your browser</a> · <a href="docs.html">Read the docs</a> · <a href="https://github.com/watermelon588/agentpeeps">Star it on GitHub</a></p>
+    </section>
+
+    <nav class="guide-more" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul><li><a href="claude-code-permission-notifications.html">Know when Claude Code needs your permission</a></li><li><a href="run-multiple-coding-agents.html">Run several AI coding agents without losing track</a></li><li><a href="coding-agent-hooks-compared.html">Claude Code, Codex, Copilot and Antigravity hooks</a></li><li><a href="vscode-ai-agent-file-badges.html">See which AI agent is editing which file in VS Code</a></li></ul>
+    </nav>
+  </article>
+</div>
+
+<!-- include:footer -->
+
+</body>
+</html>

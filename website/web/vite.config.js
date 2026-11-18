@@ -24,6 +24,6 @@ export default defineConfig({
   plugins: [partials, tailwindcss()],
   build: {
     assetsInlineLimit: 0, // keep every sticker a real file so "Download" saves it under its own name
-    rollupOptions: { input: { main: here('./index.html'), stickers: here('./stickers.html'), docs: here('./docs.html') } },
+    rollupOptions: { input: { main: here('./index.html'), stickers: here('./stickers.html'), docs: here('./docs.html'), 'claude-code-permission-notifications': here('./claude-code-permission-notifications.html'), 'run-multiple-coding-agents': here('./run-multiple-coding-agents.html'), 'claude-code-hooks': here('./claude-code-hooks.html'), 'coding-agent-hooks-compared': here('./coding-agent-hooks-compared.html'), 'vscode-ai-agent-file-badges': here('./vscode-ai-agent-file-badges.html') } },
   },
 });

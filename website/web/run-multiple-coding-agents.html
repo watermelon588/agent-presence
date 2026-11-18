@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Run several AI coding agents without losing track</title>
+<meta name="description" content="Claude Code in one terminal, Codex in another, Copilot in VS Code. How to keep track of which agent is doing what, and which one is waiting for you." />
+<link rel="canonical" href="https://www.agentpeeps.space/run-multiple-coding-agents.html" />
+<meta name="theme-color" content="#0b0b0e" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Agent Peeps" />
+<meta property="og:url" content="https://www.agentpeeps.space/run-multiple-coding-agents.html" />
+<meta property="og:title" content="Run several AI coding agents without losing track" />
+<meta property="og:description" content="Claude Code in one terminal, Codex in another, Copilot in VS Code. How to keep track of which agent is doing what, and which one is waiting for you." />
+<meta property="og:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Run several AI coding agents without losing track" />
+<meta name="twitter:description" content="Claude Code in one terminal, Codex in another, Copilot in VS Code. How to keep track of which agent is doing what, and which one is waiting for you." />
+<meta name="twitter:image" content="https://www.agentpeeps.space/brand/social-card.png" />
+<link rel="stylesheet" href="/src/style.css" />
+<link rel="stylesheet" href="/src/docs.css" />
+<link rel="icon" type="image/png" href="/brand/favicon.png" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Run several AI coding agents without losing track", "description": "Claude Code in one terminal, Codex in another, Copilot in VS Code. How to keep track of which agent is doing what, and which one is waiting for you.", "url": "https://www.agentpeeps.space/run-multiple-coding-agents.html", "datePublished": "2026-11-18", "dateModified": "2026-11-18", "image": "https://www.agentpeeps.space/brand/social-card.png", "author": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "publisher": {"@type": "Organization", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}, "about": {"@type": "SoftwareApplication", "name": "Agent Peeps", "url": "https://www.agentpeeps.space/"}}</script>
+<script>
+  document.documentElement.classList.add('js');
+  var t = new URLSearchParams(location.search).get('theme');
+  try { t = t || localStorage.getItem('ap-theme'); } catch (e) {}
+  document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+</script>
+<script type="module" src="/src/guide.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- include:nav -->
+
+<div class="wrap pt-24 pb-24 md:pt-28">
+  <article class="docs-body guide">
+    <header class="docs-head">
+      <p class="docs-kicker">Guide</p>
+      <h1>Running several coding agents at once, without losing track.</h1>
+      <p class="docs-lede">Parallel agents are the fastest way to get work done, until you lose track of them. A practical setup for running Claude Code, Codex and Copilot side by side.</p>
+    </header>
+
+    <section>
+      <h2>The problem with parallel agents</h2>
+      <p>One agent is easy to watch. With three you get a new kind of overhead: you check each terminal in turn to see whether it is still working, finished, or stuck on a question. Two things go wrong:</p>
+      <ul>
+        <li><b>Idle time.</b> An agent waiting on a permission prompt does nothing until you notice.</li>
+        <li><b>Collisions.</b> Two agents edit the same file, or one runs the tests while another is halfway through a refactor.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>1. Give each agent its own lane</h2>
+      <p>Split work so agents don't share files: one on the API, one on the UI, one writing tests. If your agents support it, run each one in its own git worktree so their changes stay apart until you merge them.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="git worktree add ../app-api -b api-work
+git worktree add ../app-ui -b ui-work"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> git worktree add ../app-api -b api-work
+<span class="p">$</span> git worktree add ../app-ui -b ui-work</pre></div>
+    </section>
+    <section>
+      <h2>2. Make every agent's state visible</h2>
+      <p>You want to know, without switching windows: which agent is working, on which file, and which one needs you. All four major coding agents can report this through hooks. <a href="https://www.agentpeeps.space/">Agent Peeps</a> turns those events into one sticker per session on top of your screen:</p>
+      <ul>
+        <li>an icon for the state: thinking, reading, writing, running, browsing, delegating, done or <b>needs you</b>,</li>
+        <li>a smaller sticker per subagent, joined to its parent,</li>
+        <li>on hover, the file it's on and the files it touched.</li>
+      </ul>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init
+npx agentpeeps overlay"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init
+<span class="p">$</span> npx agentpeeps overlay</pre></div>
+      <p>Give each agent its own look so you can tell them apart at a glance:</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="agentpeeps set claude capybaras
+agentpeeps set codex cats
+agentpeeps set helpers fruit-cats"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> agentpeeps set claude capybaras
+<span class="p">$</span> agentpeeps set codex cats
+<span class="p">$</span> agentpeeps set helpers fruit-cats</pre></div>
+    </section>
+    <section>
+      <h2>3. Catch file collisions</h2>
+      <p>The <a href="vscode-ai-agent-file-badges.html">Agent Peeps VS Code extension</a> puts a badge in the Explorer on each file an agent is touching, in that agent's color. When two badges land in the same folder, you see it before the merge conflict.</p>
+    </section>
+    <section>
+      <h2>4. Check in on a schedule, not constantly</h2>
+      <p>With states visible, stop polling terminals. Answer the agent that needs you, glance at the stickers when one finishes, and spend the time in between reviewing diffs. In the terminal, <code>agentpeeps watch</code> gives the same overview in a few lines.</p>
+    </section>
+
+    <section class="guide-cta">
+      <h2>Try it in one command</h2>
+      <p>Agent Peeps is free and open source (MIT). It only reads hook events on your machine: no account, no server, no network.</p>
+      <div class="dcode" data-lang="bash"><button class="cp" data-copy="npx agentpeeps init
+npx agentpeeps overlay"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npx agentpeeps init
+<span class="p">$</span> npx agentpeeps overlay</pre></div>
+      <p><a href="https://www.agentpeeps.space/">See the stickers in your browser</a> · <a href="docs.html">Read the docs</a> · <a href="https://github.com/watermelon588/agentpeeps">Star it on GitHub</a></p>
+    </section>
+
+    <nav class="guide-more" aria-label="More guides">
+      <h2>More guides</h2>
+      <ul><li><a href="claude-code-permission-notifications.html">Know when Claude Code needs your permission</a></li><li><a href="claude-code-hooks.html">Claude Code hooks explained, with a real example</a></li><li><a href="coding-agent-hooks-compared.html">Claude Code, Codex, Copilot and Antigravity hooks</a></li><li><a href="vscode-ai-agent-file-badges.html">See which AI agent is editing which file in VS Code</a></li></ul>
+    </nav>
+  </article>
+</div>
+
+<!-- include:footer -->
+
+</body>
+</html>
