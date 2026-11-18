@@ -242,6 +242,48 @@ function install(remove) {
   console.log(`The stickers appear on your next agent session. To start them now: ${run} overlay`);
 }
 
+// `agentpeeps doctor`: one line per check, so "why don't I see stickers?" has an answer. Returns [{ok, skip, name, msg}].
+function doctor(home = os.homedir()) {
+  const copilotHome = process.env.COPILOT_HOME || path.join(home, '.copilot');
+  const readJson = f => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return null; } };
+  // Number of events whose hooks are ours; map picks the { Event: [...] } object out of the file's JSON.
+  const countOurs = (file, map) => Object.values(map(readJson(file) || {}) || {}).filter(isOurs).length;
+  const agents = [
+    ['Claude Code hooks', 'claude', path.join(home, '.claude'), path.join(home, '.claude', 'settings.json'), j => j.hooks],
+    ['Codex hooks', 'codex', path.join(home, '.codex'), path.join(home, '.codex', 'hooks.json'), j => j.hooks],
+    ['Copilot hooks', 'copilot', copilotHome, path.join(copilotHome, 'hooks', 'agent-presence.json'), j => j.hooks],
+    ['Antigravity hooks', 'antigravity', path.join(home, '.gemini', 'antigravity'), path.join(home, '.gemini', 'config', 'hooks.json'), j => j['agent-presence']],
+  ];
+  const res = [];
+  for (const [name, key, dir, file, map] of agents) {
+    if (!fs.existsSync(dir)) { res.push({ skip: true, name, msg: 'agent not found, skipped' }); continue; }
+    const n = countOurs(file, map);
+    res.push(n ? { ok: true, name, msg: `${file} (${n} events)` } : { ok: false, name, msg: `not found. Run: agentpeeps init ${key}` });
+  }
+  if (!res.some(r => r.ok)) res.push({ ok: false, name: 'Any agent', msg: 'no agent has hooks. Run: agentpeeps init' });
+  let pid = null;
+  try { pid = Number(fs.readFileSync(path.join(HOME, 'overlay.pid'), 'utf8')); process.kill(pid, 0); } catch { pid = null; }
+  res.push(pid ? { ok: true, name: 'Overlay', msg: `running (pid ${pid})` } : { ok: false, name: 'Overlay', msg: 'not running. Run: agentpeeps overlay' });
+  let last = null;
+  try {
+    const lines = fs.readFileSync(EVENTS, 'utf8').trim().split(/\r?\n/);
+    last = JSON.parse(lines[lines.length - 1]);
+  } catch {}
+  if (last && last.t) {
+    const s = Math.max(0, Math.round((Date.now() - last.t) / 1000));
+    res.push({ ok: true, name: 'Event log', msg: `last event ${s < 120 ? s + ' s' : Math.round(s / 60) + ' min'} ago (${last.agent}, ${last.state})` });
+  } else res.push({ ok: false, name: 'Event log', msg: `no events yet in ${EVENTS}. Start an agent session after running: agentpeeps init` });
+  res.push(electronBin() ? { ok: true, name: 'Electron', msg: 'found' } : { ok: false, name: 'Electron', msg: 'not found. Run: npm i -g agentpeeps' });
+  return res;
+}
+
+function runDoctor() {
+  const res = doctor();
+  const w = Math.max(...res.map(r => r.name.length));
+  for (const r of res) console.log(`${r.skip ? '-' : r.ok ? '✓' : '✗'} ${r.name.padEnd(w)}  ${r.msg}`);
+  if (res.some(r => r.ok === false)) process.exitCode = 1;
+}
+
 // ---- terminal stickers: a hand-picked set of clean stickers as small color pixel art, baked by
 // scripts/terminal-stickers.py into avatars/terminal.json (20x20 RGBA pixels each, drawn two per character cell) ----
 let ART;
@@ -526,6 +568,7 @@ const HELP = `Agent Peeps — stickers for your AI coding agents
   agentpeeps overlay [--quit]          start/stop the floating stickers
   agentpeeps control [claude|...]      open the control room (optionally on one agent's stickers)
   agentpeeps packs                     list sticker packs
+  agentpeeps doctor                    check hooks, overlay, event log and Electron
   agentpeeps set <target> <pack>       e.g. set claude dinosaur, set model:opus cats, set helpers robots
   agentpeeps watch                     live view in the terminal, with a sticker per agent
   agentpeeps show [pack|agent|all]     preview terminal stickers (show, show claude, show pixel-food, show all)
@@ -543,10 +586,11 @@ if (require.main === module) {
   else if (cmd === 'watch') watch();
   else if (cmd === 'overlay') overlay();
   else if (cmd === 'packs') listPacks();
+  else if (cmd === 'doctor') runDoctor();
   else if (cmd === 'show') showStickers(process.argv.slice(3));
   else if (cmd === 'set') setStickers(process.argv[3], process.argv.slice(4));
   else if (cmd === 'control' || cmd === 'stickers' || cmd === 'settings') console.log(startOverlay('--control' + (process.argv[3] ? '=' + targetKey(process.argv[3]) : '')) ? 'Opening the control room...' : 'Electron not found. Install with: npm i -g agentpeeps');
   else console.log(HELP);
 }
 
-module.exports = { normalize, patchFiles, termArt, stickerLines, fit, fanHint, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };
+module.exports = { doctor, normalize, patchFiles, termArt, stickerLines, fit, fanHint, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };
