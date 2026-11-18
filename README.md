@@ -104,7 +104,7 @@ The [`vscode/`](vscode/) extension reads the same event log and adds:
 - **Explorer badges**: solid initials in each agent's color (🅒 Claude, 🅧 Codex, 🅟 Copilot, 🅐 Antigravity; helpers show their type's initial, e.g. 🅔 Explore), with folders lighting up around active files
 - an **Agents** view in the Explorer with each agent's sticker, its subagents and the files it touched
 
-Until it's on the Marketplace / Open VSX: `code --install-extension vscode/agent-presence-vscode-0.1.0.vsix`
+Until it's on the Marketplace / Open VSX, build it: `cd vscode && npx @vscode/vsce package && code --install-extension agentpeeps-0.1.1.vsix`
 
 ## Commands
 

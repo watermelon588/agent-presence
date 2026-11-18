@@ -1,9 +1,9 @@
 {
-  "name": "agent-presence-vscode",
+  "name": "agentpeeps",
   "displayName": "Agent Peeps",
   "description": "See which AI agent or subagent (Claude Code, Codex, Copilot, Antigravity) is working on which file, right in the Explorer.",
-  "version": "0.1.0",
-  "publisher": "agent-presence",
+  "version": "0.1.1",
+  "publisher": "agentpeepsx",
   "license": "MIT",
   "icon": "icon.png",
   "engines": {
