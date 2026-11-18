@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and show-and-tell
+    url: https://github.com/watermelon588/agentpeeps/discussions
+    about: How do I..., share your setup, or your own sticker packs
+  - name: Docs
+    url: https://www.agentpeeps.space/docs.html
+    about: Every command, config.json, the event log

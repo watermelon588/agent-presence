@@ -1,0 +1,14 @@
+name: Feature request
+description: An idea for Agent Peeps
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would you like to do?
+      description: The thing you're trying to do, not just the solution. "I run 3 Codex sessions and can't tell which one needs me" beats "add a sound".
+    validations: { required: true }
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could it work?

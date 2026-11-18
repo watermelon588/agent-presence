@@ -536,6 +536,7 @@ Packs are folders of images in ~/.agent-presence/stickers/<pack>. Settings live 
 if (require.main === module) {
   const cmd = process.argv[2];
   if (cmd === 'emit') emit(process.argv[3] || 'agent', process.argv[4]);
+  else if (/^(-v|--version|version)$/.test(cmd || '')) console.log(require('./package.json').version);
   else if (cmd === 'init') install(false);
   else if (cmd === 'uninstall') install(true);
   else if (cmd === 'watch') watch();

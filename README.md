@@ -6,7 +6,8 @@
 See which agent is on which file, what it's doing, and when it needs you.</p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/agentpeeps"><img src="https://img.shields.io/badge/npm-agentpeeps-2f4bff" alt="npm: agentpeeps"></a>
+  <a href="https://www.npmjs.com/package/agentpeeps"><img src="https://img.shields.io/npm/v/agentpeeps?color=2f4bff&label=npm" alt="npm version"></a>
+  <a href="https://github.com/watermelon588/agentpeeps/actions/workflows/ci.yml"><img src="https://github.com/watermelon588/agentpeeps/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-121214" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/local%20only-no%20account%2C%20no%20network-7fd99a" alt="Local only">
 </p>
@@ -16,13 +17,15 @@ See which agent is on which file, what it's doing, and when it needs you.</p>
   <a href="#commands">Commands</a> ·
   <a href="#your-own-stickers">Stickers</a> ·
   <a href="#how-it-works">How it works</a> ·
-  <a href="https://agentpeeps.space">Website</a> ·
-  <a href="https://agentpeeps.space/docs.html">Docs</a>
+  <a href="https://www.agentpeeps.space"><b>Live demo</b></a> ·
+  <a href="https://www.agentpeeps.space/docs.html">Docs</a> ·
+  <a href="CONTRIBUTING.md">Contributing</a>
 </p>
 
 <p align="center"><img src="docs/readme/demo.gif" width="760" alt="A capybara sticker in the corner of the screen shows Claude writing login.ts while a helper sticker reads the tests"></p>
 
-<p align="center"><code>npx agentpeeps init</code></p>
+<p align="center"><code>npx agentpeeps init</code><br>
+<sub>then start a Claude Code, Codex, Copilot or Antigravity session. <a href="https://www.agentpeeps.space">Try the stickers in your browser first →</a></sub></p>
 
 <div align="center">
 <table>
@@ -249,4 +252,10 @@ npm run demo                             # terminal 2: plays fake Claude, Codex,
 - Move the Codex manifest to the newer root `plugin.json` (`extensions.com.openai`) once Codex versions without it are gone
 - Sticker packs
 
-MIT
+## Contributing
+
+Bug reports, ideas and sticker packs are all welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), pick a [good first issue](https://github.com/watermelon588/agentpeeps/labels/good%20first%20issue), or say hi in [Discussions](https://github.com/watermelon588/agentpeeps/discussions). What changed in each version: [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+[MIT](LICENSE). Fan stickers on the website belong to their owners and are not part of the package.

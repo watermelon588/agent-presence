@@ -8,3 +8,6 @@ node_modules/
 
 # the website serves its own images
 !website/web/public/**/*.png
+
+# local notes
+/HANDOFF.md

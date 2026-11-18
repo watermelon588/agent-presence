@@ -1,0 +1,11 @@
+# Agent Peeps
+
+> Agent Peeps puts a tiny live sticker on your screen for every AI coding agent session (Claude Code, Codex, GitHub Copilot, Antigravity), with an icon for what it is doing: reading, writing, running, done, or needs you. Free, open source (MIT), local only.
+
+Install: `npx agentpeeps init` (adds hooks for every supported agent it finds), then `npx agentpeeps overlay`.
+
+- [Website](https://www.agentpeeps.space/): what it is, live demo of the dock
+- [Docs](https://www.agentpeeps.space/docs.html): every command, config.json, event log, VS Code extension, Node API
+- [Sticker shop](https://www.agentpeeps.space/stickers.html): 400+ stickers, download packs as zip
+- [GitHub](https://github.com/watermelon588/agentpeeps): source, issues, contributing
+- [npm](https://www.npmjs.com/package/agentpeeps)

@@ -1,0 +1,17 @@
+name: Suggest a sticker pack
+description: A pack you'd like to see (or one you made and want to share)
+labels: [sticker-pack]
+body:
+  - type: textarea
+    id: pack
+    attributes:
+      label: The pack
+      description: What's in it, and a few example images or a link.
+    validations: { required: true }
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Rights
+      options:
+        - label: I made these, or they're under a license that allows redistribution (CC0, CC-BY, MIT...). Characters owned by companies can only go on the website's fan section, not in the npm package.
+          required: true

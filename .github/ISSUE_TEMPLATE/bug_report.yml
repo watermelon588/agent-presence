@@ -1,0 +1,30 @@
+name: Bug report
+description: Something doesn't work the way it should
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you saw instead. A screenshot helps a lot.
+    validations: { required: true }
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Which agent?
+      multiple: true
+      options: [Claude Code, Codex, GitHub Copilot, Antigravity, Not agent-specific]
+    validations: { required: true }
+  - type: input
+    id: version
+    attributes:
+      label: Versions
+      description: "Output of: npx agentpeeps --version, node --version, and your OS"
+      placeholder: "agentpeeps 0.1.1, node 22.11, Windows 11"
+    validations: { required: true }
+  - type: textarea
+    id: events
+    attributes:
+      label: Last lines of the event log (optional)
+      description: "~/.agent-presence/events.jsonl. Remove anything private (file paths, commands) before pasting."
+      render: json
