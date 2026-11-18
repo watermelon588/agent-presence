@@ -546,7 +546,8 @@ if (require.main === module) {
   else if (cmd === 'show') showStickers(process.argv.slice(3));
   else if (cmd === 'set') setStickers(process.argv[3], process.argv.slice(4));
   else if (cmd === 'control' || cmd === 'stickers' || cmd === 'settings') console.log(startOverlay('--control' + (process.argv[3] ? '=' + targetKey(process.argv[3]) : '')) ? 'Opening the control room...' : 'Electron not found. Install with: npm i -g agentpeeps');
-  else console.log(HELP);
+  else if (!cmd || /^(-h|--help|help)$/.test(cmd)) console.log(HELP);
+  else { console.error('Unknown command "' + cmd + '".' + '\n\n' + HELP); process.exit(1); }
 }
 
 module.exports = { normalize, patchFiles, termArt, stickerLines, fit, fanHint, stickerFor, editHooksFile, copilotHooks, antigravityHooks, isEphemeral, packs, stickerFiles, targetKey, slug, HOME, EVENTS, CONFIG };
