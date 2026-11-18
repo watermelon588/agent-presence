@@ -107,6 +107,12 @@ const visible = l => l.replace(/\x1b\[[0-9;]*m/g, '').length;
 assert.equal(a.length, 11); assert.ok(a.every(l => visible(l) === 20)); assert.notDeepEqual(a, b, 'working stickers hop');
 assert.deepEqual(stickerLines(logo, 0, 'still'), stickerLines(logo, 170, 'still'));
 
+// `agentpeeps packs --json` prints one JSON array of { name, count, mine, dir }
+const packsJson = JSON.parse(require('child_process').execFileSync(process.execPath, [path.join(__dirname, 'cli.js'), 'packs', '--json'], { encoding: 'utf8', env: { ...process.env, AGENT_PRESENCE_HOME: fs.mkdtempSync(path.join(os.tmpdir(), 'ap-packs-')) } }));
+assert.ok(Array.isArray(packsJson) && packsJson.length > 0);
+for (const p of packsJson) { assert.deepEqual(Object.keys(p).sort(), ['count', 'dir', 'mine', 'name']); assert.ok(p.name && p.count > 0 && p.mine === false && path.isAbsolute(p.dir) && fs.existsSync(p.dir)); }
+assert.equal(packsJson.find(p => p.name === 'cats').count, require('./cli').packs().get('cats').files.length);
+
 // A short window drops whole sticker rows, never half of one
 const { fit } = require('./cli');
 const rows = ['a', 'a', '', 'b', 'b', ''];

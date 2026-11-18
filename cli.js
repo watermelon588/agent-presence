@@ -475,6 +475,7 @@ function targetKey(t) {
 
 function listPacks() {
   const all = [...packs().values()];
+  if (process.argv.includes('--json')) return console.log(JSON.stringify(all.sort((a, b) => a.name.localeCompare(b.name)).map(p => ({ name: p.name, count: p.files.length, mine: p.mine, dir: p.dir }))));
   if (!all.length) return console.log(`No packs yet. A pack is a folder of images: put some in ${path.join(HOME, 'stickers', '<pack name>')}`);
   console.log('Sticker packs (use one with: agentpeeps set <target> <pack>)\n');
   for (const p of all.sort((a, b) => a.name.localeCompare(b.name))) console.log(`  ${slug(p.name).padEnd(26)} ${String(p.files.length).padStart(3)} stickers${p.mine ? '' : '  (bundled)'}`);
