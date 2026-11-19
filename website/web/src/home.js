@@ -215,11 +215,11 @@ Promise.all([
   $('[data-stats]').hidden = false;
 }).catch(() => {});
 
-// Site visits (counted once per browser session); stays hidden until the Vercel counter is set up.
+// Site visits (counted once per browser session); shown from 1,000 real visits on.
 let counted = false;
 try { counted = sessionStorage.getItem('peeps-visit') === '1'; sessionStorage.setItem('peeps-visit', '1'); } catch {}
 fetch('/api/visits', { method: counted ? 'GET' : 'POST' }).then((r) => r.ok ? r.json() : null).then((d) => {
-  if (!d || !(d.visits > 0)) return;
+  if (!d || !(d.visits >= 1000)) return; // show only once it means something, like the 20+ stars rule
   $('[data-stat="visits"]').textContent = new Intl.NumberFormat('en', { notation: 'compact' }).format(d.visits);
   $('[data-visits]').hidden = false;
 }).catch(() => {});
