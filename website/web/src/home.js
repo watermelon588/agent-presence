@@ -214,3 +214,12 @@ Promise.all([
   if (stars >= 20) { $('[data-stat="stars"]').textContent = fmt.format(stars); $('[data-star]').hidden = false; }
   $('[data-stats]').hidden = false;
 }).catch(() => {});
+
+// Site visits (counted once per browser session); stays hidden until the Vercel counter is set up.
+let counted = false;
+try { counted = sessionStorage.getItem('peeps-visit') === '1'; sessionStorage.setItem('peeps-visit', '1'); } catch {}
+fetch('/api/visits', { method: counted ? 'GET' : 'POST' }).then((r) => r.ok ? r.json() : null).then((d) => {
+  if (!d || !(d.visits > 0)) return;
+  $('[data-stat="visits"]').textContent = new Intl.NumberFormat('en', { notation: 'compact' }).format(d.visits);
+  $('[data-visits]').hidden = false;
+}).catch(() => {});
