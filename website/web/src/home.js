@@ -202,3 +202,15 @@ if (!reduced) {
     },
   });
 }
+
+// Live install count under the hero (hidden if npm fails); stars join once there are 20+.
+Promise.all([
+  fetch('https://api.npmjs.org/downloads/point/last-month/agentpeeps').then((r) => r.json()).then((d) => d.downloads),
+  fetch('https://api.github.com/repos/watermelon588/agentpeeps').then((r) => r.json()).then((d) => d.stargazers_count).catch(() => 0),
+]).then(([npm, stars]) => {
+  if (!Number.isFinite(npm)) return;
+  const fmt = new Intl.NumberFormat('en', { notation: 'compact' });
+  $('[data-stat="npm"]').textContent = fmt.format(npm);
+  if (stars >= 20) { $('[data-stat="stars"]').textContent = fmt.format(stars); $('[data-star]').hidden = false; }
+  $('[data-stats]').hidden = false;
+}).catch(() => {});
