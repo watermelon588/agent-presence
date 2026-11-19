@@ -104,7 +104,7 @@ The [`vscode/`](vscode/) extension reads the same event log and adds:
 - **Explorer badges**: solid initials in each agent's color (🅒 Claude, 🅧 Codex, 🅟 Copilot, 🅐 Antigravity; helpers show their type's initial, e.g. 🅔 Explore), with folders lighting up around active files
 - an **Agents** view in the Explorer with each agent's sticker, its subagents and the files it touched
 
-Until it's on the Marketplace / Open VSX, build it: `cd vscode && npx @vscode/vsce package && code --install-extension agentpeeps-0.1.1.vsix`
+Install it from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=agentpeepsx.agentpeeps) or, for Cursor, Windsurf and Antigravity, from [Open VSX](https://open-vsx.org/extension/agentpeepsx/agentpeeps). Or search **Agent Peeps** in the Extensions view.
 
 ## Commands
 
@@ -246,7 +246,6 @@ npm run demo                             # terminal 2: plays fake Claude, Codex,
 
 ## Roadmap
 
-- Publish the VS Code extension to the Marketplace and Open VSX (Cursor, Windsurf and Antigravity install from Open VSX)
 - OpenCode, DeepSeek Harness hooks
 - Copilot / Antigravity: show tool calls as they start, if they get a non-blocking pre-tool hook
 - Move the Codex manifest to the newer root `plugin.json` (`extensions.com.openai`) once Codex versions without it are gone
