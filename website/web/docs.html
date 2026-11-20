@@ -62,8 +62,10 @@
       <p>Prefer a global install? Same thing, and the command stays on your PATH:</p>
       <div class="dcode"><button class="cp" data-copy="npm i -g agentpeeps&#10;agentpeeps init"><span data-copy-label>Copy</span></button><pre><span class="p">$</span> npm i -g agentpeeps
 <span class="p">$</span> agentpeeps init</pre></div>
+      <p>Or let your agent do it. Paste this into Claude Code or Codex. It reads <a href="/skill.md">skill.md</a>, runs the setup, starts the stickers and saves itself as a skill, so later you can just say “stop agentpeeps” or “start agentpeeps”:</p>
+      <div class="dcode"><button class="cp" data-copy="Set up Agent Peeps for me: read https://www.agentpeeps.space/skill.md and follow it."><span data-copy-label>Copy</span></button><pre>Set up Agent Peeps for me: read https://www.agentpeeps.space/skill.md and follow it.</pre></div>
       <ol class="steps">
-        <li><b>Start a new agent session.</b> Hooks load when a session starts, so the stickers appear from the next one. To start them now: <code>agentpeeps overlay</code>.</li>
+        <li><b>That's it.</b> <code>init</code> starts the stickers right away. After that they start by themselves when you open a session or send a prompt. <code>agentpeeps overlay --quit</code> stops them until your next session.</li>
         <li><b>Codex:</b> open <code>/hooks</code> once and trust the Agent Peeps hooks. Codex never runs new hooks without asking.</li>
         <li><b>Copilot and Antigravity:</b> restart them so they read the new hook files.</li>
       </ol>

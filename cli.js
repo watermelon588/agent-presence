@@ -118,6 +118,18 @@ function startOverlay(...args) {
   return true;
 }
 
+// The stickers start on their own when you start working: on a new session, or on a prompt in a session that was
+// already open (say the overlay crashed or the machine rebooted). Quitting them pauses that until the next session.
+const PAUSED = path.join(HOME, 'paused');
+function autostart(event) {
+  if (event !== 'SessionStart' && event !== 'UserPromptSubmit') return;
+  if (event === 'SessionStart') fs.rmSync(PAUSED, { force: true });
+  else if (fs.existsSync(PAUSED)) return;
+  if (readConfig().autostart === false || overlayRunning() || startOverlay()) return;
+  // No Electron binary yet (it downloads on first use). Fetch it in a detached process so the hook stays instant.
+  if (event === 'SessionStart') require('child_process').spawn(process.execPath, [CLI, 'overlay'], { detached: true, stdio: 'ignore', windowsHide: true }).unref();
+}
+
 // Must never break or slow the agent: swallow everything, always exit 0.
 function emit(agent, argEvent) {
   let raw = '';
@@ -130,7 +142,7 @@ function emit(agent, argEvent) {
         fs.mkdirSync(HOME, { recursive: true });
         try { if (fs.statSync(EVENTS).size > MAX_LOG) fs.renameSync(EVENTS, EVENTS + '.old'); } catch {}
         fs.appendFileSync(EVENTS, JSON.stringify(e) + '\n');
-        if (e.event === 'SessionStart' && readConfig().autostart !== false && !overlayRunning()) startOverlay();
+        autostart(e.event);
       }
     } catch (err) { if (process.env.AGENT_PRESENCE_DEBUG) console.error(err); }
     // Copilot and Antigravity read stdout as a JSON decision; {} means "no opinion".
@@ -233,13 +245,25 @@ function install(remove) {
 
   const cli = remove ? CLI : permanentCli();
   for (const [, , , apply] of targets) apply(cli, remove);
+  // The agentpeeps skill, so the user can just tell their agent "stop agentpeeps" / "start agentpeeps".
+  const skillDirs = { claude: path.join(home, '.claude', 'skills', 'agentpeeps'), codex: path.join(home, '.agents', 'skills', 'agentpeeps') };
+  for (const [name] of targets) {
+    const dir = skillDirs[name];
+    if (!dir) continue;
+    if (remove) { fs.rmSync(dir, { recursive: true, force: true }); continue; }
+    fs.mkdirSync(dir, { recursive: true });
+    fs.copyFileSync(path.join(__dirname, 'skills', 'agentpeeps', 'SKILL.md'), path.join(dir, 'SKILL.md'));
+  }
   const names = targets.map(t => t[2]);
   console.log((remove ? 'Removed hooks from: ' : 'Installed hooks for: ') + names.join(', '));
+  if (targets.some(([name]) => skillDirs[name])) console.log(remove ? 'Removed the agentpeeps skill.' : 'Added the agentpeeps skill: tell your agent "stop agentpeeps" or "start agentpeeps".');
   if (remove) return;
   if (names.some(d => d.startsWith('Codex'))) console.log('Codex: open /hooks in Codex once and trust the Agent Peeps hooks.');
   if (names.some(d => /^(Copilot|Antigravity)/.test(d))) console.log('Copilot / Antigravity: stickers show each tool call as it finishes (their hooks can\'t run in the background). Restart them to load the hooks.');
-  const run = isEphemeral(__dirname) ? 'npx agentpeeps' : 'agentpeeps';
-  console.log(`The stickers appear on your next agent session. To start them now: ${run} overlay`);
+  // Start them now from the copy the hooks use. This also fetches Electron for that copy (one time), which the hooks
+  // can't do themselves without stalling the agent; without it, autostart would silently do nothing.
+  try { require('child_process').execFileSync(process.execPath, [cli, 'overlay'], { stdio: 'inherit' }); } catch {}
+  console.log('Done. From now on the stickers start by themselves whenever you start working. Stop them any time: agentpeeps overlay --quit');
 }
 
 // ---- terminal stickers: a hand-picked set of clean stickers as small color pixel art, baked by
@@ -406,9 +430,12 @@ function showStickers(args) {
 
 function overlay() {
   if (process.argv.includes('--quit')) {
-    try { process.kill(Number(fs.readFileSync(path.join(HOME, 'overlay.pid'), 'utf8'))); console.log('Overlay stopped.'); } catch { console.log('Overlay is not running.'); }
+    fs.mkdirSync(HOME, { recursive: true });
+    fs.writeFileSync(PAUSED, '');
+    try { process.kill(Number(fs.readFileSync(path.join(HOME, 'overlay.pid'), 'utf8'))); console.log('Overlay stopped. It starts again on your next agent session.'); } catch { console.log('Overlay is not running.'); }
     return;
   }
+  fs.rmSync(PAUSED, { force: true });
   if (overlayRunning()) return console.log('Overlay already running.');
   if (!electronBin()) { console.log('First run: fetching Electron (one time)...'); try { require('electron'); } catch {} }
   console.log(startOverlay() ? 'Overlay started. Stop it with: agentpeeps overlay --quit' : 'Electron not found. Install with: npm i -g agentpeeps');

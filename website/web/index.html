@@ -137,6 +137,45 @@
   </div>
 </section>
 
+<!-- ============ LET YOUR AGENT SET IT UP ============ -->
+<section id="agent-setup" class="scroll-mt-16 pb-20 md:pb-28" aria-labelledby="agent-setup-title">
+  <div class="wrap mx-auto max-w-[760px] text-center">
+    <h2 id="agent-setup-title" data-split class="text-[clamp(36px,5vw,64px)]">Or just ask your agent.</h2>
+    <p class="mt-4 text-lg text-muted" data-reveal>Set it up once. After that the stickers show up the moment you start working, in every session, with nothing to run.</p>
+  </div>
+  <div class="wrap mt-10 grid grid-cols-1 gap-4 md:grid-cols-5">
+    <div class="cell flex flex-col md:col-span-2" data-reveal>
+      <p class="font-mono text-[13px] text-muted">One time</p>
+      <h3 class="mt-1.5 text-[30px]">Make it the default.</h3>
+      <ol class="mt-5 space-y-3 text-[15px]">
+        <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-soft font-mono text-[12px]">1</span><span>Paste the prompt into Claude Code or Codex.</span></li>
+        <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-soft font-mono text-[12px]">2</span><span>It installs the hooks, starts the stickers and saves the skill.</span></li>
+        <li class="flex gap-3"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-soft font-mono text-[12px]">3</span><span>Done for good. Say <b class="font-semibold">“stop agentpeeps”</b> whenever you want a break.</span></li>
+      </ol>
+      <div class="mt-auto pt-7">
+        <div class="rounded-[20px] border border-line bg-soft p-4">
+          <p class="font-mono text-[13.5px] leading-relaxed [overflow-wrap:anywhere]">Set up Agent Peeps for me: read https://www.agentpeeps.space/skill.md and follow it.</p>
+          <button class="btn btn-ink mt-4 !h-10 w-full !text-[14px]" data-copy="Set up Agent Peeps for me: read https://www.agentpeeps.space/skill.md and follow it."><i class="ph-bold ph-copy" aria-hidden="true"></i><span data-copy-label>Copy prompt</span></button>
+        </div>
+        <p class="mt-3 text-[13.5px] text-muted">Rather use a terminal? <code class="font-mono text-ink">npx agentpeeps init</code> does the same.</p>
+      </div>
+    </div>
+    <div class="cell flex flex-col overflow-hidden !border-[#24242b] !bg-[#121214] !p-0 text-white md:col-span-3" data-reveal>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-[#24242b] px-5 py-3">
+        <i class="ph-bold ph-file-text text-lg text-[#8fb1ff]" aria-hidden="true"></i>
+        <span class="font-mono text-[14px]">skill.md</span>
+        <span class="text-[13px] text-[#8a8a96] max-sm:hidden">what your agent reads</span>
+        <span class="ml-auto flex items-center gap-1">
+          <a class="rounded-full px-3 py-1.5 text-[13px] font-semibold text-[#a7a7b0] transition-colors hover:text-white" href="/skill.md" target="_blank" rel="noopener">Raw</a>
+          <button class="install sm !h-9 !border-0 !bg-transparent !p-0" data-copy="" data-skill-copy disabled aria-label="Copy skill.md"><span class="i-key !m-0"><span class="i-idle"><i class="ph-bold ph-copy"></i>Copy skill</span><span class="i-done"><i class="ph-bold ph-check"></i>Copied</span></span></button>
+        </span>
+      </div>
+      <pre class="term max-h-[460px] flex-1 overflow-auto px-5 py-4 !text-[13px]" data-skill data-lenis-prevent tabindex="0" aria-label="skill.md contents">Loading skill.md…</pre>
+      <p class="border-t border-[#24242b] px-5 py-3 text-[13px] text-[#8a8a96]">Save it yourself as <code class="font-mono text-[#d8d8e0]">~/.claude/skills/agentpeeps/SKILL.md</code> (Claude Code) or <code class="font-mono text-[#d8d8e0]">~/.agents/skills/agentpeeps/SKILL.md</code> (Codex).</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ WITHOUT / WITH ============ -->
 <section id="how" class="scroll-mt-16 py-16 md:py-24">
   <div class="wrap">

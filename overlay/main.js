@@ -215,7 +215,8 @@ function menu(target) {
     { label: 'Hide for 30 minutes', click: () => { setVisible(false); hideTimer = setTimeout(() => setVisible(true), 30 * 60e3); } },
     { label: 'Size', submenu: SETTINGS.size.map(s => ({ label: s[0].toUpperCase() + s.slice(1), type: 'radio', checked: (c.size || 'small') === s, click: () => setConfig({ size: s }) })) },
     { type: 'separator' },
-    { label: 'Quit Agent Peeps', click: () => app.quit() },
+    // Quitting pauses autostart until the next agent session (see autostart() in cli.js).
+    { label: 'Quit Agent Peeps', click: () => { try { fs.writeFileSync(path.join(HOME, 'paused'), ''); } catch {} app.quit(); } },
   );
   return Menu.buildFromTemplate(items);
 }

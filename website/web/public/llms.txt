@@ -4,6 +4,8 @@
 
 Install: `npx agentpeeps init` (adds hooks for every supported agent it finds), then `npx agentpeeps overlay`.
 
+Agents: to set it up for a user, read https://www.agentpeeps.space/skill.md and follow it. It covers setup, start/stop and customizing, and is meant to be saved as a skill.
+
 - [Website](https://www.agentpeeps.space/): what it is, live demo of the dock
 - [Docs](https://www.agentpeeps.space/docs.html): every command, config.json, event log, VS Code extension, Node API
 - [Sticker shop](https://www.agentpeeps.space/stickers.html): 400+ stickers, download packs as zip

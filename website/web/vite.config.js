@@ -1,9 +1,12 @@
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
-import { readFileSync } from 'node:fs';
+import { readFileSync, copyFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const here = (p) => fileURLToPath(new URL(p, import.meta.url));
+
+// /skill.md is the same file the npm package and the plugins ship, so agents and the site never drift apart.
+copyFileSync(here('../../skills/agentpeeps/SKILL.md'), here('./public/skill.md'));
 
 // <!-- include:nav --> pulls in partials/nav.html, so every page shares one nav and footer.
 // {{home}} is "" on the homepage (same-page anchors) and "./" elsewhere.

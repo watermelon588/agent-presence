@@ -1,6 +1,6 @@
 {
   "name": "agentpeeps",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Agent Peeps: small stickers that float over your screen and show what Claude Code, Codex, Copilot and Antigravity agents (and their subagents) are doing, live.",
   "license": "MIT",
   "bin": {

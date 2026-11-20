@@ -52,8 +52,18 @@ One sticker per Claude Code, Codex, Copilot or Antigravity session, a smaller on
 npx agentpeeps init    # adds hooks for every supported agent it finds (backups are kept)
 ```
 
-The stickers appear on your next agent session (or start them now with `npx agentpeeps overlay`).
+`init` starts the stickers right away, and from then on they start by themselves whenever you start working.
 Because npx runs from a cache it may clear, `init` first installs a permanent copy into `~/.agent-presence/app` and points the hooks there. Run it again any time to update.
+
+### Or let your agent set it up
+
+Paste this into Claude Code or Codex:
+
+```text
+Set up Agent Peeps for me: read https://www.agentpeeps.space/skill.md and follow it.
+```
+
+It runs the setup, starts the stickers and saves [skill.md](website/web/public/skill.md) as a skill. After that you can just tell your agent "stop agentpeeps", "start agentpeeps" or "turn agentpeeps off until I say".
 
 Prefer a global install? Same result:
 

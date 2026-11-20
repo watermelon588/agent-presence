@@ -223,3 +223,18 @@ fetch('/api/visits', { method: counted ? 'GET' : 'POST' }).then((r) => r.ok ? r.
   $('[data-stat="visits"]').textContent = new Intl.NumberFormat('en', { notation: 'compact' }).format(d.visits);
   $('[data-visits]').hidden = false;
 }).catch(() => {});
+
+/* ---------- skill.md preview: the same file agents read, with light markdown colouring ---------- */
+const skillPre = $('[data-skill]'), skillCopy = $('[data-skill-copy]');
+fetch('/skill.md').then((r) => (r.ok ? r.text() : Promise.reject())).then((md) => {
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  let front = false;
+  skillPre.innerHTML = md.trimEnd().split('\n').map((line) => {
+    if (line === '---') { front = !front; return `<span class="c">${line}</span>`; }
+    if (front) return esc(line).replace(/^(\w+):/, '<span class="p">$1</span>:');
+    if (/^#/.test(line)) return `<span class="ok">${esc(line)}</span>`;
+    return esc(line).replace(/`([^`]+)`/g, '<span class="p">`$1`</span>');
+  }).join('\n');
+  skillCopy.dataset.copy = md;
+  skillCopy.disabled = false;
+}).catch(() => { skillPre.textContent = 'Couldn’t load skill.md. Open it with Raw above.'; });
