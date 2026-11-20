@@ -275,6 +275,9 @@ function start() {
     webPreferences: { preload: path.join(__dirname, 'preload.js') },
   });
   win.setAlwaysOnTop(true, 'screen-saver');
+  // Windows can drop us out of always-on-top (sleep/wake, Explorer restarting, an app going fullscreen) and never puts us
+  // back, so the stickers end up under browser tabs. Reclaim the top every 2s; the window can't take focus, so typing is never interrupted.
+  if (process.platform === 'win32') setInterval(() => { if (win.isVisible()) { win.setAlwaysOnTop(true, 'screen-saver'); win.moveTop(); } }, 2000);
   win.setVisibleOnAllWorkspaces(true);
   win.setIgnoreMouseEvents(true, { forward: true }); // clicks pass through except over stickers
   win.loadFile(path.join(__dirname, 'index.html'));
